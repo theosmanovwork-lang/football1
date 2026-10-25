@@ -1,0 +1,614 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Рабочий стол тренера</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="position: relative; width: 100%; min-height: 100vh; display: flex; flex-wrap: wrap; background: #0B0C0E; color: #E3E4E6; font-family: Inter, system-ui, sans-serif; font-size: 13px; line-height: 1.4">
+
+<sc-if value="{{navDrawer}}" hint-placeholder-val="{{ false }}">
+<button type="button" onClick="{{closeNav}}" aria-label="Закрыть меню" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 9; border: 0; padding: 0; background: rgba(5, 6, 8, 0.6); cursor: default"></button>
+</sc-if>
+<sc-if value="{{navShown}}" hint-placeholder-val="{{ true }}">
+<nav aria-label="Основное меню" style="position: {{navPos}}; top: 0; left: 0; bottom: 0; z-index: {{navZ}}; flex: 0 0 {{navW}}; width: {{navW}}; max-width: 100%; box-sizing: border-box; padding: 10px {{navPad}} 8px; display: flex; flex-direction: column; gap: 16px; background: #0B0C0E; border-right: 1px solid {{navEdge}}; box-shadow: {{navShadow}}; transition: flex-basis 160ms ease">
+<sc-if value="{{navFull}}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; align-items: center; gap: 6px; padding: 2px 4px">
+<a href="#" class="navi" style="display: flex; align-items: center; gap: 8px; padding: 4px 6px; border-radius: 6px; flex: 1; min-width: 0; color: #E3E4E6">
+<span style="width: 20px; height: 20px; flex: none; border-radius: 5px; background: {{accent}}; color: #0B0C0E; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 600">NR</span>
+<span style="font-weight: 600; white-space: nowrap">Норт Ривер</span>
+<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg>
+</a>
+<button type="button" class="ib" aria-label="Поиск" style="width: 28px; height: 28px; flex: none; border-radius: 6px; border: 1px solid transparent; background: transparent; color: #A4A8AF; display: flex; align-items: center; justify-content: center; cursor: pointer">
+<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg>
+</button>
+<button type="button" class="ib" aria-label="Тактический блокнот" style="width: 28px; height: 28px; flex: none; border-radius: 50%; border: 1px solid #2A2C31; background: #141518; color: #D0D2D6; display: flex; align-items: center; justify-content: center; cursor: pointer">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"></path></svg>
+</button>
+</div>
+</sc-if>
+<sc-if value="{{navCompact}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-direction: column; align-items: center; gap: 6px">
+<a href="#" class="navi" aria-label="Норт Ривер — сменить клуб" style="width: 36px; height: 32px; border-radius: 6px; display: flex; align-items: center; justify-content: center">
+<span style="width: 20px; height: 20px; border-radius: 5px; background: {{accent}}; color: #0B0C0E; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 600">NR</span>
+</a>
+<button type="button" class="ib" aria-label="Поиск" style="width: 36px; height: 32px; border-radius: 6px; border: 1px solid transparent; background: transparent; color: #A4A8AF; display: flex; align-items: center; justify-content: center; cursor: pointer">
+<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg>
+</button>
+</div>
+</sc-if>
+
+<div style="display: flex; flex-direction: column; gap: 1px">
+<sc-for list="{{navTop}}" as="n" hint-placeholder-count="3">
+<a href="#" class="navi" aria-label="{{n.label}}" title="{{n.label}}" style="display: flex; align-items: center; justify-content: {{itemJustify}}; gap: 10px; height: 30px; padding: 0 {{itemPad}}; border-radius: 6px; color: #D0D2D6; position: relative">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none"><path d="{{n.icon}}"></path></svg>
+<sc-if value="{{navFull}}" hint-placeholder-val="{{ true }}">
+<span style="flex: 1; white-space: nowrap">{{n.label}}</span>
+<span style="font-size: 12px; color: #A4A8AF">{{n.count}}</span>
+</sc-if>
+<sc-if value="{{n.dot}}" hint-placeholder-val="{{ false }}">
+<span aria-hidden="true" style="position: absolute; top: 6px; right: 8px; width: 6px; height: 6px; border-radius: 50%; background: #F59E3B"></span>
+</sc-if>
+</a>
+</sc-for>
+</div>
+
+<sc-for list="{{navSections}}" as="s" hint-placeholder-count="4">
+<div style="display: flex; flex-direction: column; gap: 1px">
+<sc-if value="{{navFull}}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; align-items: center; gap: 4px; height: 26px; padding: 0 10px; font-size: 12px; color: #9A9FA6">
+<span>{{s.title}}</span>
+<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 9h12l-6 7z"></path></svg>
+</div>
+</sc-if>
+<sc-if value="{{navCompact}}" hint-placeholder-val="{{ false }}">
+<div style="height: 1px; background: #1E1F23; margin: 6px 8px"></div>
+</sc-if>
+<sc-for list="{{s.items}}" as="n" hint-placeholder-count="3">
+<a href="#" class="navi" aria-label="{{n.label}}" title="{{n.label}}" style="display: flex; align-items: center; justify-content: {{itemJustify}}; gap: 10px; height: 30px; padding: 0 {{itemPad}}; border-radius: 6px; background: {{n.bg}}; color: {{n.color}}; position: relative">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none"><path d="{{n.icon}}"></path></svg>
+<sc-if value="{{navFull}}" hint-placeholder-val="{{ true }}">
+<span style="flex: 1; white-space: nowrap">{{n.label}}</span>
+<span style="font-size: 12px; color: #A4A8AF">{{n.count}}</span>
+</sc-if>
+<sc-if value="{{n.dot}}" hint-placeholder-val="{{ false }}">
+<span aria-hidden="true" style="position: absolute; top: 6px; right: 8px; width: 6px; height: 6px; border-radius: 50%; background: #F59E3B"></span>
+</sc-if>
+</a>
+</sc-for>
+</div>
+</sc-for>
+
+<div style="margin-top: auto; display: flex; flex-direction: {{footDir}}; align-items: center; gap: 6px; padding: 0 4px">
+<button type="button" class="ib" aria-label="Справка" style="width: 26px; height: 26px; border-radius: 50%; border: 1px solid #2A2C31; background: transparent; color: #A4A8AF; font-size: 12px; cursor: pointer">?</button>
+<sc-if value="{{navFull}}" hint-placeholder-val="{{ true }}">
+<span style="flex: 1"></span>
+</sc-if>
+<button type="button" class="ib" onClick="{{toggleNav}}" aria-label="{{navToggleLabel}}" title="{{navToggleLabel}}" style="width: 28px; height: 28px; border-radius: 6px; border: 1px solid transparent; background: transparent; color: #A4A8AF; display: flex; align-items: center; justify-content: center; cursor: pointer">
+<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"></rect><path d="M9 5v14"></path><path d="{{navChevron}}"></path></svg>
+</button>
+</div>
+<sc-if value="{{navResizable}}" hint-placeholder-val="{{ true }}">
+<button type="button" class="rz" onPointerDown="{{startNavDrag}}" onDoubleClick="{{resetNav}}" onKeyDown="{{navKey}}" aria-label="Ширина меню: {{navWLabel}}. Стрелки меняют ширину, Home — по умолчанию" title="Потяните, чтобы изменить ширину · двойной щелчок — по умолчанию" style="position: absolute; top: 0; right: -5px; bottom: 0; width: 10px; padding: 0; border: 0; background: transparent; cursor: col-resize; z-index: 3; display: flex; justify-content: center">
+<span class="rzl" style="display: block; width: 2px; height: 100%"></span>
+<sc-if value="{{navDragging}}" hint-placeholder-val="{{ false }}">
+<span style="position: absolute; top: 0; bottom: 0; left: 4px; width: 2px; background: {{accent}}"></span>
+</sc-if>
+</button>
+</sc-if>
+</nav>
+</sc-if>
+
+<div style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column; padding: 8px 8px 0 0; box-sizing: border-box">
+<main style="flex: 1; min-height: 760px; display: flex; flex-direction: column; background: #121316; border: 1px solid #222327; border-radius: 10px; overflow: hidden">
+
+<header style="display: flex; align-items: center; gap: 8px; height: 44px; padding: 0 12px 0 {{headPad}}; border-bottom: 1px solid #1E1F23; min-width: 0">
+<sc-if value="{{showMenuBtn}}" hint-placeholder-val="{{ false }}">
+<button type="button" class="ib" onClick="{{openNav}}" aria-label="Открыть меню" aria-expanded="{{navOpenAttr}}" title="Меню" style="width: 28px; height: 28px; flex: none; border-radius: 6px; border: 1px solid #2A2C31; background: transparent; color: #D0D2D6; display: flex; align-items: center; justify-content: center; cursor: pointer">
+<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
+</button>
+</sc-if>
+<span style="width: 16px; height: 16px; flex: none; border-radius: 4px; background: {{accent}}; display: inline-block" aria-hidden="true"></span>
+<span style="color: #D0D2D6; white-space: nowrap">Норт Ривер</span>
+<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#8F949C" stroke-width="2" stroke-linecap="round" aria-hidden="true" style="flex: none"><path d="M9 6l6 6-6 6"></path></svg>
+<span style="font-weight: 500">Главная</span>
+<div style="flex: 1"></div>
+<sc-if value="{{showDate}}" hint-placeholder-val="{{ true }}">
+<span style="font-size: 12px; color: #9A9FA6; white-space: nowrap">Вс, 25 окт · MD+1 · Неделя 10</span>
+</sc-if>
+<button type="button" class="ib" aria-label="Уведомления" style="width: 28px; height: 28px; flex: none; border-radius: 6px; border: 1px solid transparent; background: transparent; color: #A4A8AF; display: flex; align-items: center; justify-content: center; cursor: pointer">
+<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 8 3 8H3s3-1 3-8M10 20a2 2 0 0 0 4 0"></path></svg>
+</button>
+<button type="button" class="ib" style="height: 28px; flex: none; padding: 0 10px; border-radius: 6px; border: 1px solid #2A2C31; background: #1A1B1F; color: #E3E4E6; font-size: 12px; font-weight: 500; display: flex; align-items: center; gap: 6px; cursor: pointer">
+Продолжить
+<span style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 10px; color: #A4A8AF; border: 1px solid #2E3035; border-radius: 4px; padding: 0 4px">Space</span>
+</button>
+</header>
+
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 6px; padding: 8px 12px; border-bottom: 1px solid #1E1F23">
+<sc-if value="{{tabsInline}}" hint-placeholder-val="{{ true }}">
+<sc-for list="{{tabs}}" as="t" hint-placeholder-count="3">
+<button type="button" class="ib" onClick="{{t.pick}}" aria-pressed="{{t.pressed}}" style="height: 28px; padding: 0 12px; border-radius: 999px; border: 1px solid {{t.border}}; background: {{t.bg}}; color: {{t.color}}; font-size: 12px; font-weight: 500; cursor: pointer">{{t.label}}</button>
+</sc-for>
+</sc-if>
+<sc-if value="{{tabsMenu}}" hint-placeholder-val="{{ false }}">
+<div style="position: relative">
+<button type="button" class="ib" onClick="{{toggleTabMenu}}" aria-haspopup="listbox" aria-expanded="{{tabMenuAttr}}" style="height: 28px; padding: 0 10px 0 12px; border-radius: 999px; border: 1px solid #33353B; background: #232428; color: #FFFFFF; font-size: 12px; font-weight: 500; display: flex; align-items: center; gap: 6px; cursor: pointer">{{tabLabel}}<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></button>
+<sc-if value="{{tabMenuOpen}}" hint-placeholder-val="{{ false }}">
+<div role="listbox" aria-label="Вид главной" style="position: absolute; top: 34px; left: 0; z-index: 6; min-width: 168px; padding: 4px; border: 1px solid #2A2C31; border-radius: 8px; background: #17181B; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45); display: flex; flex-direction: column; gap: 1px">
+<sc-for list="{{tabs}}" as="t" hint-placeholder-count="3">
+<button type="button" role="option" class="navi" onClick="{{t.pickClose}}" aria-selected="{{t.pressed}}" style="height: 30px; padding: 0 10px; border: 0; border-radius: 6px; background: {{t.menuBg}}; color: {{t.color}}; font-size: 12px; text-align: left; cursor: pointer">{{t.label}}</button>
+</sc-for>
+</div>
+</sc-if>
+</div>
+</sc-if>
+<div style="flex: 1"></div>
+<button type="button" class="ib" aria-label="Настроить виджеты" title="Настроить виджеты" style="width: 30px; height: 30px; border-radius: 50%; border: 1px solid #2A2C31; background: transparent; color: #A4A8AF; display: flex; align-items: center; justify-content: center; cursor: pointer">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg>
+</button>
+<button type="button" class="ib" onClick="{{togglePanel}}" aria-pressed="{{panelPressed}}" aria-label="Боковая панель: следующий матч" title="Боковая панель" style="width: 30px; height: 30px; border-radius: 50%; border: 1px solid {{panelBtnBorder}}; background: {{panelBtnBg}}; color: {{panelBtnColor}}; display: flex; align-items: center; justify-content: center; cursor: pointer">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"></rect><path d="M15 5v14"></path></svg>
+</button>
+</div>
+
+<div style="position: relative; flex: 1; display: flex; flex-wrap: wrap; min-height: 0">
+
+<div style="flex: 999 1 420px; min-width: 0; padding: 10px 10px 18px; display: flex; flex-direction: column; gap: 12px; box-sizing: border-box">
+
+<sc-if value="{{showKpi}}" hint-placeholder-val="{{ true }}">
+<section aria-label="Показатели дня" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 1px; background: #222327; border: 1px solid #222327; border-radius: 8px; overflow: hidden">
+<sc-for list="{{kpis}}" as="k" hint-placeholder-count="4">
+<a href="#" class="row" style="background: #121316; padding: 10px 12px; display: flex; flex-direction: column; gap: 6px; color: #E3E4E6">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 8px">
+<span style="font-size: 11px; color: #9A9FA6">{{k.label}}</span>
+<span style="font-size: 10px; color: #8F949C; border: 1px solid #2A2C31; border-radius: 4px; padding: 0 5px; white-space: nowrap">{{k.src}}</span>
+</div>
+<div style="display: flex; align-items: baseline; gap: 8px">
+<span style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 20px; font-weight: 500">{{k.value}}</span>
+<span style="font-size: 11px; color: {{k.deltaColor}}">{{k.delta}}</span>
+</div>
+<div style="display: flex; height: 4px; border-radius: 2px; overflow: hidden; background: #26272B">
+<sc-for list="{{k.bars}}" as="b" hint-placeholder-count="1">
+<span style="display: block; height: 4px; width: {{b.w}}; background: {{b.c}}"></span>
+</sc-for>
+</div>
+<span style="font-size: 11px; color: #9A9FA6">{{k.note}}</span>
+</a>
+</sc-for>
+</section>
+</sc-if>
+
+<sc-for list="{{groups}}" as="g" hint-placeholder-count="2">
+<section>
+<button type="button" onClick="{{g.toggle}}" aria-expanded="{{g.expanded}}" style="width: 100%; display: flex; align-items: center; gap: 10px; height: 36px; padding: 0 12px; border: 0; border-radius: 6px; background: #17181B; color: #E3E4E6; font-size: 13px; cursor: pointer; text-align: left; min-width: 0">
+<svg width="10" height="10" viewBox="0 0 24 24" fill="#8F949C" aria-hidden="true" style="flex: none; transform: rotate({{g.caretRot}}); transition: transform 150ms ease"><path d="M6 9h12l-6 7z"></path></svg>
+<span style="width: 14px; height: 14px; flex: none; border-radius: 50%; border: 1.5px solid {{g.tone}}; box-sizing: border-box"></span>
+<span style="font-weight: 500; white-space: nowrap">{{g.title}}</span>
+<span style="color: #9A9FA6">{{g.count}}</span>
+<span style="flex: 1"></span>
+<span style="font-size: 12px; color: #9A9FA6; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap">{{g.hint}}</span>
+</button>
+<sc-if value="{{g.open}}" hint-placeholder-val="{{ true }}">
+<div>
+<sc-for list="{{g.rows}}" as="r" hint-placeholder-count="4">
+<a href="#" class="row" style="display: flex; align-items: center; gap: 12px; min-height: 40px; padding: 0 12px 0 {{rowIndent}}; border-radius: 6px; color: #E3E4E6">
+<span style="width: 52px; flex: none; font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 11px; color: #9A9FA6">{{r.code}}</span>
+<sc-if value="{{r.urgent}}" hint-placeholder-val="{{ false }}">
+<svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" style="flex: none"><circle cx="12" cy="12" r="9" fill="#F59E3B"></circle><path d="M12 7v6M12 16.5v.5" stroke="#121316" stroke-width="2.4" stroke-linecap="round"></path></svg>
+</sc-if>
+<sc-if value="{{r.todo}}" hint-placeholder-val="{{ true }}">
+<svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" style="flex: none"><circle cx="12" cy="12" r="8" fill="none" stroke="#9A9FA6" stroke-width="1.8"></circle></svg>
+</sc-if>
+<sc-if value="{{r.progress}}" hint-placeholder-val="{{ false }}">
+<svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" style="flex: none"><circle cx="12" cy="12" r="8" fill="none" stroke="#F2C94C" stroke-width="1.8"></circle><path d="M12 7a5 5 0 0 1 0 10z" fill="#F2C94C"></path></svg>
+</sc-if>
+<sc-if value="{{r.ready}}" hint-placeholder-val="{{ false }}">
+<svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" style="flex: none"><circle cx="12" cy="12" r="9" fill="{{accent}}"></circle><path d="M8 12.5l2.7 2.5L16 9.5" fill="none" stroke="#121316" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</sc-if>
+<sc-if value="{{r.insight}}" hint-placeholder-val="{{ false }}">
+<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#7CC4FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none"><path d="M5 20V11M11 20V5M17 20v-6"></path></svg>
+</sc-if>
+<span style="flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap">{{r.title}}</span>
+<sc-if value="{{r.hasLoad}}" hint-placeholder-val="{{ false }}">
+<span style="width: 64px; height: 4px; flex: none; background: #26272B; border-radius: 2px; display: block"><span style="display: block; height: 4px; width: {{r.loadW}}; background: {{r.loadColor}}; border-radius: 2px"></span></span>
+</sc-if>
+<sc-if value="{{r.hasChip}}" hint-placeholder-val="{{ true }}">
+<span style="flex: none; height: 22px; padding: 0 8px; border: 1px solid #2A2C31; border-radius: 999px; font-size: 11px; color: {{r.chipColor}}; display: flex; align-items: center; gap: 6px; white-space: nowrap"><span style="width: 6px; height: 6px; border-radius: 50%; background: {{r.chipColor}}"></span>{{r.chip}}</span>
+</sc-if>
+<sc-if value="{{r.hasIni}}" hint-placeholder-val="{{ true }}">
+<span style="width: 20px; height: 20px; flex: none; border-radius: 50%; background: #26272B; color: #C3C6CB; font-size: 9px; font-weight: 600; display: flex; align-items: center; justify-content: center">{{r.ini}}</span>
+</sc-if>
+<span style="width: 60px; flex: none; text-align: right; font-size: 12px; color: #9A9FA6; white-space: nowrap">{{r.meta}}</span>
+</a>
+</sc-for>
+</div>
+</sc-if>
+</section>
+</sc-for>
+
+<sc-if value="{{showSquad}}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; flex-wrap: wrap; gap: 12px">
+
+<section aria-labelledby="h-quad" style="flex: 1 1 {{quadBasis}}; min-width: 0; border: 1px solid #222327; border-radius: 8px; padding: 12px; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; align-items: center; gap: 8px">
+<h2 id="h-quad" style="margin: 0; font-size: 13px; font-weight: 500">Нагрузка × готовность</h2>
+<span style="font-size: 11px; color: #9A9FA6">GPS + анкеты утром</span>
+<div style="flex: 1"></div>
+<a href="#" style="font-size: 12px; color: #9A9FA6">Медцентр →</a>
+</div>
+<div style="display: flex; gap: 8px">
+<div style="writing-mode: vertical-rl; transform: rotate(180deg); font-size: 10px; color: #8F949C; text-align: center">готовность ↑</div>
+<div style="flex: 1; display: flex; flex-direction: column; gap: 4px">
+<div role="img" aria-label="Точечный график: игроки по нагрузке и готовности; в зоне риска Окафор и Бреннан" style="position: relative; height: 200px; border: 1px solid #222327; border-radius: 6px; overflow: hidden; background: #111215">
+<div style="position: absolute; left: 50%; top: 50%; right: 0; bottom: 0; background: #2A1D12"></div>
+<div style="position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: #2A2C31"></div>
+<div style="position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: #2A2C31"></div>
+<span style="position: absolute; left: 8px; top: 6px; font-size: 10px; color: #8F949C">Свежие</span>
+<span style="position: absolute; right: 8px; top: 6px; font-size: 10px; color: #8F949C">В форме</span>
+<span style="position: absolute; left: 8px; bottom: 6px; font-size: 10px; color: #8F949C">Недогружены</span>
+<span style="position: absolute; right: 8px; bottom: 6px; font-size: 10px; color: #F59E3B">Риск перегрузки</span>
+<sc-for list="{{dots}}" as="d" hint-placeholder-count="12">
+<span title="{{d.name}}" style="position: absolute; left: {{d.x}}; top: {{d.y}}; width: 8px; height: 8px; margin: -4px 0 0 -4px; border-radius: 50%; background: {{d.c}}; box-shadow: 0 0 0 2px #111215"></span>
+</sc-for>
+<sc-for list="{{dotLabels}}" as="d" hint-placeholder-count="2">
+<span style="position: absolute; left: {{d.x}}; top: {{d.y}}; margin: -20px 0 0 6px; font-size: 10px; color: #E3E4E6; white-space: nowrap">{{d.name}}</span>
+</sc-for>
+</div>
+<div style="text-align: right; font-size: 10px; color: #8F949C">нагрузка за 7 дней →</div>
+</div>
+</div>
+</section>
+
+<section aria-labelledby="h-avail" style="flex: 1 1 {{availBasis}}; min-width: 0; border: 1px solid #222327; border-radius: 8px; padding: 12px; display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; align-items: center; gap: 8px">
+<h2 id="h-avail" style="margin: 0; font-size: 13px; font-weight: 500">Доступность</h2>
+<span style="font-size: 11px; color: #9A9FA6">21 · 2 · 3</span>
+<div style="flex: 1"></div>
+<a href="#" style="font-size: 12px; color: #9A9FA6">Весь состав →</a>
+</div>
+<sc-for list="{{avail}}" as="a" hint-placeholder-count="5">
+<a href="#" class="row" style="display: flex; align-items: center; gap: 10px; min-height: 34px; padding: 0 6px; border-radius: 6px; color: #E3E4E6">
+<span style="width: 34px; flex: none; font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 11px; color: #9A9FA6">{{a.pos}}</span>
+<span style="flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap">{{a.name}}</span>
+<span style="flex: none; height: 20px; padding: 0 7px; border-radius: 4px; background: {{a.bg}}; color: {{a.fg}}; font-size: 11px; display: flex; align-items: center; white-space: nowrap">{{a.status}}</span>
+<span style="width: 58px; flex: none; text-align: right; font-size: 11px; color: #9A9FA6">{{a.back}}</span>
+</a>
+</sc-for>
+</section>
+
+</div>
+</sc-if>
+</div>
+
+<sc-if value="{{panelScrim}}" hint-placeholder-val="{{ false }}">
+<button type="button" onClick="{{togglePanel}}" aria-label="Закрыть боковую панель" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 4; border: 0; padding: 0; background: rgba(5, 6, 8, 0.5); cursor: default"></button>
+</sc-if>
+<sc-if value="{{panelOpen}}" hint-placeholder-val="{{ true }}">
+<aside aria-label="Следующий матч" style="position: {{asidePos}}; top: 0; right: 0; bottom: 0; z-index: 5; flex: 0 0 {{panelW}}; width: {{panelW}}; max-width: 100%; min-width: 0; border-left: 1px solid {{asideEdge}}; background: #121316; box-shadow: {{asideShadow}}; padding: 16px; display: flex; flex-direction: column; gap: 20px; box-sizing: border-box; overflow-y: {{asideScroll}}">
+<button type="button" class="rz" onPointerDown="{{startPanelDrag}}" onDoubleClick="{{resetPanel}}" onKeyDown="{{panelKey}}" aria-label="Ширина панели: {{panelWLabel}}. Стрелки меняют ширину, Home — по умолчанию" title="Потяните, чтобы изменить ширину · двойной щелчок — по умолчанию" style="position: absolute; top: 0; left: -5px; bottom: 0; width: 10px; padding: 0; border: 0; background: transparent; cursor: col-resize; z-index: 3; display: flex; justify-content: center">
+<span class="rzl" style="display: block; width: 2px; height: 100%"></span>
+<sc-if value="{{panelDragging}}" hint-placeholder-val="{{ false }}">
+<span style="position: absolute; top: 0; bottom: 0; left: 4px; width: 2px; background: {{accent}}"></span>
+</sc-if>
+</button>
+
+<section aria-labelledby="h-match" style="display: flex; flex-direction: column; gap: 12px">
+<h2 id="h-match" style="margin: 0; font-size: 12px; font-weight: 500; color: #9A9FA6">Следующий матч · через 6 дней</h2>
+<div style="display: flex; flex-direction: column; gap: 4px">
+<span style="font-size: 15px; font-weight: 600">Норт Ривер — Вестфилд Сити</span>
+<span style="font-size: 12px; color: #A4A8AF">Сб, 31 окт · 17:30 · Дома · Тур 11</span>
+</div>
+<div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap">
+<span style="font-size: 11px; color: #9A9FA6">Форма соперника</span>
+<sc-for list="{{form}}" as="f" hint-placeholder-count="5">
+<span style="width: 20px; height: 20px; border-radius: 4px; border: 1px solid #2A2C31; color: {{f.color}}; font-size: 10px; font-weight: 600; display: flex; align-items: center; justify-content: center">{{f.r}}</span>
+</sc-for>
+</div>
+<div style="border: 1px solid #222327; border-radius: 8px; overflow: hidden">
+<div style="display: flex; padding: 7px 10px; font-size: 11px; color: #9A9FA6; border-bottom: 1px solid #222327"><span style="flex: 1">Центр данных · 10 туров</span><span style="width: 48px; text-align: right">Мы</span><span style="width: 56px; text-align: right">Они</span></div>
+<sc-for list="{{compare}}" as="c" hint-placeholder-count="6">
+<div style="display: flex; align-items: center; padding: 6px 10px; font-size: 12px; border-bottom: 1px solid #1B1C20">
+<span style="flex: 1; min-width: 0; color: #D0D2D6">{{c.m}}</span>
+<span style="width: 48px; text-align: right; font-family: &quot;JetBrains Mono&quot;, monospace; color: {{c.usC}}">{{c.us}}</span>
+<span style="width: 56px; text-align: right; font-family: &quot;JetBrains Mono&quot;, monospace; color: {{c.themC}}">{{c.them}}</span>
+</div>
+</sc-for>
+</div>
+<div style="display: flex; gap: 10px; padding: 10px; border-radius: 8px; background: #17181B; font-size: 12px">
+<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#7CC4FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 1px"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"></path></svg>
+<span style="color: #D0D2D6">Аналитик: их левый центральный защитник проигрывает больше половины единоборств на разворотах — 6 эпизодов в пакете.</span>
+</div>
+<div style="display: flex; gap: 8px">
+<a href="#" class="ib" style="flex: 1; height: 30px; border-radius: 6px; border: 1px solid #2A2C31; background: #1A1B1F; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 500; color: #E3E4E6">Пакет подготовки</a>
+<a href="#" class="ib" style="flex: 1; height: 30px; border-radius: 6px; border: 1px solid #2A2C31; background: transparent; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #D0D2D6">Тактическая карта</a>
+</div>
+</section>
+
+<section aria-labelledby="h-table" style="display: flex; flex-direction: column; gap: 6px">
+<h2 id="h-table" style="margin: 0 0 4px; font-size: 12px; font-weight: 500; color: #9A9FA6">Таблица</h2>
+<sc-for list="{{table}}" as="t" hint-placeholder-count="5">
+<div style="display: flex; align-items: center; gap: 10px; height: 26px; padding: 0 8px; border-radius: 6px; background: {{t.bg}}; font-size: 12px">
+<span style="width: 16px; font-family: &quot;JetBrains Mono&quot;, monospace; color: #9A9FA6">{{t.pos}}</span>
+<span style="flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: {{t.color}}">{{t.club}}</span>
+<span style="font-family: &quot;JetBrains Mono&quot;, monospace; color: #A4A8AF">{{t.gd}}</span>
+<span style="width: 22px; text-align: right; font-family: &quot;JetBrains Mono&quot;, monospace; color: {{t.color}}">{{t.pts}}</span>
+</div>
+</sc-for>
+</section>
+
+<section aria-labelledby="h-goals" style="display: flex; flex-direction: column; gap: 10px">
+<h2 id="h-goals" style="margin: 0; font-size: 12px; font-weight: 500; color: #9A9FA6">Цели совета</h2>
+<sc-for list="{{goals}}" as="g" hint-placeholder-count="2">
+<div style="display: flex; align-items: center; gap: 10px; font-size: 12px">
+<svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true" style="flex: none"><circle cx="12" cy="12" r="8" fill="none" stroke="#2E3035" stroke-width="3"></circle><circle cx="12" cy="12" r="8" fill="none" stroke="{{accent}}" stroke-width="3" stroke-dasharray="{{g.dash}}" transform="rotate(-90 12 12)"></circle></svg>
+<span style="flex: 1; min-width: 0">{{g.goal}}</span>
+<span style="color: #9A9FA6; white-space: nowrap">{{g.state}}</span>
+</div>
+</sc-for>
+</section>
+</aside>
+</sc-if>
+</div>
+</main>
+
+<footer style="height: 34px; display: flex; align-items: center; gap: 14px; padding: 0 8px; font-size: 12px; color: #A4A8AF">
+<span style="white-space: nowrap">Автосохранение · 10:12</span>
+<span style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 11px; color: #8F949C">{{widthLabel}}</span>
+<div style="flex: 1"></div>
+<a href="#" style="display: flex; align-items: center; gap: 6px; color: #A4A8AF; white-space: nowrap">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.5 7.2L4 20l1-4.6A8 8 0 1 1 21 12z"></path></svg>
+Штаб · 3 новых
+</a>
+</footer>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"variant":{"editor":"enum","options":["auto","1440","1200","1024","800"],"default":"auto"},"accent":{"editor":"color","default":"#9BE15D","options":["#9BE15D","#7CC4FF","#FFB547","#B9A2FF"]},"$preview":{"width":1440,"height":1180}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    var w = this.fixedWidth(props) || this.windowWidth();
+    var b = this.bucketFor(w);
+    this.state = Object.assign({ tab: 'today', closed: {}, ww: this.windowWidth(), drag: null, tabMenu: false }, this.layoutFor(b));
+    this.onResize = this.onResize.bind(this);
+    this.onMove = this.onMove.bind(this);
+    this.onUp = this.onUp.bind(this);
+  }
+  fixedWidth(props) { var v = (props && props.variant) || 'auto'; return v === 'auto' ? 0 : Number(v); }
+  windowWidth() { return (typeof window !== 'undefined' && window.innerWidth) ? window.innerWidth : 1440; }
+  totalWidth() { return this.fixedWidth(this.props) || this.state.ww; }
+  bucketFor(w) { if (w >= 1440) return 'xl'; if (w >= 1200) return 'lg'; if (w > 1024) return 'md'; if (w > 860) return 'sm'; return 'xs'; }
+  defaults(b) { return { xl: { panel: true, compact: false, hidden: false, panelPx: 320 }, lg: { panel: true, compact: false, hidden: false, panelPx: 284 }, md: { panel: false, compact: false, hidden: false, panelPx: 340 }, sm: { panel: false, compact: true, hidden: false, panelPx: 340 }, xs: { panel: false, compact: false, hidden: true, panelPx: 340 } }[b]; }
+  layoutFor(b) { var d = this.defaults(b); return { bucket: b, panelOpen: d.panel, navCompact: d.compact, navOpen: false, navPx: 224, panelPx: d.panelPx }; }
+  inlineBucket(b) { return b === 'xl' || b === 'lg'; }
+  metrics(st) {
+    var W = this.totalWidth();
+    var hidden = st.bucket === 'xs';
+    var navCur = hidden ? 0 : (st.navCompact ? 60 : st.navPx);
+    var panelMin = 260;
+    var panelMaxInline = Math.min(480, W - 8 - navCur - 560);
+    var inline = this.inlineBucket(st.bucket) && panelMaxInline >= panelMin;
+    var panelMax = inline ? panelMaxInline : Math.min(480, W - 48);
+    var panelPx = Math.max(panelMin, Math.min(st.panelPx, panelMax));
+    var inlinePanel = st.panelOpen && inline ? panelPx : 0;
+    var navMax = Math.min(320, W - 8 - inlinePanel - 560);
+    return { W: W, hidden: hidden, navCur: navCur, inline: inline, panelPx: panelPx, panelMin: panelMin, panelMax: panelMax, navMin: 180, navMax: Math.max(180, navMax), content: W - navCur - 8 - inlinePanel };
+  }
+  clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
+  componentDidMount() { if (!this.fixedWidth(this.props) && typeof window !== 'undefined') { window.addEventListener('resize', this.onResize); } }
+  componentWillUnmount() { if (typeof window !== 'undefined') { window.removeEventListener('resize', this.onResize); window.removeEventListener('pointermove', this.onMove); window.removeEventListener('pointerup', this.onUp); } }
+  onResize() {
+    var w = this.windowWidth(); var b = this.bucketFor(w);
+    if (b !== this.state.bucket) { this.setState(Object.assign({ ww: w, tabMenu: false }, this.layoutFor(b))); }
+    else { this.setState({ ww: w }); }
+  }
+  startDrag(which, e) {
+    if (e && e.preventDefault) { e.preventDefault(); }
+    var el = e && e.currentTarget;
+    var scale = 1;
+    if (el && el.getBoundingClientRect && el.offsetWidth) { var r = el.getBoundingClientRect(); if (r.width > 0) { scale = r.width / el.offsetWidth; } }
+    var m = this.metrics(this.state);
+    this.dragInfo = { which: which, x0: e.clientX, w0: which === 'nav' ? this.state.navPx : m.panelPx, scale: scale || 1 };
+    this.setState({ drag: which });
+    window.addEventListener('pointermove', this.onMove);
+    window.addEventListener('pointerup', this.onUp);
+  }
+  onMove(e) {
+    var d = this.dragInfo; if (!d) { return; }
+    var dx = (e.clientX - d.x0) / d.scale;
+    var m = this.metrics(this.state);
+    if (d.which === 'nav') { this.setState({ navPx: Math.round(this.clamp(d.w0 + dx, m.navMin, m.navMax)) }); }
+    else { this.setState({ panelPx: Math.round(this.clamp(d.w0 - dx, m.panelMin, m.panelMax)) }); }
+  }
+  onUp() { this.dragInfo = null; this.setState({ drag: null }); window.removeEventListener('pointermove', this.onMove); window.removeEventListener('pointerup', this.onUp); }
+  keyResize(which, e) {
+    var m = this.metrics(this.state);
+    var step = e.shiftKey ? 48 : 16;
+    var sign = 0;
+    if (e.key === 'ArrowRight') { sign = which === 'nav' ? 1 : -1; }
+    if (e.key === 'ArrowLeft') { sign = which === 'nav' ? -1 : 1; }
+    if (e.key === 'Home') { e.preventDefault(); if (which === 'nav') { this.setState({ navPx: 224 }); } else { this.setState({ panelPx: this.defaults(this.state.bucket).panelPx }); } return; }
+    if (!sign) { return; }
+    e.preventDefault();
+    if (which === 'nav') { this.setState({ navPx: this.clamp(this.state.navPx + sign * step, m.navMin, m.navMax) }); }
+    else { this.setState({ panelPx: this.clamp(m.panelPx + sign * step, m.panelMin, m.panelMax) }); }
+  }
+  renderVals() {
+    var self = this;
+    var accent = this.props.accent ?? '#9BE15D';
+    var st = this.state;
+    var fixed = this.fixedWidth(this.props);
+    var closed = st.closed || {};
+    var m = this.metrics(st);
+    var xs = st.bucket === 'xs';
+    var drawer = xs && !!st.navOpen;
+    var compact = !!st.navCompact && !xs;
+    var panelOpen = !!st.panelOpen;
+    var overlay = !m.inline;
+    var narrow = st.bucket === 'sm' || st.bucket === 'md' || xs;
+    var I = {
+      inbox: 'M3 13h5l2 3h4l2-3h5M5 5h14l2 8v6a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-6z',
+      cal: 'M4 6h16v14H4zM4 10h16M9 3v4M15 3v4',
+      notes: 'M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z',
+      home: 'M4 11l8-6 8 6v8a1 1 0 0 1-1 1h-4v-5h-6v5H5a1 1 0 0 1-1-1z',
+      squad: 'M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM2 21v-1a6 6 0 0 1 12 0v1M16 3.5a4 4 0 0 1 0 7M22 21v-1a6 6 0 0 0-4-5.6',
+      tactic: 'M4 4h16v16H4zM12 4v16M12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6z',
+      setp: 'M5 21V4M5 4h11l-2 4 2 4H5',
+      train: 'M4 18l4-6 4 3 4-7 4 4M4 21h16',
+      med: 'M12 21s-8-5-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 6-8 11-8 11z',
+      load: 'M3 12h4l3-8 4 16 3-8h4',
+      match: 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM12 7l3.5 2.5-1.3 4h-4.4l-1.3-4z',
+      data: 'M5 20V11M11 20V5M17 20v-6',
+      scout: 'M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM20 20l-4-4',
+      transfer: 'M4 8h13l-3-3M20 16H7l3 3',
+      world: 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM3 12h18M12 3c2.5 2.5 3.8 5.5 3.8 9s-1.3 6.5-3.8 9c-2.5-2.5-3.8-5.5-3.8-9S9.5 5.5 12 3z',
+      club: 'M4 21V8l8-5 8 5v13M9 21v-6h6v6',
+      money: 'M3 7h18v10H3zM12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z',
+      dept: 'M4 19h16M6 15l3-4 3 2 5-6'
+    };
+    function item(label, icon, count, active) {
+      return { label: label, icon: icon, count: count || '', dot: compact && !!count, bg: active ? '#1E1F23' : 'transparent', color: active ? '#FFFFFF' : '#D0D2D6' };
+    }
+    var tabs = [['today', 'Сегодня'], ['week', 'Неделя'], ['all', 'Все события']].map(function (t) {
+      var on = st.tab === t[0];
+      return { label: t[1], pressed: on ? 'true' : 'false', pick: function () { self.setState({ tab: t[0] }); },
+        pickClose: function () { self.setState({ tab: t[0], tabMenu: false }); }, menuBg: on ? '#232428' : 'transparent',
+        bg: on ? '#232428' : 'transparent', border: on ? '#33353B' : '#2A2C31', color: on ? '#FFFFFF' : '#C3C6CB' };
+    });
+    function row(o) {
+      var r = Object.assign({ urgent: false, todo: false, progress: false, ready: false, insight: false, hasLoad: false, hasChip: false, hasIni: false, chip: '', chipColor: '#C3C6CB', ini: '', loadW: '0%', loadColor: '#5B5F66' }, o);
+      if (xs) { r.hasIni = false; }
+      return r;
+    }
+    var decisions = [
+      row({ code: 'MED-14', urgent: true, title: 'Лиам Харт: растяжение бедра — утвердить этап 2 протокола восстановления', hasChip: true, chip: 'Медцентр', chipColor: '#FF9A8A', hasIni: true, ini: 'ДК', meta: '09:12' }),
+      row({ code: 'LOAD-3', urgent: true, title: 'Окафор в зоне риска перегрузки — облегчить вторничную тренировку?', hasChip: true, chip: 'Нагрузка', chipColor: '#FFB547', hasIni: true, ini: 'ДК', meta: '08:55' }),
+      row({ code: 'TRF-6', todo: true, title: 'СД отклонил запрос на левого защитника: бюджет превышен на 1,8 млн', hasChip: true, chip: 'Трансферы', chipColor: '#7CC4FF', hasIni: true, ini: 'СД', meta: 'вчера' }),
+      row({ code: 'ANL-21', ready: true, title: 'Пакет подготовки к Вестфилд Сити готов: 3 приоритета, 14 эпизодов', hasChip: true, chip: 'Аналитика', chipColor: accent, hasIni: true, ini: 'МС', meta: '08:40' }),
+      row({ code: 'PR-9', progress: true, title: 'Пресс-конференция в пятницу, 13:00 — вопросы о защите после 0:3', hasChip: true, chip: 'Пресса', chipColor: '#B9A2FF', meta: '08:15' })
+    ];
+    var insights = [
+      row({ code: 'DATA', insight: true, title: 'Наш прессинг усилился: PPDA 11,2 → 9,8 за последние 3 матча', hasChip: true, chip: 'Центр данных', chipColor: '#7CC4FF', meta: '3 матча' }),
+      row({ code: 'DATA', insight: true, title: 'Вестфилд Сити пропускает 40% голов после угловых у ближней штанги', hasChip: true, chip: 'Соперник', chipColor: '#7CC4FF', meta: '10 туров' }),
+      row({ code: 'GPS', insight: true, title: 'Окафор: спринты падают после 70-й минуты третий матч подряд', hasChip: true, chip: 'Физданные', chipColor: '#7CC4FF', meta: '3 матча' }),
+      row({ code: 'DATA', insight: true, title: 'Тео Мартинес — 2-й в лиге по обойдённым соперникам за 90 минут', hasChip: true, chip: 'Центр данных', chipColor: '#7CC4FF', meta: 'сезон' })
+    ];
+    var week = [
+      ['MD+1', 'Вс 25 · Восстановление после матча', 20, true],
+      ['MD-5', 'Пн 26 · Выходной', 0],
+      ['MD-4', 'Вт 27 · Сила и объём', 85],
+      ['MD-3', 'Ср 28 · Тактика 11 на 11 · угловые', 80],
+      ['MD-2', 'Чт 29 · Скорость, короткие игры', 55],
+      ['MD-1', 'Пт 30 · Активация и стандарты', 30],
+      ['MD', 'Сб 31 · Матч с Вестфилд Сити', 100, false, true]
+    ].map(function (w) {
+      return row({ code: w[0], progress: !!w[3], todo: !w[3] && !w[4], urgent: !!w[4], title: w[1], hasLoad: true, loadW: w[2] + '%', loadColor: w[4] ? '#FFB547' : (w[3] ? accent : '#6B7078'), meta: w[2] ? ('план ' + w[2] + '%') : '—' });
+    });
+    var defs = [
+      { id: 'dec', title: 'Требует решения', rows: decisions, tone: '#F59E3B', hint: 'до конца дня' },
+      { id: 'ins', title: 'Инсайты недели', rows: insights, tone: '#7CC4FF', hint: 'центр данных и GPS' },
+      { id: 'week', title: 'План недели', rows: week, tone: '#9A9FA6', hint: 'целевая нагрузка до матча' }
+    ];
+    if (st.tab === 'today') { defs = [defs[0], defs[1]]; }
+    if (st.tab === 'week') { defs = [defs[2]]; }
+    var groups = defs.map(function (g) {
+      var open = !closed[g.id];
+      return { title: g.title, count: String(g.rows.length), rows: g.rows, tone: g.tone, hint: g.hint, open: open, expanded: open ? 'true' : 'false', caretRot: open ? '0deg' : '-90deg',
+        toggle: function () { var c = Object.assign({}, closed); c[g.id] = open; self.setState({ closed: c }); } };
+    });
+    var kpis = [
+      { label: 'Доступность', src: 'Медцентр', value: '81%', delta: '21 из 26', deltaColor: '#9A9FA6', bars: [{ w: '81%', c: accent }, { w: '8%', c: '#FFB547' }, { w: '11%', c: '#FF9A8A' }], note: 'доступны · ограниченно · недоступны' },
+      { label: 'Готовность команды', src: 'Анкеты', value: '74', delta: '−4 за 7 дней', deltaColor: '#FFB547', bars: [{ w: '74%', c: '#C3C6CB' }], note: 'сон, усталость, болезненность' },
+      { label: 'Нагрузка недели', src: 'GPS', value: '82%', delta: 'от плана', deltaColor: '#9A9FA6', bars: [{ w: '82%', c: '#7CC4FF' }], note: '2 игрока выше нормы' },
+      { label: 'Прессинг, PPDA', src: 'Центр данных', value: '9,8', delta: '3-е в лиге', deltaColor: accent, bars: [{ w: '70%', c: accent }], note: 'чем ниже, тем агрессивнее' }
+    ];
+    var pl = [
+      ['Окафор', 82, 34, true], ['Бреннан', 70, 28, true], ['Мартинес', 64, 78], ['Ли', 58, 70], ['Ковач', 46, 82], ['Абади', 40, 64],
+      ['Росси', 55, 58], ['Нгуен', 36, 74], ['Фокс', 72, 62], ['Дюбуа', 30, 40], ['Сато', 50, 86], ['Мбеки', 62, 52], ['Хольм', 44, 55], ['Перес', 26, 66]
+    ];
+    var dots = pl.map(function (p) {
+      var risk = p[1] > 50 && p[2] < 50;
+      return { name: p[0], x: p[1] + '%', y: (100 - p[2]) + '%', c: risk ? '#F59E3B' : (p[2] >= 50 ? '#C3C6CB' : '#6B7078') };
+    });
+    var dotLabels = pl.filter(function (p) { return p[3]; }).map(function (p) { return { name: p[0], x: p[1] + '%', y: (100 - p[2]) + '%' }; });
+    function stat(kind) {
+      return { ok: { bg: '#1B2A16', fg: '#B7E69A' }, mod: { bg: '#2E2412', fg: '#FFCB7A' }, out: { bg: '#2E1715', fg: '#FFB0A6' } }[kind];
+    }
+    var avail = [
+      ['ЦП', 'Лиам Харт', 'Недоступен', 'out', '~16 нояб'],
+      ['НАП', 'Карл Ведберг', 'Недоступен', 'out', 'к MD-2'],
+      ['ПЗ', 'Ян Ковач', 'Недоступен', 'out', '2 нед.'],
+      ['ЛЗ', 'Нико Бреннан', 'Ограниченно', 'mod', 'после ср'],
+      ['ЦЗ', 'Самуэль Окафор', 'Ограниченно', 'mod', 'нагрузка']
+    ].map(function (a) { var s = stat(a[3]); return { pos: a[0], name: a[1], status: a[2], bg: s.bg, fg: s.fg, back: a[4] }; });
+    var form = ['В', 'В', 'Н', 'П', 'В'].map(function (r) { return { r: r, color: r === 'В' ? accent : (r === 'П' ? '#FF9A8A' : '#C3C6CB') }; });
+    var compare = [
+      ['xG за матч', '1,48', '1,72', false], ['xG против', '1,21', '1,05', false], ['PPDA', '9,8', '12,4', true],
+      ['Высокие возвраты', '7,1', '5,3', true], ['Голы со стандартов', '27%', '19%', true], ['Обойдённые соперники', '62', '71', false]
+    ].map(function (c) { return { m: c[0], us: c[1], them: c[2], usC: c[3] ? accent : '#D0D2D6', themC: c[3] ? '#A4A8AF' : '#E3E4E6' }; });
+    var table = [
+      ['3', 'Вестфилд Сити', '+9', '21'], ['4', 'Кингспорт', '+6', '19'], ['5', 'Эшби Роверс', '+4', '18'],
+      ['6', 'Норт Ривер', '+3', '17', true], ['7', 'Хейвен Таун', '+1', '16']
+    ].map(function (t) { return { pos: t[0], club: t[1], gd: t[2], pts: t[3], bg: t[4] ? '#1C1D21' : 'transparent', color: t[4] ? '#FFFFFF' : '#D0D2D6' }; });
+    var C = 50.27;
+    var goals = [
+      { goal: 'Финиш в топ-6', state: 'сейчас 6-е', p: 0.6 },
+      { goal: '3 игрока до 21 года в основе', state: '2 из 3', p: 0.66 }
+    ].map(function (g) { return Object.assign({}, g, { dash: (C * g.p).toFixed(1) + ' ' + C }); });
+    var panelW = m.panelPx + 'px';
+    var bucketName = { xl: 'полный вид', lg: 'узкая панель', md: 'панель выезжает', sm: 'меню иконками', xs: 'меню скрыто' }[st.bucket];
+    var widthLabel = 'окно ' + m.W + ' px · контент ' + m.content + ' px · ' + bucketName;
+    if (st.drag === 'nav') { widthLabel = 'меню ' + st.navPx + ' px · контент ' + m.content + ' px (не меньше 560)'; }
+    if (st.drag === 'panel') { widthLabel = 'панель ' + m.panelPx + ' px · контент ' + m.content + ' px (не меньше 560)'; }
+    var tabLabelMap = { today: 'Сегодня', week: 'Неделя', all: 'Все события' };
+    return {
+      accent: accent, tabs: tabs, groups: groups, kpis: kpis, dots: dots, dotLabels: dotLabels, avail: avail, form: form, compare: compare, table: table, goals: goals,
+      showKpi: st.tab !== 'week', showSquad: st.tab !== 'week',
+      navFull: !compact, navCompact: compact,
+      navShown: !xs || drawer, navDrawer: drawer, navPos: drawer ? 'absolute' : 'relative', navZ: drawer ? '10' : '2',
+      navEdge: drawer ? '#2A2C31' : 'transparent', navShadow: drawer ? '0 12px 40px rgba(0, 0, 0, 0.55)' : 'none',
+      navResizable: !compact && !xs, navDragging: st.drag === 'nav', navWLabel: (xs ? 248 : st.navPx) + ' px',
+      startNavDrag: function (e) { self.startDrag('nav', e); }, resetNav: function () { self.setState({ navPx: 224 }); }, navKey: function (e) { self.keyResize('nav', e); },
+      showMenuBtn: xs, openNav: function () { self.setState({ navOpen: true }); }, closeNav: function () { self.setState({ navOpen: false }); }, navOpenAttr: drawer ? 'true' : 'false',
+      headPad: xs ? '10px' : '16px',
+      tabsInline: !xs, tabsMenu: xs, tabMenuOpen: !!st.tabMenu, tabMenuAttr: st.tabMenu ? 'true' : 'false', tabLabel: tabLabelMap[st.tab],
+      toggleTabMenu: function () { self.setState({ tabMenu: !st.tabMenu }); },
+      quadBasis: xs ? '100%' : '320px', availBasis: xs ? '100%' : '280px',
+      asidePos: overlay ? 'absolute' : 'relative', asideEdge: overlay ? '#2A2C31' : '#1E1F23', asideShadow: overlay ? '-12px 0 40px rgba(0, 0, 0, 0.5)' : 'none', asideScroll: overlay ? 'auto' : 'visible',
+      panelScrim: overlay && panelOpen, panelDragging: st.drag === 'panel', panelWLabel: m.panelPx + ' px',
+      startPanelDrag: function (e) { self.startDrag('panel', e); }, resetPanel: function () { self.setState({ panelPx: self.defaults(st.bucket).panelPx }); }, panelKey: function (e) { self.keyResize('panel', e); },
+      navW: drawer ? '248px' : (compact ? '60px' : st.navPx + 'px'), navPad: compact ? '8px' : '10px',
+      itemJustify: compact ? 'center' : 'flex-start', itemPad: compact ? '0px' : '10px',
+      footDir: compact ? 'column' : 'row',
+      navToggleLabel: xs ? 'Закрыть меню' : (compact ? 'Развернуть меню' : 'Свернуть меню'),
+      navChevron: compact ? 'M13 10l2 2-2 2' : 'M15 10l-2 2 2 2',
+      toggleNav: function () { if (xs) { self.setState({ navOpen: false }); } else { self.setState({ navCompact: !compact }); } },
+      panelOpen: panelOpen, panelW: panelW, panelPressed: panelOpen ? 'true' : 'false',
+      panelBtnBg: panelOpen ? '#232428' : 'transparent', panelBtnBorder: panelOpen ? '#3A3C42' : '#2A2C31', panelBtnColor: panelOpen ? '#FFFFFF' : '#A4A8AF',
+      togglePanel: function () { self.setState({ panelOpen: !panelOpen }); },
+      showDate: st.bucket !== 'sm' && !xs,
+      rowIndent: narrow ? '22px' : '34px',
+      widthLabel: widthLabel,
+      navTop: [item('Входящие', I.inbox, '7'), item('Календарь', I.cal), item('Тактический блокнот', I.notes)],
+      navSections: [
+        { title: 'Команда', items: [item('Главная', I.home, '', true), item('Состав', I.squad), item('Тактика', I.tactic), item('Стандарты', I.setp), item('Матчевый день', I.match)] },
+        { title: 'Здоровье', items: [item('Медцентр', I.med, '3'), item('Нагрузка и GPS', I.load), item('Тренировки', I.train)] },
+        { title: 'Данные и отбор', items: [item('Центр данных', I.data), item('Скаутинг', I.scout, '3'), item('Трансферы', I.transfer), item('Мир', I.world)] },
+        { title: 'Клуб', items: [item('Совет и цели', I.club), item('Финансы', I.money), item('Отдел данных', I.dept)] }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>
