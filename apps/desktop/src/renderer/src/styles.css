@@ -28,6 +28,7 @@
   --line-control: #d9d9de;
   --line-strong: #c9c9cf;
   --line-faint: #f0f0f2;
+  --line-button: #bfbfc6;
   --track: #e4e4e7;
   /* Text */
   --fg: #18181b;
@@ -100,6 +101,7 @@
   --line-control: #2a2c31;
   --line-strong: #33353b;
   --line-faint: #1b1c20;
+  --line-button: #3a3c42;
   --track: #26272b;
   --fg: #e3e4e6;
   --fg-strong: #ffffff;
@@ -140,6 +142,24 @@
   --font-sans: 'Inter Variable', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 
+  /* Type scale (CLAUDE.md, «Типографика и иерархия»). Weight is set where used. */
+  --text-entity: 24px; /* entity title, key KPI value */
+  --text-entity--line-height: 1.2;
+  --text-object: 18px; /* main object of a block, fact value */
+  --text-object--line-height: 1.25;
+  --text-section: 15px; /* section title, current page in the header */
+  --text-section--line-height: 1.3;
+  --text-widget: 14px; /* widget title, list group */
+  --text-widget--line-height: 1.35;
+  --text-body: 13px;
+  --text-body--line-height: 1.4;
+  --text-meta: 12px; /* captions, metadata */
+  --text-meta--line-height: 1.4;
+  --text-label: 11px; /* small labels, codes */
+  --text-label--line-height: 1.35;
+  --text-micro: 10px; /* source chips, kbd */
+  --text-micro--line-height: 1.3;
+
   --color-app: var(--app-bg);
   --color-surface: var(--surface);
   --color-surface-sunken: var(--surface-sunken);
@@ -152,6 +172,7 @@
   --color-line-control: var(--line-control);
   --color-line-strong: var(--line-strong);
   --color-line-faint: var(--line-faint);
+  --color-line-button: var(--line-button);
   --color-track: var(--track);
   --color-fg: var(--fg);
   --color-fg-strong: var(--fg-strong);

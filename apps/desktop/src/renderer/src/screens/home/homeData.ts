@@ -269,7 +269,8 @@ export const AVAILABILITY: AvailabilityRow[] = [
 ]
 
 export const NEXT_MATCH = {
-  heading: 'Следующий матч · через 6 дней',
+  heading: 'Следующий матч',
+  headingNote: 'через 6 дней',
   fixture: 'Норт Ривер — Вестфилд Сити',
   details: 'Сб, 31 окт · 17:30 · Дома · Тур 11',
   opponentForm: ['В', 'В', 'Н', 'П', 'В'] as const,

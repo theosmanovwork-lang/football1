@@ -32,7 +32,7 @@ function Segmented<T extends string | number>({
               aria-checked={on}
               onClick={() => onChange(option.value)}
               className={cn(
-                'h-7 rounded-full border px-3 text-xs font-medium transition-colors duration-[120ms]',
+                'h-7 rounded-full border px-3 text-meta font-medium transition-colors duration-[120ms]',
                 on
                   ? 'border-line-strong bg-selected-strong text-fg-strong'
                   : 'border-line-control bg-transparent text-fg-3 hover:bg-selected',
@@ -66,7 +66,7 @@ export function SettingsScreen() {
   return (
     <div className="min-h-0 flex-1 overflow-y-auto">
       <div className="mx-auto max-w-xl px-6 py-6">
-        <h2 className="m-0 mb-2 text-xs font-medium text-fg-subtle">Вид</h2>
+        <h2 className="m-0 mb-2 text-meta font-medium text-fg-subtle">Вид</h2>
         <Segmented label="Тема" options={THEMES} value={theme} onChange={setTheme} />
         <Segmented label="Плотность" options={DENSITIES} value={density} onChange={setDensity} />
         <Segmented label="Масштаб интерфейса" options={ZOOMS} value={zoom} onChange={setZoom} />

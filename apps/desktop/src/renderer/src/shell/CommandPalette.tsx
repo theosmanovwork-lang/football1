@@ -27,7 +27,7 @@ function Item({
 }
 
 const groupClass =
-  '[&_[cmdk-group-heading]]:px-2.5 [&_[cmdk-group-heading]]:pt-2 [&_[cmdk-group-heading]]:pb-1 [&_[cmdk-group-heading]]:text-[11px] [&_[cmdk-group-heading]]:text-fg-subtle'
+  '[&_[cmdk-group-heading]]:px-2.5 [&_[cmdk-group-heading]]:pt-2 [&_[cmdk-group-heading]]:pb-1 [&_[cmdk-group-heading]]:text-label [&_[cmdk-group-heading]]:text-fg-subtle'
 
 /** Ctrl+K / Cmd+K: jump to any section and run interface commands. */
 export function CommandPalette() {
@@ -53,7 +53,7 @@ export function CommandPalette() {
     >
       <Command.Input
         placeholder="Перейти или выполнить команду…"
-        className="h-11 w-full border-0 border-b border-line bg-transparent px-3.5 text-[13px] text-fg outline-none placeholder:text-fg-faint"
+        className="h-11 w-full border-0 border-b border-line bg-transparent px-3.5 text-body text-fg outline-none placeholder:text-fg-faint"
       />
       <Command.List className="max-h-[min(420px,60vh)] overflow-y-auto p-1">
         <Command.Empty className="px-3 py-6 text-center text-fg-subtle">

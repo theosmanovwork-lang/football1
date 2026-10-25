@@ -19,10 +19,10 @@ export function Footer({
   metrics: LayoutMetrics
 }) {
   return (
-    <footer className="flex h-[34px] flex-none items-center gap-3.5 px-2 text-xs text-fg-muted">
+    <footer className="flex h-[34px] flex-none items-center gap-3.5 px-2 text-meta text-fg-muted">
       <span className="whitespace-nowrap">Автосохранение · 10:12</span>
       {/* Layout readout from the mockup; handy while the layout rules are being tuned. */}
-      <span className="truncate font-mono text-[11px] text-fg-faint" data-testid="layout-readout">
+      <span className="truncate font-mono text-label text-fg-faint" data-testid="layout-readout">
         окно {width} px · контент {metrics.contentWidth} px · {BUCKET_NAME[bucket]}
       </span>
       <div className="flex-1" />

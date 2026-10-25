@@ -13,7 +13,7 @@ export function ClubMark({
       aria-hidden
       className={cn(
         'flex flex-none items-center justify-center bg-brand font-semibold text-brand-fg',
-        size === 'md' ? 'size-5 rounded-[5px] text-[10px]' : 'size-4 rounded-[4px]',
+        size === 'md' ? 'size-5 rounded-[5px] text-micro' : 'size-4 rounded-[4px]',
       )}
     >
       {withInitials && size === 'md' ? 'NR' : null}

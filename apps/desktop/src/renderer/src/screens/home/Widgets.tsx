@@ -22,14 +22,16 @@ export function KpiStrip() {
           className="flex min-w-0 flex-[1_1_170px] flex-col gap-1.5 bg-surface px-3 py-2.5 text-fg"
         >
           <div className="flex items-center justify-between gap-2">
-            <span className="text-[11px] text-fg-subtle">{k.label}</span>
-            <span className="whitespace-nowrap rounded-[4px] border border-line-control px-[5px] text-[10px] text-fg-faint">
+            <span className="text-meta font-medium text-fg-muted">{k.label}</span>
+            <span className="whitespace-nowrap rounded-[4px] border border-line-control px-[5px] text-micro text-fg-faint">
               {k.source}
             </span>
           </div>
           <div className="flex items-baseline gap-2">
-            <span className="font-mono text-xl font-medium">{k.value}</span>
-            <span className={cn('text-[11px]', TONE_TEXT[k.deltaTone])}>{k.delta}</span>
+            <span className="font-mono text-entity font-medium tracking-[-0.02em] text-fg-strong">
+              {k.value}
+            </span>
+            <span className={cn('text-meta font-medium', TONE_TEXT[k.deltaTone])}>{k.delta}</span>
           </div>
           <div className="flex h-1 overflow-hidden rounded-sm bg-track">
             {k.bars.map((b, i) => (
@@ -40,7 +42,7 @@ export function KpiStrip() {
               />
             ))}
           </div>
-          <span className="text-[11px] text-fg-subtle">{k.note}</span>
+          <span className="text-label text-fg-subtle">{k.note}</span>
         </a>
       ))}
     </section>
@@ -66,12 +68,12 @@ function CardHeader({
 }) {
   return (
     <div className="flex items-center gap-2">
-      <h2 id={id} className="m-0 text-[13px] font-medium">
+      <h2 id={id} className="m-0 text-widget font-semibold">
         {title}
       </h2>
-      <span className="text-[11px] text-fg-subtle">{hint}</span>
+      <span className="text-label text-fg-subtle">{hint}</span>
       <div className="flex-1" />
-      <a href="#" className="text-xs whitespace-nowrap text-fg-subtle">
+      <a href="#" className="text-meta whitespace-nowrap text-fg-subtle">
         {link} →
       </a>
     </div>
@@ -92,7 +94,7 @@ export function LoadQuadrant({ fullWidth }: { fullWidth: boolean }) {
         link="Медцентр"
       />
       <div className="flex gap-2">
-        <div className="rotate-180 text-center text-[10px] text-fg-faint [writing-mode:vertical-rl]">
+        <div className="rotate-180 text-center text-micro text-fg-faint [writing-mode:vertical-rl]">
           готовность ↑
         </div>
         <div className="flex flex-1 flex-col gap-1">
@@ -104,12 +106,10 @@ export function LoadQuadrant({ fullWidth }: { fullWidth: boolean }) {
             <div className="absolute top-1/2 right-0 bottom-0 left-1/2 bg-risk-zone" />
             <div className="absolute top-0 bottom-0 left-1/2 w-px bg-line-control" />
             <div className="absolute top-1/2 right-0 left-0 h-px bg-line-control" />
-            <span className="absolute top-1.5 left-2 text-[10px] text-fg-faint">Свежие</span>
-            <span className="absolute top-1.5 right-2 text-[10px] text-fg-faint">В форме</span>
-            <span className="absolute bottom-1.5 left-2 text-[10px] text-fg-faint">
-              Недогружены
-            </span>
-            <span className="absolute right-2 bottom-1.5 text-[10px] text-warn">
+            <span className="absolute top-1.5 left-2 text-micro text-fg-faint">Свежие</span>
+            <span className="absolute top-1.5 right-2 text-micro text-fg-faint">В форме</span>
+            <span className="absolute bottom-1.5 left-2 text-micro text-fg-faint">Недогружены</span>
+            <span className="absolute right-2 bottom-1.5 text-micro text-warn">
               Риск перегрузки
             </span>
             {LOAD_POINTS.map((p) => (
@@ -127,13 +127,13 @@ export function LoadQuadrant({ fullWidth }: { fullWidth: boolean }) {
               <span
                 key={`${p.name}-label`}
                 style={{ left: `${p.load}%`, top: `${100 - p.readiness}%` }}
-                className="-mt-5 ml-1.5 absolute whitespace-nowrap text-[10px] text-fg"
+                className="-mt-5 ml-1.5 absolute whitespace-nowrap text-micro text-fg"
               >
                 {p.name}
               </span>
             ))}
           </div>
-          <div className="text-right text-[10px] text-fg-faint">нагрузка за 7 дней →</div>
+          <div className="text-right text-micro text-fg-faint">нагрузка за 7 дней →</div>
         </div>
       </div>
     </section>
@@ -162,19 +162,19 @@ export function AvailabilityCard({ fullWidth }: { fullWidth: boolean }) {
             href="#"
             className="hover-surface flex min-h-list-row items-center gap-2.5 rounded-md px-1.5 text-fg"
           >
-            <span className="w-[34px] flex-none font-mono text-[11px] text-fg-subtle">
+            <span className="w-[34px] flex-none font-mono text-label text-fg-subtle">
               {a.position}
             </span>
             <span className="min-w-0 flex-1 truncate">{a.name}</span>
             <span
               className={cn(
-                'flex h-5 flex-none items-center whitespace-nowrap rounded-[4px] px-[7px] text-[11px]',
+                'flex h-5 flex-none items-center whitespace-nowrap rounded-[4px] px-[7px] text-label',
                 badge.className,
               )}
             >
               {badge.label}
             </span>
-            <span className="w-[58px] flex-none text-right text-[11px] text-fg-subtle">
+            <span className="w-[58px] flex-none text-right text-label text-fg-subtle">
               {a.back}
             </span>
           </a>

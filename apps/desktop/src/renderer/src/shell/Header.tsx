@@ -1,6 +1,7 @@
 import { Bell, ChevronRight, Menu } from 'lucide-react'
 import { sectionById } from '@/navigation'
 import { useUi } from '@/store/ui'
+import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { ClubMark } from './ClubMark'
 
@@ -32,12 +33,14 @@ export function Header() {
         </button>
       )}
       <ClubMark size="sm" withInitials={false} />
-      <span className="whitespace-nowrap text-fg-2">Норт Ривер</span>
+      <span className="whitespace-nowrap text-fg-muted">Норт Ривер</span>
       <ChevronRight size={12} strokeWidth={2} aria-hidden className="flex-none text-fg-faint" />
-      <h1 className="m-0 truncate text-[13px] font-medium">{sectionById(section).label}</h1>
+      <h1 className="m-0 truncate text-section font-semibold text-fg-strong">
+        {sectionById(section).label}
+      </h1>
       <div className="flex-1" />
       {showDate && (
-        <span className="whitespace-nowrap text-xs text-fg-subtle">
+        <span className="whitespace-nowrap text-meta text-fg-subtle">
           Вс, 25 окт · MD+1 · Неделя 10
         </span>
       )}
@@ -49,15 +52,12 @@ export function Header() {
         <Bell size={15} strokeWidth={1.75} aria-hidden />
       </button>
       {/* Advances the game day; wired to the simulation core in T001 step 3. */}
-      <button
-        type="button"
-        className="hover-surface flex h-7 flex-none items-center gap-1.5 rounded-md border border-line-control bg-control px-2.5 text-xs font-medium text-fg"
-      >
+      <Button variant="primary" className="pr-2">
         Продолжить
-        <kbd className="rounded-[4px] border border-line-strong px-1 font-mono text-[10px] text-fg-muted">
+        <kbd className="rounded-[4px] bg-black/12 px-[5px] py-px font-mono text-micro font-medium text-brand-fg/80">
           Space
         </kbd>
-      </button>
+      </Button>
     </header>
   )
 }

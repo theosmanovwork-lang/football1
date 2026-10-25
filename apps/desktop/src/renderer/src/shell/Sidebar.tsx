@@ -44,8 +44,8 @@ export function Sidebar({ compact, drawer }: SidebarProps) {
         <Icon {...ICON} className="flex-none" aria-hidden />
         {!compact && (
           <>
-            <span className="flex-1 truncate">{item.label}</span>
-            {item.count ? <span className="text-xs text-fg-muted">{item.count}</span> : null}
+            <span className={cn('flex-1 truncate', active && 'font-medium')}>{item.label}</span>
+            {item.count ? <span className="text-meta text-fg-muted">{item.count}</span> : null}
           </>
         )}
         {compact && item.count ? (
@@ -120,7 +120,7 @@ export function Sidebar({ compact, drawer }: SidebarProps) {
             {compact ? (
               <div className="mx-2 my-1.5 h-px bg-line" />
             ) : (
-              <div className="flex h-6.5 items-center gap-1 px-2.5 text-xs text-fg-subtle">
+              <div className="flex h-6.5 items-center gap-1 px-2.5 text-meta font-medium text-fg-subtle">
                 <span>{group.title}</span>
                 <ChevronDown size={10} strokeWidth={2.5} aria-hidden />
               </div>
@@ -134,7 +134,7 @@ export function Sidebar({ compact, drawer }: SidebarProps) {
         <button
           type="button"
           aria-label="Справка"
-          className="hover-surface size-6.5 rounded-full border border-line-control bg-transparent text-xs text-fg-muted"
+          className="hover-surface size-6.5 rounded-full border border-line-control bg-transparent text-meta text-fg-muted"
         >
           ?
         </button>

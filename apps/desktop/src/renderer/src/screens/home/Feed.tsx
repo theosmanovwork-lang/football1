@@ -33,7 +33,7 @@ export function FeedSection({ group }: { group: FeedGroup }) {
         type="button"
         aria-expanded={!collapsed}
         onClick={() => toggleGroup(group.id)}
-        className="flex h-group w-full min-w-0 cursor-pointer items-center gap-2.5 rounded-md border-0 bg-raised px-3 text-left text-[13px] text-fg"
+        className="flex h-group w-full min-w-0 cursor-pointer items-center gap-2.5 rounded-md border-0 bg-raised px-3 text-left text-body text-fg"
       >
         <svg
           width="10"
@@ -50,10 +50,10 @@ export function FeedSection({ group }: { group: FeedGroup }) {
         <span
           className={cn('size-3.5 flex-none rounded-full border-[1.5px]', TONE_BORDER[group.tone])}
         />
-        <span className="whitespace-nowrap font-medium">{group.title}</span>
-        <span className="text-fg-subtle">{group.rows.length}</span>
+        <span className="whitespace-nowrap text-widget font-semibold">{group.title}</span>
+        <span className="font-medium text-fg-subtle">{group.rows.length}</span>
         <span className="flex-1" />
-        <span className="min-w-0 truncate text-xs text-fg-subtle">{group.hint}</span>
+        <span className="min-w-0 truncate text-meta text-fg-subtle">{group.hint}</span>
       </button>
       {!collapsed && (
         <div>
@@ -69,7 +69,7 @@ export function FeedSection({ group }: { group: FeedGroup }) {
                   narrow ? 'pl-[22px]' : 'pl-[34px]',
                 )}
               >
-                <span className="w-[52px] flex-none font-mono text-[11px] text-fg-subtle">
+                <span className="w-[52px] flex-none font-mono text-label text-fg-subtle">
                   {row.code}
                 </span>
                 <StatusIcon
@@ -78,7 +78,14 @@ export function FeedSection({ group }: { group: FeedGroup }) {
                   aria-label={status.label}
                   className={cn('flex-none', status.className)}
                 />
-                <span className="min-w-0 flex-1 truncate">{row.title}</span>
+                <span
+                  className={cn(
+                    'min-w-0 flex-1 truncate',
+                    row.status === 'urgent' && 'font-medium text-fg-strong',
+                  )}
+                >
+                  {row.title}
+                </span>
                 {row.load && (
                   <span className="block h-1 w-16 flex-none rounded-sm bg-track">
                     <span
@@ -90,7 +97,7 @@ export function FeedSection({ group }: { group: FeedGroup }) {
                 {row.chip && (
                   <span
                     className={cn(
-                      'flex h-[22px] flex-none items-center gap-1.5 whitespace-nowrap rounded-full border border-line-control px-2 text-[11px]',
+                      'flex h-[22px] flex-none items-center gap-1.5 whitespace-nowrap rounded-full border border-line-control px-2 text-label',
                       TONE_TEXT[row.chip.tone],
                     )}
                   >
@@ -103,7 +110,7 @@ export function FeedSection({ group }: { group: FeedGroup }) {
                     {row.owner}
                   </span>
                 )}
-                <span className="w-[60px] flex-none whitespace-nowrap text-right text-xs text-fg-subtle">
+                <span className="w-[60px] flex-none whitespace-nowrap text-right text-meta text-fg-subtle">
                   {row.meta}
                 </span>
               </a>

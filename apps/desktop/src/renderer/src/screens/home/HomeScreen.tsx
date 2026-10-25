@@ -22,10 +22,10 @@ const GROUPS_BY_TAB = {
 
 function pillClass(on: boolean): string {
   return cn(
-    'h-7 cursor-pointer rounded-full border px-3 text-xs font-medium transition-colors duration-[120ms]',
+    'h-7 cursor-pointer rounded-full border px-3 text-meta transition-colors duration-[120ms]',
     on
-      ? 'border-line-strong bg-selected-strong text-fg-strong'
-      : 'border-line-control bg-transparent text-fg-3 hover:bg-selected',
+      ? 'border-line-strong bg-selected-strong font-semibold text-fg-strong'
+      : 'border-line-control bg-transparent font-medium text-fg-3 hover:bg-selected',
   )
 }
 
@@ -70,7 +70,7 @@ function Toolbar() {
                     setMenuOpen(false)
                   }}
                   className={cn(
-                    'hover-surface h-[30px] rounded-md border-0 px-2.5 text-left text-xs',
+                    'hover-surface h-[30px] rounded-md border-0 px-2.5 text-left text-meta',
                     t.id === tab ? 'bg-selected-strong text-fg-strong' : 'bg-transparent text-fg-3',
                   )}
                 >
