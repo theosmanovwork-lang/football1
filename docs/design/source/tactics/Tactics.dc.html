@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Тактика · модель игры</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0B0C0E}
+a{color:#D0D2D6;text-decoration:none}a:hover{color:#FFFFFF}
+button{font-family:inherit}
+.navi{transition:background-color 120ms ease,color 120ms ease}
+.navi:hover{background:#1A1B1F;color:#FFFFFF}
+.row{transition:background-color 120ms ease}
+.row:hover{background:#18191C}
+.ib{transition:background-color 120ms ease,border-color 120ms ease}
+.ib:hover{background:#1E1F23;border-color:#34363C}
+.pri{transition:filter 120ms ease}
+.pri:hover{filter:brightness(1.08)}
+.seg{transition:background-color 120ms ease,color 120ms ease}
+.seg:hover{color:#FFFFFF}
+</style>
+</helmet>
+<div style="width: 100%; min-height: 100vh; display: flex; flex-wrap: wrap; background: #0B0C0E; color: #E3E4E6; font-family: Inter, system-ui, sans-serif; font-size: 13px; line-height: 1.4">
+
+<nav aria-label="Основное меню" style="flex: 0 0 224px; max-width: 100%; box-sizing: border-box; padding: 10px 10px 8px; display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; align-items: center; gap: 8px; padding: 6px 10px">
+<span style="width: 20px; height: 20px; flex: none; border-radius: 5px; background: {{accent}}; color: #0B0C0E; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 600">NR</span>
+<span style="font-weight: 600; white-space: nowrap">Норт Ривер</span>
+</div>
+<sc-for list="{{navSections}}" as="s" hint-placeholder-count="5">
+<div style="display: flex; flex-direction: column; gap: 1px">
+<sc-if value="{{s.hasTitle}}" hint-placeholder-val="{{ true }}">
+<div style="height: 26px; padding: 0 10px; display: flex; align-items: center; font-size: 12px; font-weight: 500; color: #9A9FA6">{{s.title}}</div>
+</sc-if>
+<sc-for list="{{s.items}}" as="n" hint-placeholder-count="3">
+<a href="#" class="navi" style="display: flex; align-items: center; gap: 10px; height: 30px; padding: 0 10px; border-radius: 6px; background: {{n.bg}}; color: {{n.color}}">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none"><path d="{{n.icon}}"></path></svg>
+<span style="flex: 1; white-space: nowrap; font-weight: {{n.weight}}">{{n.label}}</span>
+<span style="font-size: 12px; color: #A4A8AF">{{n.count}}</span>
+</a>
+</sc-for>
+</div>
+</sc-for>
+</nav>
+
+<div style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column; padding: 8px 8px 8px 0; box-sizing: border-box">
+<main style="flex: 1; display: flex; flex-direction: column; background: #121316; border: 1px solid #222327; border-radius: 10px; overflow: hidden">
+
+<header style="display: flex; align-items: center; gap: 8px; height: 44px; padding: 0 12px 0 16px; border-bottom: 1px solid #1E1F23; min-width: 0">
+<span style="color: #A4A8AF; white-space: nowrap">Команда</span>
+<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#8F949C" stroke-width="2" stroke-linecap="round" aria-hidden="true" style="flex: none"><path d="M9 6l6 6-6 6"></path></svg>
+<h1 style="margin: 0; font-size: 15px; font-weight: 600; white-space: nowrap">Тактика</h1>
+<span style="font-size: 13px; color: #9A9FA6; white-space: nowrap">модель игры · сезон 2026/27</span>
+<div style="flex: 1"></div>
+<button type="button" class="ib" style="height: 32px; flex: none; padding: 0 12px; border-radius: 7px; border: 1px solid #2A2C31; background: transparent; color: #D0D2D6; font-size: 13px; font-weight: 500; cursor: pointer">Открыть в блокноте</button>
+<button type="button" class="pri" style="height: 32px; flex: none; padding: 0 14px; border-radius: 7px; border: 0; background: {{accent}}; color: #0B0C0E; font-size: 13px; font-weight: 600; cursor: pointer">Тренировать на неделе</button>
+</header>
+
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 6px; padding: 8px 12px; border-bottom: 1px solid #1E1F23">
+<sc-for list="{{plans}}" as="p" hint-placeholder-count="3">
+<button type="button" class="ib" onClick="{{p.pick}}" aria-pressed="{{p.pressed}}" style="height: 28px; padding: 0 12px; border-radius: 999px; border: 1px solid {{p.border}}; background: {{p.bg}}; color: {{p.color}}; font-size: 12px; font-weight: {{p.weight}}; display: flex; align-items: center; gap: 6px; cursor: pointer">{{p.label}}<span style="color: #9A9FA6; font-weight: 400">{{p.note}}</span></button>
+</sc-for>
+<button type="button" class="ib" aria-label="Новый план" title="Новый план на матч или сценарий" style="width: 28px; height: 28px; border-radius: 50%; border: 1px dashed #3A3C42; background: transparent; color: #A4A8AF; display: flex; align-items: center; justify-content: center; cursor: pointer">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>
+</button>
+<div style="flex: 1"></div>
+<span style="font-size: 12px; color: #9A9FA6">{{planHint}}</span>
+</div>
+
+<div style="display: flex; flex-wrap: wrap; align-items: flex-start; flex: 1">
+
+<nav aria-label="Фазы игры" style="flex: 0 0 236px; max-width: 100%; box-sizing: border-box; padding: 12px 8px 24px 12px; display: flex; flex-direction: column; gap: 14px; border-right: 1px solid #1E1F23">
+<sc-for list="{{phaseGroups}}" as="g" hint-placeholder-count="4">
+<div style="display: flex; flex-direction: column; gap: 2px">
+<span style="height: 24px; padding: 0 10px; display: flex; align-items: center; font-size: 12px; font-weight: 600; color: #A4A8AF">{{g.title}}</span>
+<sc-for list="{{g.items}}" as="f" hint-placeholder-count="3">
+<button type="button" class="navi" onClick="{{f.pick}}" aria-pressed="{{f.pressed}}" style="display: flex; align-items: center; gap: 8px; min-height: 34px; padding: 4px 10px; border: 0; border-radius: 6px; background: {{f.bg}}; color: {{f.color}}; font-size: 13px; text-align: left; cursor: pointer">
+<span style="flex: 1; display: flex; flex-direction: column; gap: 1px; min-width: 0"><span style="font-weight: {{f.weight}}">{{f.label}}</span><span style="font-size: 11px; color: #9A9FA6; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{f.sub}}</span></span>
+<span title="Освоение командой" style="flex: none; width: 28px; height: 4px; border-radius: 2px; background: #26272B; display: block"><span style="display: block; height: 4px; border-radius: 2px; width: {{f.learn}}; background: {{f.learnColor}}"></span></span>
+</button>
+</sc-for>
+</div>
+</sc-for>
+</nav>
+
+<div style="flex: 999 1 520px; min-width: 0; padding: 12px 16px 24px; display: flex; flex-direction: column; gap: 14px; box-sizing: border-box">
+<div style="display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap">
+<h2 style="margin: 0; font-size: 18px; font-weight: 600; color: #FFFFFF">{{ph.title}}</h2>
+<span style="font-size: 13px; color: #9A9FA6">{{ph.shapeName}}</span>
+<div style="flex: 1"></div>
+<span style="font-size: 12px; color: #9A9FA6">атакуем слева направо</span>
+</div>
+<p style="margin: 0; color: #C3C6CB; max-width: 760px">{{ph.idea}}</p>
+
+<div role="img" aria-label="{{ph.aria}}" style="border: 1px solid #222327; border-radius: 8px; background: #0F1012; padding: 10px">
+<svg viewBox="0 0 1050 680" width="100%" style="display: block" aria-hidden="true">
+<defs>
+<marker id="arw" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C3C6CB"></path></marker>
+<marker id="arwA" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="{{accent}}"></path></marker>
+</defs>
+<rect x="10" y="10" width="1030" height="660" rx="4" fill="#111315" stroke="#2A2C31" stroke-width="2"></rect>
+<line x1="350" y1="10" x2="350" y2="670" stroke="#1E2023" stroke-width="2" stroke-dasharray="6 8"></line>
+<line x1="700" y1="10" x2="700" y2="670" stroke="#1E2023" stroke-width="2" stroke-dasharray="6 8"></line>
+<line x1="525" y1="10" x2="525" y2="670" stroke="#2A2C31" stroke-width="2"></line>
+<circle cx="525" cy="340" r="91" fill="none" stroke="#2A2C31" stroke-width="2"></circle>
+<rect x="10" y="138" width="165" height="404" fill="none" stroke="#2A2C31" stroke-width="2"></rect>
+<rect x="10" y="248" width="55" height="184" fill="none" stroke="#2A2C31" stroke-width="2"></rect>
+<rect x="875" y="138" width="165" height="404" fill="none" stroke="#2A2C31" stroke-width="2"></rect>
+<rect x="985" y="248" width="55" height="184" fill="none" stroke="#2A2C31" stroke-width="2"></rect>
+<sc-if value="{{ph.hasZone}}" hint-placeholder-val="{{ false }}">
+<rect x="{{ph.zone.x}}" y="{{ph.zone.y}}" width="{{ph.zone.w}}" height="{{ph.zone.h}}" rx="8" fill="{{accent}}" fill-opacity="0.07" stroke="{{accent}}" stroke-opacity="0.35" stroke-width="2" stroke-dasharray="8 6"></rect>
+<text x="{{ph.zone.tx}}" y="{{ph.zone.ty}}" font-size="22" font-weight="600" fill="{{accent}}" font-family="Inter, sans-serif">{{ph.zone.label}}</text>
+</sc-if>
+<sc-if value="{{ph.hasLine}}" hint-placeholder-val="{{ false }}">
+<line x1="{{ph.line.x}}" y1="10" x2="{{ph.line.x}}" y2="670" stroke="#FFB547" stroke-width="3" stroke-dasharray="12 8"></line>
+<text x="{{ph.line.tx}}" y="40" font-size="22" font-weight="600" fill="#FFB547" font-family="Inter, sans-serif">{{ph.line.label}}</text>
+</sc-if>
+<sc-for list="{{ph.arrows}}" as="a" hint-placeholder-count="2">
+<line x1="{{a.x1}}" y1="{{a.y1}}" x2="{{a.x2}}" y2="{{a.y2}}" stroke="{{a.c}}" stroke-width="3" stroke-dasharray="{{a.dash}}" marker-end="{{a.m}}"></line>
+</sc-for>
+<sc-if value="{{ph.hasBall}}" hint-placeholder-val="{{ false }}">
+<circle cx="{{ph.ball.x}}" cy="{{ph.ball.y}}" r="11" fill="#FFFFFF" stroke="#0B0C0E" stroke-width="3"></circle>
+</sc-if>
+<sc-for list="{{ph.players}}" as="p" hint-placeholder-count="11">
+<circle cx="{{p.x}}" cy="{{p.y}}" r="28" fill="{{p.fill}}" stroke="{{p.ring}}" stroke-width="4"></circle>
+<text x="{{p.x}}" y="{{p.ty}}" text-anchor="middle" font-size="22" font-weight="700" fill="#0B0C0E" font-family="Inter, sans-serif">{{p.n}}</text>
+<text x="{{p.x}}" y="{{p.ly}}" text-anchor="middle" font-size="20" font-weight="500" fill="#C3C6CB" font-family="Inter, sans-serif">{{p.name}}</text>
+</sc-for>
+</svg>
+</div>
+
+<section aria-labelledby="h-roles" style="display: flex; flex-direction: column; gap: 4px">
+<h3 id="h-roles" style="margin: 0 0 4px; font-size: 14px; font-weight: 600">Роли в этой фазе</h3>
+<sc-for list="{{ph.roles}}" as="r" hint-placeholder-count="4">
+<div class="row" style="display: flex; align-items: baseline; gap: 12px; min-height: 34px; padding: 6px 10px; border-radius: 6px">
+<span style="width: 26px; flex: none; font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 12px; color: #9A9FA6">{{r.n}}</span>
+<span style="width: 140px; flex: none; font-weight: 600; color: #FFFFFF">{{r.name}}</span>
+<span style="width: 180px; flex: none; font-size: 12px; color: {{accent}}; font-weight: 500">{{r.role}}</span>
+<span style="flex: 1; min-width: 0; font-size: 12px; color: #C3C6CB">{{r.task}}</span>
+</div>
+</sc-for>
+</section>
+</div>
+
+<aside aria-label="Настройки фазы" style="flex: 1 1 360px; max-width: 100%; min-width: 0; border-left: 1px solid #1E1F23; padding: 14px 18px 24px 16px; display: flex; flex-direction: column; gap: 18px; box-sizing: border-box">
+<section aria-labelledby="h-dec" style="display: flex; flex-direction: column; gap: 12px">
+<h3 id="h-dec" style="margin: 0; font-size: 14px; font-weight: 600; color: #FFFFFF">Решения <span style="font-weight: 400; color: #9A9FA6">· {{ph.title}}</span></h3>
+<sc-for list="{{ph.decisions}}" as="d" hint-placeholder-count="4">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<span style="font-size: 12px; font-weight: 500; color: #A4A8AF">{{d.label}}</span>
+<div role="radiogroup" aria-label="{{d.label}}" style="display: flex; flex-wrap: wrap; gap: 2px; padding: 2px; border-radius: 8px; background: #17181B; border: 1px solid #222327">
+<sc-for list="{{d.options}}" as="o" hint-placeholder-count="3">
+<button type="button" role="radio" class="seg" onClick="{{o.pick}}" aria-checked="{{o.checked}}" style="flex: 1 1 auto; min-height: 28px; padding: 4px 10px; border: 0; border-radius: 6px; background: {{o.bg}}; color: {{o.color}}; font-size: 12px; font-weight: {{o.weight}}; cursor: pointer">{{o.label}}</button>
+</sc-for>
+</div>
+<span style="font-size: 11px; color: #9A9FA6">{{d.hint}}</span>
+</div>
+</sc-for>
+</section>
+
+<section aria-labelledby="h-trig" style="display: flex; flex-direction: column; gap: 8px">
+<h3 id="h-trig" style="margin: 0; font-size: 13px; font-weight: 600; color: #E3E4E6">{{ph.chipsTitle}}</h3>
+<div style="display: flex; flex-wrap: wrap; gap: 6px">
+<sc-for list="{{ph.chips}}" as="c" hint-placeholder-count="4">
+<button type="button" class="ib" onClick="{{c.pick}}" aria-pressed="{{c.pressed}}" style="height: 28px; padding: 0 10px; border-radius: 999px; border: 1px solid {{c.border}}; background: {{c.bg}}; color: {{c.color}}; font-size: 12px; font-weight: {{c.weight}}; cursor: pointer">{{c.label}}</button>
+</sc-for>
+</div>
+</section>
+
+<section aria-labelledby="h-princ" style="display: flex; flex-direction: column; gap: 6px">
+<h3 id="h-princ" style="margin: 0; font-size: 13px; font-weight: 600; color: #E3E4E6">Принципы <span style="font-weight: 400; color: #9A9FA6">· как объясняем игрокам</span></h3>
+<sc-for list="{{ph.principles}}" as="t" hint-placeholder-count="3">
+<div style="display: flex; gap: 8px; font-size: 12px; color: #D0D2D6"><span style="color: {{accent}}">—</span><span>{{t}}</span></div>
+</sc-for>
+</section>
+
+<section aria-labelledby="h-kpi" style="display: flex; flex-direction: column; gap: 8px">
+<h3 id="h-kpi" style="margin: 0; font-size: 13px; font-weight: 600; color: #E3E4E6">Как проверим <span style="font-weight: 400; color: #9A9FA6">· центр данных, 10 туров</span></h3>
+<div style="border: 1px solid #222327; border-radius: 8px; overflow: hidden">
+<sc-for list="{{ph.kpis}}" as="k" hint-placeholder-count="3">
+<div style="display: flex; gap: 10px; padding: 7px 10px; font-size: 12px; border-bottom: 1px solid #1B1C20"><span style="flex: 1; color: #D0D2D6">{{k.m}}</span><span style="color: #9A9FA6; white-space: nowrap">цель {{k.t}}</span><span style="width: 52px; text-align: right; font-family: &quot;JetBrains Mono&quot;, monospace; font-weight: 500; color: {{k.c}}">{{k.v}}</span></div>
+</sc-for>
+</div>
+</section>
+
+<section aria-labelledby="h-learn" style="display: flex; flex-direction: column; gap: 8px">
+<h3 id="h-learn" style="margin: 0; font-size: 13px; font-weight: 600; color: #E3E4E6">Освоение командой</h3>
+<div style="display: flex; align-items: center; gap: 10px">
+<span style="flex: 1; height: 6px; border-radius: 3px; background: #26272B; display: block"><span style="display: block; height: 6px; border-radius: 3px; width: {{ph.learn}}; background: {{ph.learnColor}}"></span></span>
+<span style="font-size: 13px; font-weight: 600; color: #FFFFFF; white-space: nowrap">{{ph.learnWord}}</span>
+</div>
+<span style="font-size: 12px; color: #9A9FA6">{{ph.learnNote}}</span>
+</section>
+</aside>
+</div>
+</main>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#9BE15D","options":["#9BE15D","#7CC4FF","#FFB547","#B9A2FF"]},"$preview":{"width":1440,"height":1460}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { plan: 'model', phase: 'mid', pick: {}, chips: {} };
+  }
+  renderVals() {
+    var self = this;
+    var accent = this.props.accent ?? '#9BE15D';
+    var st = this.state;
+    var names = { 1: 'Эйр', 2: 'Ковач', 3: 'Бреннан', 4: 'Окафор', 5: 'Хольм', 6: 'Сато', 8: 'Мартинес', 14: 'Ли', 7: 'Мбеки', 11: 'Ферри', 19: 'Кроули', 22: 'Дюбуа' };
+    // x,y in metres: x 0..105 (own goal → their goal), y 0..68 (left → right touchline)
+    var shapes = {
+      buildup: [[1, 6, 34], [5, 20, 22], [4, 19, 44], [22, 25, 60], [3, 36, 28], [6, 36, 40], [11, 64, 5], [8, 60, 24], [19, 68, 34], [14, 60, 45], [7, 64, 63]],
+      progression: [[1, 14, 34], [5, 33, 20], [4, 32, 44], [22, 38, 60], [3, 48, 28], [6, 48, 40], [11, 76, 5], [8, 72, 24], [19, 82, 34], [14, 72, 45], [7, 76, 63]],
+      creation: [[1, 22, 34], [5, 46, 22], [4, 45, 44], [22, 52, 58], [3, 62, 28], [6, 60, 40], [11, 90, 8], [8, 86, 24], [19, 96, 36], [14, 84, 46], [7, 92, 60]],
+      high: [[1, 18, 34], [3, 46, 12], [5, 44, 27], [4, 44, 41], [22, 46, 56], [6, 62, 34], [8, 72, 24], [14, 72, 46], [11, 86, 14], [19, 90, 34], [7, 86, 54]],
+      mid: [[1, 8, 34], [3, 30, 12], [5, 28, 27], [4, 28, 41], [22, 30, 56], [11, 41, 10], [6, 40, 27], [14, 40, 41], [7, 41, 58], [8, 51, 28], [19, 52, 41]],
+      low: [[1, 4, 34], [3, 15, 13], [5, 14, 28], [4, 14, 40], [22, 15, 55], [11, 26, 9], [6, 25, 25], [14, 25, 34], [8, 26, 44], [7, 26, 59], [19, 40, 34]],
+      counterpress: [[1, 14, 34], [5, 40, 26], [4, 40, 42], [6, 52, 30], [22, 52, 46], [3, 66, 22], [8, 72, 16], [11, 76, 10], [19, 80, 22], [14, 66, 36], [7, 82, 56]],
+      counter: [[1, 6, 34], [3, 24, 14], [5, 20, 27], [4, 20, 41], [22, 24, 56], [6, 34, 30], [14, 40, 42], [8, 52, 26], [11, 60, 10], [19, 66, 34], [7, 62, 58]]
+    };
+    function P(id, hl) {
+      return (shapes[id] || shapes.mid).map(function (p) {
+        var x = 10 + p[1] * 9.81, y = 10 + p[2] * 9.7;
+        var on = hl.indexOf(p[0]) >= 0;
+        return { n: String(p[0]), name: names[p[0]] || '', x: x.toFixed(0), y: y.toFixed(0), ty: (y + 8).toFixed(0), ly: (y + 52).toFixed(0), fill: on ? accent : '#E3E4E6', ring: on ? '#0B0C0E' : '#0F1012' };
+      });
+    }
+    function px(m) { return (10 + m * 9.81).toFixed(0); }
+    function py(m) { return (10 + m * 9.7).toFixed(0); }
+    function arrow(x1, y1, x2, y2, acc, dash) { return { x1: px(x1), y1: py(y1), x2: px(x2), y2: py(y2), c: acc ? accent : '#C3C6CB', m: acc ? 'url(#arwA)' : 'url(#arw)', dash: dash ? '10 8' : 'none' }; }
+    function dec(phase, id, label, options, def, hint) { return { phase: phase, id: id, label: label, options: options, def: def, hint: hint }; }
+    var P_ = {
+      buildup: { title: 'Начало атаки', group: 'att', sub: '3+2, вратарь участвует', shapeName: '4-3-3 → 3-2-5 с мячом', learn: 72,
+        idea: 'Выходим из своей трети коротким розыгрышем: левый защитник уходит в центр к опорному, сзади остаются трое. Если соперник прессингует высоко и плотно — длинная передача на Кроули, борьба за подбор.',
+        players: P('buildup', [3, 6]), arrows: [arrow(30, 10, 36, 26, true), arrow(20, 22, 34, 30, false, true)], hasZone: true, zone: { x: px(28), y: py(18), w: 9.81 * 18, h: 9.7 * 30, tx: px(28.5), ty: py(17), label: 'опорная двойка' },
+        decisions: [dec('buildup', 'shape', 'Структура сзади', ['3+2', '2+3', '4+1'], 0, 'Сколько игроков остаётся в первой линии и сколько встаёт перед ней'), dec('buildup', 'gk', 'Вратарь', ['Участвует в розыгрыше', 'Только страхует'], 0, 'Эйр уверенно играет ногами — даёт лишнего игрока'), dec('buildup', 'press', 'Если высокий прессинг', ['Разыгрываем через него', 'Длинный на нападающего', 'По ситуации'], 2, 'Решение читает Сато: два паса без выхода из-под давления — длинный')],
+        chipsTitle: 'Куда стремимся продвинуть мяч', chips: ['В полупространство слева', 'Через опорного', 'На крайнего у бровки', 'За спину защитникам'], chipsOn: [0, 1],
+        principles: ['Треугольники вокруг мяча: у владеющего всегда два варианта передачи', 'Ищем свободного «третьего»: передача — откидка — пас вперёд', 'Ширину держат крайние нападающие, не защитники'],
+        kpis: [{ m: 'Выход из своей трети под давлением', t: '≥ 60%', v: '58%', c: '#FFCB7A' }, { m: 'Потери в своей трети за матч', t: '≤ 6', v: '5,1', c: accent }, { m: 'Длинные передачи от вратаря', t: '≤ 35%', v: '31%', c: accent }],
+        roles: [{ n: '3', name: 'Нико Бреннан', role: 'Инвертированный крайний', task: 'С мячом уходит в центр к Сато, становится вторым опорным' }, { n: '6', name: 'Кенджи Сато', role: 'Опорный-распасовщик', task: 'Принимает мяч лицом к полю, решает: короткий или длинный' }, { n: '22', name: 'Энцо Дюбуа', role: 'Третий центральный', task: 'Правый защитник остаётся сзади, страхует правый фланг' }, { n: '1', name: 'Мартин Эйр', role: 'Вратарь в розыгрыше', task: 'Встаёт между центральными защитниками при давлении' }] },
+      progression: { title: 'Продвижение', group: 'att', sub: 'через полупространства', shapeName: '3-2-5', learn: 64,
+        idea: 'В средней трети ищем передачу между линиями соперника — Мартинесу или Ли в полупространство. Если линии закрыты — терпеливо перекладываем мяч, не теряем его в центре.',
+        players: P('progression', [8, 14]), arrows: [arrow(48, 28, 72, 24, true), arrow(48, 40, 72, 45, true)], hasZone: true, zone: { x: px(62), y: py(14), w: 9.81 * 18, h: 9.7 * 40, tx: px(62.5), ty: py(13), label: 'между линиями' },
+        decisions: [dec('progression', 'tempo', 'Темп', ['Терпеливо', 'Быстро вперёд'], 0, 'Против Вестфилд Сити — терпеливо: они сильны на контратаках'), dec('progression', 'side', 'Сторона атаки', ['Слева', 'Справа', 'Баланс'], 0, 'Слева сильнее: связка Бреннан — Мартинес — Ферри')],
+        chipsTitle: 'Сигналы для передачи вперёд', chips: ['Полузащитник соперника вышел из линии', 'Принимающий развёрнут к воротам', 'Свободен игрок у бровки'], chipsOn: [0, 1],
+        principles: ['Принимаем мяч развёрнутыми к воротам соперника', 'Не больше двух касаний в центре поля', 'Потеряли ширину — вернули мяч назад и сменили фланг'],
+        kpis: [{ m: 'Передачи между линиями за матч', t: '≥ 22', v: '19', c: '#FFCB7A' }, { m: 'Прогрессивные передачи', t: '≥ 45', v: '47', c: accent }],
+        roles: [{ n: '8', name: 'Тео Мартинес', role: 'Полузащитник между линиями', task: 'Ищет мяч в левом полупространстве, разворачивается' }, { n: '14', name: 'Минхо Ли', role: 'Восьмёрка-челнок', task: 'Открывается между линиями справа, при потере — первый в контрпрессинге' }] },
+      creation: { title: 'Завершение', group: 'att', sub: 'навесы и забегания', shapeName: '2-3-5', learn: 55,
+        idea: 'В последней трети заполняем штрафную: минимум трое в зоне удара при навесе. Слева — комбинация через забегание Мартинеса, справа — проход Мбеки один в один.',
+        players: P('creation', [8, 19, 7]), arrows: [arrow(86, 24, 96, 26, true), arrow(92, 60, 98, 48, false)], hasZone: true, zone: { x: px(89), y: py(18), w: 9.81 * 15, h: 9.7 * 32, tx: px(84), ty: py(17), label: 'заполняем штрафную' },
+        decisions: [dec('creation', 'cross', 'Навесы', ['Низом на ближнюю', 'Верхом на дальнюю', 'Только из выгодных позиций'], 2, 'Кроули сильнее в игре на опережение у ближней штанги'), dec('creation', 'box', 'Сколько в штрафной при навесе', ['2', '3', '4'], 1, 'Больше — сильнее атака, но хуже страховка')],
+        chipsTitle: 'Предпочтительные действия', chips: ['Забегание в полупространство', 'Отрез назад на линию штрафной', 'Удар из-за штрафной', 'Обводка один в один'], chipsOn: [0, 1, 3],
+        principles: ['Ближняя штанга, дальняя штанга, точка пенальти — каждая занята', 'Отрез назад лучше навеса в толпу'],
+        kpis: [{ m: 'xG за матч без пенальти', t: '≥ 1,5', v: '1,48', c: '#FFCB7A' }, { m: 'Касания в штрафной соперника', t: '≥ 24', v: '26', c: accent }],
+        roles: [{ n: '19', name: 'Сэм Кроули', role: 'Нападающий у ближней штанги', task: 'Атакует ближнюю штангу при каждом навесе' }, { n: '7', name: 'Джордан Мбеки', role: 'Вингер один в один', task: 'Обыгрывает своего защитника, навешивает или отрезает назад' }] },
+      high: { title: 'Высокий прессинг', group: 'def', sub: 'от удара от ворот', shapeName: '4-3-3', learn: 60,
+        idea: 'Прессингуем высоко только в определённых ситуациях: удар от ворот соперника и передача на их крайнего защитника. Крайние нападающие отрезают передачу на защитников, Кроули давит на вратаря.',
+        players: P('high', [11, 19, 7]), arrows: [arrow(86, 14, 92, 18, true), arrow(90, 34, 97, 34, true), arrow(86, 54, 92, 50, true)], hasLine: true, line: { x: px(70), tx: px(70.5), label: 'линия вовлечения: их треть' },
+        decisions: [dec('high', 'when', 'Когда включаем', ['Всегда', 'Только по триггерам', 'Никогда'], 1, 'Высокий прессинг весь матч не выдерживают — физика проседает после 60-й'), dec('high', 'side', 'Куда направляем', ['К бровке', 'В центр, в ловушку'], 0, 'У бровки соперник теряет варианты передачи')],
+        chipsTitle: 'Триггеры прессинга', chips: ['Удар от ворот', 'Передача назад вратарю', 'Передача на крайнего защитника', 'Плохой приём', 'Соперник спиной к нашим воротам'], chipsOn: [0, 2, 3],
+        principles: ['Первый идёт — остальные сдвигаются вместе, без разрывов', 'Закрываем передачу, а не бежим на игрока', 'Не вышло за 5 секунд — отходим в средний блок'],
+        kpis: [{ m: 'PPDA', t: '9–11', v: '9,8', c: accent }, { m: 'Высокие возвраты мяча за матч', t: '≥ 7', v: '7,1', c: accent }, { m: 'Пропущено после выхода из нашего прессинга', t: '≤ 1 за 3 матча', v: '1', c: accent }],
+        roles: [{ n: '19', name: 'Сэм Кроули', role: 'Нападающий-прессингёр', task: 'Давит на вратаря изогнутым бегом, закрывая передачу одному защитнику' }, { n: '11', name: 'Лука Ферри', role: 'Отрезает крайнего', task: 'Стоит между центральным и крайним защитником соперника' }] },
+      mid: { title: 'Средний блок', group: 'def', sub: '4-4-2 от центра поля', shapeName: '4-3-3 → 4-4-2 без мяча', learn: 84,
+        idea: 'Основной режим без мяча. Ждём соперника у центральной линии в 4-4-2: Мартинес поднимается к Кроули. Закрываем центр, пускаем мяч к бровке и там прессингуем вместе.',
+        players: P('mid', [8, 19]), arrows: [arrow(51, 28, 55, 22, true), arrow(52, 41, 56, 46, true)], hasLine: true, line: { x: px(52.5), tx: px(53.5), label: 'линия вовлечения: центр поля' }, hasZone: true, zone: { x: px(26), y: py(6), w: 9.81 * 28, h: 9.7 * 56, tx: px(26.5), ty: py(5), label: 'компактность ≤ 30 м' },
+        decisions: [dec('mid', 'line', 'Высота линии обороны', ['Низкая · 25 м', 'Средняя · 35 м', 'Высокая · 45 м'], 1, 'Расстояние от своих ворот до линии защитников'), dec('mid', 'compact', 'Ширина блока', ['Узко, закрыть центр', 'Широко'], 0, 'Узко — пускаем к бровке, там ловушка'), dec('mid', 'front', 'Кто встаёт к нападающему', ['Мартинес', 'Ли', 'Никто, 4-5-1'], 0, 'Мартинес лучше всех читает передачу на опорного')],
+        chipsTitle: 'Триггеры прессинга', chips: ['Передача на крайнего защитника', 'Передача назад', 'Плохой приём', 'Соперник спиной', 'Центральный защитник пошёл вперёд'], chipsOn: [0, 1, 2],
+        principles: ['Между игроками — 2–3 метра по ширине, между линиями — не больше 10–12 метров', 'Ждём триггер, а не прессингуем раньше времени', 'После отбора у бровки — первая передача вперёд, Мбеки или Ферри'],
+        kpis: [{ m: 'xG соперника за матч', t: '≤ 1,1', v: '1,21', c: '#FFCB7A' }, { m: 'Передачи соперника через центр в нашу треть', t: '≤ 18', v: '16', c: accent }, { m: 'Отборы у бровки в средней трети', t: '≥ 9', v: '10', c: accent }],
+        roles: [{ n: '8', name: 'Тео Мартинес', role: 'Второй нападающий без мяча', task: 'Встаёт к Кроули, закрывает передачу на опорного соперника' }, { n: '6', name: 'Кенджи Сато', role: 'Страховка центра', task: 'Не выходит из линии полузащиты, закрывает зону перед защитниками' }, { n: '11', name: 'Лука Ферри', role: 'Левый полузащитник', task: 'Опускается в линию четырёх, при передаче на крайнего — прессингует первым' }, { n: '7', name: 'Джордан Мбеки', role: 'Правый полузащитник', task: 'То же справа; после отбора — первый вариант для контратаки' }] },
+      low: { title: 'Низкий блок', group: 'def', sub: 'когда ведём в концовке', shapeName: '4-5-1', learn: 70,
+        idea: 'Включаем, когда ведём в счёте после 75-й минуты или против сильного соперника. Две плотные линии у своей штрафной, Кроули остаётся впереди для выноса.',
+        players: P('low', [19]), arrows: [], hasLine: true, line: { x: px(35), tx: px(35.5), label: 'линия вовлечения: наша треть' },
+        decisions: [dec('low', 'when', 'Когда включаем', ['Ведём после 75-й', 'Весь матч', 'По команде со скамейки'], 0, 'Сигнал игрокам подаёт капитан'), dec('low', 'out', 'После отбора', ['Вынос на Кроули', 'Сохраняем мяч'], 0, 'Кроули выигрывает 54% верховых единоборств')],
+        chipsTitle: 'Что запрещаем сопернику', chips: ['Удары из центра', 'Передачи в штрафную низом', 'Навесы с правого фланга'], chipsOn: [0, 1],
+        principles: ['Две линии по пять и четыре, никто не выходит из линии без команды', 'Навесы пускаем, передачи низом в штрафную — нет'],
+        kpis: [{ m: 'Пропущено после 75-й минуты', t: '≤ 2 за 10 туров', v: '3', c: '#FFB0A6' }],
+        roles: [{ n: '19', name: 'Сэм Кроули', role: 'Выносной нападающий', task: 'Держит мяч после выноса, ждёт поддержки' }] },
+      counterpress: { title: 'После потери', group: 'tr', sub: 'контрпрессинг 5 секунд', shapeName: 'сжатие к мячу', learn: 66,
+        idea: 'Потеряли мяч в атаке — четверо ближайших сразу давят на владеющего 5 секунд. Сзади всегда стоит страховка «2+2» в центре, чтобы контратака не прошла насквозь.',
+        players: P('counterpress', [8, 11, 19, 3]), hasBall: true, ball: { x: px(72), y: py(19) }, arrows: [arrow(66, 22, 72, 16, true), arrow(80, 22, 76, 16, true), arrow(76, 10, 74, 13, true)], hasZone: true, zone: { x: px(36), y: py(20), w: 9.81 * 20, h: 9.7 * 30, tx: px(36.5), ty: py(19), label: 'страховка 2+2' },
+        decisions: [dec('counterpress', 'mode', 'После потери', ['Контрпрессинг', 'Откат в блок', 'Зависит от зоны'], 2, 'В их трети — давим, в своей половине — откатываемся'), dec('counterpress', 'rest', 'Страховка сзади', ['2+1', '2+2', '3+2'], 1, 'Сколько игроков не участвует в атаке и страхует'), dec('counterpress', 'foul', 'Тактический фол', ['Разрешён в центре', 'Нет'], 0, 'Если контрпрессинг не сработал и соперник уходит в контратаку')],
+        chipsTitle: 'Когда не давим, а откатываемся', chips: ['Потеря в своей половине', 'Нас меньше у мяча', 'Соперник выиграл мяч развёрнутым'], chipsOn: [0, 1, 2],
+        principles: ['Первые 5 секунд — самые важные: ближайший давит сразу', 'Страховка «2+2» не участвует в атаке никогда', 'Не вернули за 5 секунд — тактический фол или откат'],
+        kpis: [{ m: 'Возвраты мяча за 5 секунд после потери', t: '≥ 35%', v: '38%', c: accent }, { m: 'Удары соперника после нашей потери', t: '≤ 2', v: '2,4', c: '#FFCB7A' }],
+        roles: [{ n: '6', name: 'Кенджи Сато', role: 'Страховка «2+2»', task: 'Вместе с Мартинесом при атаке слева не идёт вперёд' }, { n: '8', name: 'Тео Мартинес', role: 'Первый в контрпрессинге', task: 'Ближайший к мячу при потере слева — давит сразу' }] },
+      counter: { title: 'После отбора', group: 'tr', sub: 'контратака или сохранить мяч', shapeName: 'вертикально', learn: 58,
+        idea: 'Отобрали мяч — первая передача вперёд, если есть забегание за спину. Нет — сохраняем мяч и переходим в позиционную атаку.',
+        players: P('counter', [11, 19, 7]), hasBall: true, ball: { x: px(52), y: py(26) }, arrows: [arrow(60, 10, 82, 14, true), arrow(66, 34, 88, 34, true), arrow(62, 58, 84, 54, true)],
+        decisions: [dec('counter', 'mode', 'После отбора', ['Сразу вперёд', 'Сохранить мяч', 'По ситуации'], 2, 'Читает игрок с мячом: есть забегание — вперёд'), dec('counter', 'runners', 'Сколько бегут в контратаку', ['2', '3', '4'], 1, 'Больше бегущих — опаснее, но хуже страховка')],
+        chipsTitle: 'Куда первая передача', chips: ['За спину защитникам', 'В ноги Кроули', 'На свободный фланг'], chipsOn: [0, 2],
+        principles: ['Первая передача — вперёд, если она возможна', 'Трое бегут, остальные страхуют'],
+        kpis: [{ m: 'Удары после быстрой атаки за матч', t: '≥ 3', v: '2,6', c: '#FFCB7A' }],
+        roles: [{ n: '11', name: 'Лука Ферри', role: 'Забегание за спину', task: 'Первый бежит в свободную зону после отбора' }] },
+      setpieces: { title: 'Стандарты', group: 'sp', sub: 'отдельный конструктор', shapeName: 'угловые, штрафные, ауты', learn: 62,
+        idea: 'Стандарты настраиваются в отдельном разделе «Стандарты»: розыгрыши угловых и штрафных, кто подаёт, кто в зоне, кто страхует. Здесь — общие правила.',
+        players: P('mid', []), arrows: [],
+        decisions: [dec('setpieces', 'def', 'Оборона угловых', ['Зонально', 'Персонально', 'Смешанно'], 2, 'Смешанно: трое в зоне у ближней штанги, остальные персонально')],
+        chipsTitle: 'Связанные разделы', chips: ['Открыть «Стандарты»'], chipsOn: [],
+        principles: ['Каждый розыгрыш отрабатываем на MD-1'],
+        kpis: [{ m: 'Голы со стандартов', t: '≥ 25%', v: '27%', c: accent }],
+        roles: [] }
+    };
+    var groupsDef = [['att', 'С мячом'], ['def', 'Без мяча'], ['tr', 'Переходы'], ['sp', 'Стандарты']];
+    var order = ['buildup', 'progression', 'creation', 'high', 'mid', 'low', 'counterpress', 'counter', 'setpieces'];
+    function learnColor(v) { return v >= 80 ? accent : v >= 60 ? '#C3C6CB' : '#FFB547'; }
+    function learnWord(v) { return v >= 80 ? 'Уверенно' : v >= 60 ? 'Знают, но ошибаются' : 'Только учим'; }
+    var phaseGroups = groupsDef.map(function (g) {
+      return { title: g[1], items: order.filter(function (k) { return P_[k].group === g[0]; }).map(function (k) {
+        var on = st.phase === k;
+        return { label: P_[k].title, sub: P_[k].sub, pressed: on ? 'true' : 'false', bg: on ? '#1E1F23' : 'transparent', color: on ? '#FFFFFF' : '#D0D2D6', weight: on ? '600' : '500',
+          learn: P_[k].learn + '%', learnColor: learnColor(P_[k].learn), pick: function () { self.setState({ phase: k }); } };
+      }) };
+    });
+    var cur = P_[st.phase];
+    var picks = st.pick || {};
+    var decisions = cur.decisions.map(function (d) {
+      var key = d.phase + ':' + d.id;
+      var sel = picks[key] !== undefined ? picks[key] : d.def;
+      return { label: d.label, hint: d.hint, options: d.options.map(function (o, i) {
+        var on = i === sel;
+        return { label: o, checked: on ? 'true' : 'false', bg: on ? '#2A2C31' : 'transparent', color: on ? '#FFFFFF' : '#A4A8AF', weight: on ? '600' : '500',
+          pick: function () { var p = Object.assign({}, picks); p[key] = i; self.setState({ pick: p }); } };
+      }) };
+    });
+    var chipState = st.chips || {};
+    var chips = cur.chips.map(function (c, i) {
+      var key = st.phase + ':' + i;
+      var on = chipState[key] !== undefined ? chipState[key] : cur.chipsOn.indexOf(i) >= 0;
+      return { label: c, pressed: on ? 'true' : 'false', border: on ? accent : '#2A2C31', bg: on ? 'rgba(155, 225, 93, 0.10)' : 'transparent', color: on ? '#FFFFFF' : '#A4A8AF', weight: on ? '600' : '500',
+        pick: function () { var s = Object.assign({}, chipState); s[key] = !on; self.setState({ chips: s }); } };
+    });
+    var ph = Object.assign({ hasZone: false, hasLine: false, hasBall: false, zone: {}, line: {}, ball: {} }, cur, {
+      decisions: decisions, chips: chips, learn: cur.learn + '%', learnColor: learnColor(cur.learn), learnWord: learnWord(cur.learn),
+      learnNote: 'Отработано на тренировках: ' + Math.round(cur.learn / 8) + ' занятий. ' + (cur.learn >= 80 ? 'Команда выполняет без подсказок.' : 'Ещё около ' + Math.max(2, Math.round((80 - cur.learn) / 5)) + ' занятий до уверенного уровня — добавьте тему в микроцикл.'),
+      aria: 'Схема фазы «' + cur.title + '»: расстановка игроков на поле'
+    });
+    var planDefs = [['model', 'Модель игры', 'база на сезон'], ['west', 'План на Вестфилд Сити', 'сб, 31 окт'], ['lead', 'Ведём в счёте', 'сценарий']];
+    var plans = planDefs.map(function (p) {
+      var on = st.plan === p[0];
+      return { label: p[1], note: p[2], pressed: on ? 'true' : 'false', bg: on ? '#232428' : 'transparent', border: on ? '#33353B' : '#2A2C31', color: on ? '#FFFFFF' : '#C3C6CB', weight: on ? '600' : '500', pick: function () { self.setState({ plan: p[0] }); } };
+    });
+    var planHint = st.plan === 'model' ? 'План на матч наследует модель и меняет только отличия' : st.plan === 'west' ? 'Отличия от модели: 3 · высокий прессинг только от удара от ворот, тише темп' : 'Отличия от модели: низкий блок после 75-й, двое в контратаку';
+    var I = {
+      inbox: 'M3 13h5l2 3h4l2-3h5M5 5h14l2 8v6a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-6z', cal: 'M4 6h16v14H4zM4 10h16M9 3v4M15 3v4', notes: 'M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z',
+      home: 'M4 11l8-6 8 6v8a1 1 0 0 1-1 1h-4v-5h-6v5H5a1 1 0 0 1-1-1z', squad: 'M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM2 21v-1a6 6 0 0 1 12 0v1M16 3.5a4 4 0 0 1 0 7M22 21v-1a6 6 0 0 0-4-5.6',
+      tactic: 'M4 4h16v16H4zM12 4v16M12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6z', setp: 'M5 21V4M5 4h11l-2 4 2 4H5', match: 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM12 7l3.5 2.5-1.3 4h-4.4l-1.3-4z',
+      med: 'M12 21s-8-5-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 6-8 11-8 11z', load: 'M3 12h4l3-8 4 16 3-8h4', data: 'M5 20V11M11 20V5M17 20v-6', scout: 'M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM20 20l-4-4'
+    };
+    function item(label, icon, count, active) { return { label: label, icon: icon, count: count || '', bg: active ? '#1E1F23' : 'transparent', color: active ? '#FFFFFF' : '#D0D2D6', weight: active ? '500' : '400' }; }
+    var navSections = [
+      { hasTitle: false, title: '', items: [item('Входящие', I.inbox, '7'), item('Календарь', I.cal), item('Тактический блокнот', I.notes)] },
+      { hasTitle: true, title: 'Команда', items: [item('Главная', I.home), item('Состав', I.squad), item('Тактика', I.tactic, '', true), item('Стандарты', I.setp), item('Матчевый день', I.match)] },
+      { hasTitle: true, title: 'Здоровье', items: [item('Медцентр', I.med, '3'), item('Нагрузка и GPS', I.load)] },
+      { hasTitle: true, title: 'Данные и отбор', items: [item('Центр данных', I.data), item('Скаутинг', I.scout, '3')] }
+    ];
+    return { accent: accent, navSections: navSections, plans: plans, planHint: planHint, phaseGroups: phaseGroups, ph: ph };
+  }
+}
+</script>
+</body>
+</html>
