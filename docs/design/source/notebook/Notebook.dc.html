@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Тактический блокнот</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0B0C0E}
+a{color:#D0D2D6;text-decoration:none}a:hover{color:#FFFFFF}
+button{font-family:inherit}
+.navi{transition:background-color 120ms ease,color 120ms ease}
+.navi:hover{background:#1A1B1F;color:#FFFFFF}
+.row{transition:background-color 120ms ease}
+.row:hover{background:#18191C}
+.ib{transition:background-color 120ms ease,border-color 120ms ease}
+.ib:hover{background:#1E1F23;border-color:#34363C}
+.pri{transition:filter 120ms ease}
+.pri:hover{filter:brightness(1.08)}
+</style>
+</helmet>
+<div style="width: 100%; min-height: 100vh; display: flex; flex-wrap: wrap; background: #0B0C0E; color: #E3E4E6; font-family: Inter, system-ui, sans-serif; font-size: 13px; line-height: 1.4">
+
+<nav aria-label="Основное меню" style="flex: 0 0 224px; max-width: 100%; box-sizing: border-box; padding: 10px 10px 8px; display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; align-items: center; gap: 8px; padding: 6px 10px">
+<span style="width: 20px; height: 20px; flex: none; border-radius: 5px; background: {{accent}}; color: #0B0C0E; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 600">NR</span>
+<span style="font-weight: 600; white-space: nowrap">Норт Ривер</span>
+</div>
+<sc-for list="{{navSections}}" as="s" hint-placeholder-count="4">
+<div style="display: flex; flex-direction: column; gap: 1px">
+<sc-if value="{{s.hasTitle}}" hint-placeholder-val="{{ true }}">
+<div style="height: 26px; padding: 0 10px; display: flex; align-items: center; font-size: 12px; font-weight: 500; color: #9A9FA6">{{s.title}}</div>
+</sc-if>
+<sc-for list="{{s.items}}" as="n" hint-placeholder-count="3">
+<a href="#" class="navi" style="display: flex; align-items: center; gap: 10px; height: 30px; padding: 0 10px; border-radius: 6px; background: {{n.bg}}; color: {{n.color}}">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none"><path d="{{n.icon}}"></path></svg>
+<span style="flex: 1; white-space: nowrap; font-weight: {{n.weight}}">{{n.label}}</span>
+</a>
+</sc-for>
+</div>
+</sc-for>
+</nav>
+
+<div style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column; padding: 8px 8px 8px 0; box-sizing: border-box">
+<main style="flex: 1; display: flex; flex-direction: column; background: #121316; border: 1px solid #222327; border-radius: 10px; overflow: hidden">
+
+<header style="display: flex; align-items: center; gap: 8px; height: 44px; padding: 0 12px 0 16px; border-bottom: 1px solid #1E1F23; min-width: 0">
+<h1 style="margin: 0; font-size: 15px; font-weight: 600; white-space: nowrap">Тактический блокнот</h1>
+<span style="font-size: 13px; color: #9A9FA6; white-space: nowrap">14 рисунков</span>
+<div style="flex: 1"></div>
+<button type="button" class="ib" style="height: 32px; flex: none; padding: 0 12px; border-radius: 7px; border: 1px solid #2A2C31; background: transparent; color: #D0D2D6; font-size: 13px; font-weight: 500; cursor: pointer">Новый рисунок</button>
+<button type="button" class="pri" style="height: 32px; flex: none; padding: 0 14px; border-radius: 7px; border: 0; background: {{accent}}; color: #0B0C0E; font-size: 13px; font-weight: 600; cursor: pointer">Показать на собрании</button>
+</header>
+
+<div style="display: flex; flex-wrap: wrap; align-items: flex-start; flex: 1">
+
+<section aria-labelledby="h-lib" style="flex: 0 0 280px; max-width: 100%; box-sizing: border-box; padding: 12px 8px 24px 12px; display: flex; flex-direction: column; gap: 8px; border-right: 1px solid #1E1F23">
+<h2 id="h-lib" style="margin: 0; padding: 0 8px; font-size: 14px; font-weight: 600">Библиотека</h2>
+<div style="display: flex; flex-wrap: wrap; gap: 4px; padding: 0 4px 4px">
+<sc-for list="{{filters}}" as="f" hint-placeholder-count="5">
+<button type="button" class="ib" onClick="{{f.pick}}" aria-pressed="{{f.pressed}}" style="height: 26px; padding: 0 10px; border-radius: 999px; border: 1px solid {{f.border}}; background: {{f.bg}}; color: {{f.color}}; font-size: 12px; font-weight: {{f.weight}}; cursor: pointer">{{f.label}}</button>
+</sc-for>
+</div>
+<sc-for list="{{library}}" as="d" hint-placeholder-count="5">
+<button type="button" class="row" onClick="{{d.pick}}" aria-pressed="{{d.pressed}}" style="display: flex; gap: 10px; padding: 8px; border: 0; border-radius: 6px; background: {{d.bg}}; box-shadow: {{d.ring}}; color: #E3E4E6; text-align: left; cursor: pointer">
+<span aria-hidden="true" style="width: 64px; height: 42px; flex: none; border-radius: 4px; border: 1px solid #2A2C31; background: #111315; position: relative; overflow: hidden; display: block">
+<span style="position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: #2A2C31"></span>
+<span style="position: absolute; left: {{d.tx}}; top: {{d.ty}}; width: 18px; height: 12px; border-radius: 3px; border: 1px dashed {{accent}}"></span>
+<span style="position: absolute; left: {{d.ax}}; top: {{d.ay}}; width: 20px; height: 2px; background: #FFB547; transform: rotate(-20deg)"></span>
+</span>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+<span style="font-weight: 600; color: #FFFFFF; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{d.title}}</span>
+<span style="font-size: 11px; color: #A4A8AF; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{d.src}}</span>
+<span style="font-size: 11px; color: #9A9FA6; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{d.link}}</span>
+</span>
+</button>
+</sc-for>
+</section>
+
+<div style="flex: 999 1 520px; min-width: 0; padding: 12px 16px 24px; display: flex; flex-direction: column; gap: 10px; box-sizing: border-box">
+<div style="display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap">
+<h2 style="margin: 0; font-size: 18px; font-weight: 600; color: #FFFFFF">{{cur.title}}</h2>
+<span style="font-size: 13px; color: #9A9FA6">{{cur.src}}</span>
+</div>
+
+<div role="toolbar" aria-label="Инструменты рисования" style="display: flex; flex-wrap: wrap; align-items: center; gap: 4px; padding: 4px; border: 1px solid #222327; border-radius: 8px; background: #17181B">
+<sc-for list="{{tools}}" as="t" hint-placeholder-count="9">
+<button type="button" class="ib" onClick="{{t.pick}}" aria-pressed="{{t.pressed}}" aria-label="{{t.label}}" title="{{t.label}} · {{t.key}}" style="height: 30px; min-width: 30px; padding: 0 8px; border-radius: 6px; border: 1px solid {{t.border}}; background: {{t.bg}}; color: {{t.color}}; display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 500; cursor: pointer">
+<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{t.icon}}"></path></svg>
+<sc-if value="{{t.showLabel}}" hint-placeholder-val="{{ false }}"><span>{{t.label}}</span></sc-if>
+</button>
+</sc-for>
+<span style="width: 1px; height: 20px; background: #2A2C31; margin: 0 4px"></span>
+<sc-for list="{{colors}}" as="c" hint-placeholder-count="4">
+<button type="button" onClick="{{c.pick}}" aria-pressed="{{c.pressed}}" aria-label="Цвет: {{c.name}}" title="{{c.name}}" style="width: 22px; height: 22px; border-radius: 50%; border: 2px solid {{c.ring}}; background: {{c.v}}; cursor: pointer; padding: 0"></button>
+</sc-for>
+<div style="flex: 1"></div>
+<span style="font-size: 11px; color: #9A9FA6; padding-right: 6px">{{toolHint}}</span>
+</div>
+
+<div role="img" aria-label="{{cur.aria}}" style="border: 1px solid #222327; border-radius: 8px; background: #0F1012; padding: 10px">
+<svg viewBox="0 0 1050 680" width="100%" style="display: block" aria-hidden="true">
+<defs>
+<marker id="nbY" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#FFB547"></path></marker>
+<marker id="nbA" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="{{accent}}"></path></marker>
+<marker id="nbW" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M5 0V10" stroke="#FFFFFF" stroke-width="2"></path></marker>
+</defs>
+<rect x="10" y="10" width="1030" height="660" rx="4" fill="#111315" stroke="#2A2C31" stroke-width="2"></rect>
+<line x1="525" y1="10" x2="525" y2="670" stroke="#2A2C31" stroke-width="2"></line>
+<circle cx="525" cy="340" r="91" fill="none" stroke="#2A2C31" stroke-width="2"></circle>
+<rect x="10" y="138" width="165" height="404" fill="none" stroke="#2A2C31" stroke-width="2"></rect>
+<rect x="875" y="138" width="165" height="404" fill="none" stroke="#2A2C31" stroke-width="2"></rect>
+<sc-if value="{{lay.zone}}" hint-placeholder-val="{{ true }}">
+<sc-for list="{{cur.zones}}" as="z" hint-placeholder-count="1">
+<rect x="{{z.x}}" y="{{z.y}}" width="{{z.w}}" height="{{z.h}}" rx="10" fill="{{z.c}}" fill-opacity="0.12" stroke="{{z.c}}" stroke-width="3" stroke-dasharray="10 8"></rect>
+</sc-for>
+</sc-if>
+<sc-for list="{{cur.opp}}" as="o" hint-placeholder-count="10">
+<circle cx="{{o.x}}" cy="{{o.y}}" r="17" fill="none" stroke="#FF9A8A" stroke-width="3"></circle>
+</sc-for>
+<sc-for list="{{cur.ours}}" as="p" hint-placeholder-count="10">
+<circle cx="{{p.x}}" cy="{{p.y}}" r="19" fill="#E3E4E6" stroke="#0F1012" stroke-width="3"></circle>
+<text x="{{p.x}}" y="{{p.ty}}" text-anchor="middle" font-size="17" font-weight="700" fill="#0B0C0E" font-family="Inter, sans-serif">{{p.n}}</text>
+</sc-for>
+<sc-if value="{{cur.hasBall}}" hint-placeholder-val="{{ true }}">
+<circle cx="{{cur.ball.x}}" cy="{{cur.ball.y}}" r="9" fill="#FFFFFF" stroke="#0B0C0E" stroke-width="3"></circle>
+</sc-if>
+<sc-if value="{{lay.spot}}" hint-placeholder-val="{{ true }}">
+<sc-for list="{{cur.spots}}" as="s" hint-placeholder-count="1">
+<ellipse cx="{{s.x}}" cy="{{s.y2}}" rx="34" ry="12" fill="none" stroke="{{s.c}}" stroke-width="3"></ellipse>
+<circle cx="{{s.x}}" cy="{{s.y}}" r="30" fill="none" stroke="{{s.c}}" stroke-width="3" stroke-dasharray="4 6"></circle>
+</sc-for>
+</sc-if>
+<sc-if value="{{lay.arrows}}" hint-placeholder-val="{{ true }}">
+<sc-for list="{{cur.arrows}}" as="a" hint-placeholder-count="2">
+<path d="{{a.d}}" fill="none" stroke="{{a.c}}" stroke-width="4" stroke-dasharray="{{a.dash}}" marker-end="{{a.m}}"></path>
+</sc-for>
+</sc-if>
+<sc-if value="{{lay.measure}}" hint-placeholder-val="{{ true }}">
+<sc-for list="{{cur.measures}}" as="m" hint-placeholder-count="1">
+<line x1="{{m.x1}}" y1="{{m.y}}" x2="{{m.x2}}" y2="{{m.y}}" stroke="#FFFFFF" stroke-width="2.5" marker-start="url(#nbW)" marker-end="url(#nbW)"></line>
+<rect x="{{m.lx}}" y="{{m.ly}}" width="78" height="30" rx="6" fill="#FFFFFF"></rect>
+<text x="{{m.tx}}" y="{{m.ty}}" text-anchor="middle" font-size="18" font-weight="700" fill="#0B0C0E" font-family="Inter, sans-serif">{{m.label}}</text>
+</sc-for>
+</sc-if>
+<sc-if value="{{lay.text}}" hint-placeholder-val="{{ true }}">
+<sc-for list="{{cur.texts}}" as="t" hint-placeholder-count="1">
+<rect x="{{t.x}}" y="{{t.y}}" width="{{t.w}}" height="38" rx="8" fill="#17181B" stroke="{{t.c}}" stroke-width="2"></rect>
+<text x="{{t.tx}}" y="{{t.ty}}" font-size="19" font-weight="600" fill="#FFFFFF" font-family="Inter, sans-serif">{{t.label}}</text>
+</sc-for>
+</sc-if>
+</svg>
+<sc-if value="{{cur.isFrame}}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; align-items: center; gap: 10px; padding: 10px 4px 0">
+<button type="button" class="ib" aria-label="Воспроизвести повтор" style="width: 28px; height: 28px; flex: none; border-radius: 6px; border: 1px solid #2A2C31; background: transparent; color: #D0D2D6; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4l13 8-13 8z"></path></svg></button>
+<span style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 12px; color: #C3C6CB">{{cur.time}}</span>
+<span style="flex: 1; position: relative; height: 4px; border-radius: 2px; background: #26272B; display: block"><span style="position: absolute; left: 0; top: 0; height: 4px; width: 62%; border-radius: 2px; background: #5B5F66"></span><span style="position: absolute; left: 62%; top: -5px; width: 2px; height: 14px; background: {{accent}}"></span></span>
+<span style="font-size: 12px; color: #9A9FA6; white-space: nowrap">стоп-кадр 2D-повтора · −4 / +6 с</span>
+</div>
+</sc-if>
+</div>
+<p style="margin: 0; padding: 10px 12px; border-radius: 8px; background: #17181B; color: #D0D2D6; font-size: 13px">{{cur.caption}}</p>
+</div>
+
+<aside aria-label="Слои и связи" style="flex: 1 1 300px; max-width: 100%; min-width: 0; border-left: 1px solid #1E1F23; padding: 14px 18px 24px 16px; display: flex; flex-direction: column; gap: 18px; box-sizing: border-box">
+<section aria-labelledby="h-layers" style="display: flex; flex-direction: column; gap: 4px">
+<h3 id="h-layers" style="margin: 0 0 4px; font-size: 14px; font-weight: 600; color: #FFFFFF">Слои</h3>
+<sc-for list="{{layers}}" as="l" hint-placeholder-count="5">
+<button type="button" class="row" onClick="{{l.toggle}}" aria-pressed="{{l.pressed}}" style="display: flex; align-items: center; gap: 10px; min-height: 32px; padding: 0 8px; border: 0; border-radius: 6px; background: transparent; color: {{l.color}}; font-size: 12px; text-align: left; cursor: pointer">
+<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none"><path d="{{l.eye}}"></path></svg>
+<span style="flex: 1; font-weight: 500">{{l.label}}</span>
+<span style="color: #9A9FA6">{{l.count}}</span>
+</button>
+</sc-for>
+</section>
+
+<section aria-labelledby="h-links" style="display: flex; flex-direction: column; gap: 8px">
+<h3 id="h-links" style="margin: 0; font-size: 13px; font-weight: 600; color: #E3E4E6">Прикреплено к</h3>
+<sc-for list="{{cur.links}}" as="k" hint-placeholder-count="3">
+<a href="#" class="row" style="display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 6px; border: 1px solid #222327">
+<span style="height: 20px; flex: none; padding: 0 6px; border-radius: 4px; background: #1B1C20; color: #A4A8AF; font-size: 11px; display: flex; align-items: center">{{k.kind}}</span>
+<span style="flex: 1; font-size: 12px; font-weight: 500; color: #FFFFFF">{{k.name}}</span>
+<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#8F949C" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg>
+</a>
+</sc-for>
+<button type="button" class="ib" style="height: 30px; border-radius: 7px; border: 1px dashed #3A3C42; background: transparent; color: #A4A8AF; font-size: 12px; font-weight: 500; cursor: pointer">Прикрепить к фазе, стандарту, тренировке или игроку</button>
+</section>
+
+<section aria-labelledby="h-used" style="display: flex; flex-direction: column; gap: 8px">
+<h3 id="h-used" style="margin: 0; font-size: 13px; font-weight: 600; color: #E3E4E6">Где показывали</h3>
+<sc-for list="{{cur.used}}" as="u" hint-placeholder-count="2">
+<div style="display: flex; justify-content: space-between; gap: 10px; font-size: 12px"><span style="color: #D0D2D6">{{u.t}}</span><span style="color: #9A9FA6; white-space: nowrap">{{u.d}}</span></div>
+</sc-for>
+</section>
+
+<section aria-labelledby="h-effect" style="display: flex; flex-direction: column; gap: 8px">
+<h3 id="h-effect" style="margin: 0; font-size: 13px; font-weight: 600; color: #E3E4E6">Что изменилось после</h3>
+<div style="padding: 10px; border-radius: 8px; background: #17181B; font-size: 12px; color: #D0D2D6">{{cur.effect}}</div>
+</section>
+</aside>
+</div>
+</main>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#9BE15D","options":["#9BE15D","#7CC4FF","#FFB547","#B9A2FF"]},"$preview":{"width":1440,"height":1160}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { sel: 'gap', tool: 'arrow', color: 0, filter: 'all', hide: {} };
+  }
+  renderVals() {
+    var self = this;
+    var accent = this.props.accent ?? '#9BE15D';
+    var st = this.state;
+    function X(m) { return (10 + m * 9.81).toFixed(0); }
+    function Y(m) { return (10 + m * 9.7).toFixed(0); }
+    function pl(list) { return list.map(function (p) { return { n: String(p[0]), x: X(p[1]), y: Y(p[2]), ty: (10 + p[2] * 9.7 + 6).toFixed(0) }; }); }
+    function op(list) { return list.map(function (p) { return { x: X(p[0]), y: Y(p[1]) }; }); }
+    function arr(pts, col, dash) { var d = 'M ' + X(pts[0]) + ' ' + Y(pts[1]); if (pts.length === 6) { d += ' Q ' + X(pts[2]) + ' ' + Y(pts[3]) + ' ' + X(pts[4]) + ' ' + Y(pts[5]); } else { d += ' L ' + X(pts[2]) + ' ' + Y(pts[3]); } return { d: d, c: col === 'a' ? accent : '#FFB547', m: col === 'a' ? 'url(#nbA)' : 'url(#nbY)', dash: dash ? '12 10' : 'none' }; }
+    function zone(x, y, w, h, c) { return { x: X(x), y: Y(y), w: (w * 9.81).toFixed(0), h: (h * 9.7).toFixed(0), c: c }; }
+    var D = {
+      gap: { tag: 'press', title: 'Разрыв между линиями', src: 'Норт Ривер — Хейвен Таун · 63:12', time: '63:12', isFrame: true, hasBall: true, ball: { x: X(60), y: Y(30) },
+        ours: pl([[1, 6, 34], [3, 26, 12], [5, 25, 27], [4, 25, 41], [22, 27, 56], [11, 46, 12], [6, 44, 28], [14, 45, 42], [7, 46, 57], [8, 55, 30], [19, 56, 42]]),
+        opp: op([[60, 30], [38, 34], [36, 18], [70, 44], [74, 18], [52, 6], [40, 60], [80, 30], [88, 46], [92, 22]]),
+        zones: [zone(28, 22, 14, 24, '#FFB547')], spots: [{ x: X(46), y: Y(12), y2: Y(12.5), c: accent }],
+        arrows: [arr([60, 30, 38, 34], 'y'), arr([46, 12, 36, 14, 34, 22], 'a', true)],
+        measures: [{ x1: X(25), x2: X(44), y: Y(64), lx: (+X(34.5) - 39).toFixed(0), ly: (+Y(64) - 36).toFixed(0), tx: X(34.5), ty: (+Y(64) - 15).toFixed(0), label: '18 м' }],
+        texts: [{ x: X(56), y: Y(4), w: 300, tx: (+X(56) + 14).toFixed(0), ty: (+Y(4) + 26).toFixed(0), label: 'Ферри — вниз, в линию четырёх', c: accent }],
+        caption: 'Между линиями 18 метров вместо 10–12: передача соперника проходит в разрыв, и его нападающий разворачивается. Ферри должен опуститься в линию полузащиты, а защитники — подняться на 5 метров.',
+        links: [{ kind: 'Тактика', name: 'Средний блок · компактность' }, { kind: 'Тренировка', name: 'Ср, 28 окт · MD-3 · 11 на 11' }, { kind: 'Игрок', name: 'Лука Ферри · разбор' }],
+        used: [{ t: 'Разбор матча с командой', d: '15 окт' }, { t: 'Индивидуально с Ферри', d: '16 окт' }],
+        effect: 'Средняя дистанция между линиями в следующих двух матчах: 11,6 м (было 14,2). Передачи соперника в разрыв: 4 за матч (было 9).',
+        aria: 'Стоп-кадр: разрыв 18 метров между линиями защиты и полузащиты, передача соперника в разрыв' },
+      buildup: { tag: 'build', title: 'Выход 3+2 от ворот', src: 'чистое поле · для тренировки', isFrame: false, hasBall: true, ball: { x: X(6), y: Y(34) },
+        ours: pl([[1, 6, 34], [5, 19, 22], [4, 19, 46], [22, 24, 60], [3, 30, 26], [6, 32, 40], [11, 52, 5], [8, 50, 24], [19, 58, 34], [14, 50, 45], [7, 52, 63]]),
+        opp: op([]), zones: [zone(26, 20, 12, 28, accent)], spots: [{ x: X(30), y: Y(26), y2: Y(26.5), c: accent }],
+        arrows: [arr([26, 8, 28, 16, 30, 24], 'a', true), arr([6, 34, 19, 22], 'y'), arr([19, 22, 30, 26], 'y')],
+        measures: [], texts: [{ x: X(34), y: Y(10), w: 270, tx: (+X(34) + 14).toFixed(0), ty: (+Y(10) + 26).toFixed(0), label: 'Бреннан — в центр к Сато', c: accent }],
+        caption: 'Удар от ворот: Эйр начинает с Хольма, Бреннан уходит с фланга в центр и становится вторым опорным. Дальше — передача Бреннану лицом к полю.',
+        links: [{ kind: 'Тактика', name: 'Начало атаки · 3+2' }, { kind: 'Тренировка', name: 'Вт, 27 окт · MD-4' }],
+        used: [{ t: 'Установка на тренировку', d: '20 окт' }],
+        effect: 'Выход из своей трети под давлением: 58% (было 51% до установки).',
+        aria: 'Схема выхода от ворот 3+2 с забеганием левого защитника в центр' },
+      corner: { tag: 'sp', title: 'У-1 · блок на вратаря', src: 'Норт Ривер — Кингспорт · 34:40', time: '34:40', isFrame: true, hasBall: true, ball: { x: X(100), y: Y(66) },
+        ours: pl([[19, 94, 36], [5, 103, 34], [14, 96, 31], [4, 92, 28], [6, 86, 34]]), opp: op([[100, 30], [100, 34], [100, 38], [96, 34], [104, 34]]),
+        zones: [zone(97, 33, 6, 6, accent)], spots: [{ x: X(103), y: Y(34), y2: Y(34.5), c: '#FFB547' }],
+        arrows: [arr([100, 66, 90, 50, 100, 37], 'y', true), arr([94, 36, 99, 36], 'a')], measures: [],
+        texts: [{ x: X(64), y: Y(54), w: 290, tx: (+X(64) + 14).toFixed(0), ty: (+Y(54) + 26).toFixed(0), label: 'Хольм стоит, а не толкает', c: '#FFB547' }],
+        caption: 'Блок на вратаря без рук: в этом эпизоде судья свистнул нарушение. Хольм занимает место раньше и стоит неподвижно.',
+        links: [{ kind: 'Стандарты', name: 'У-1 · Ближняя штанга' }, { kind: 'Тренировка', name: 'Пт, 30 окт · MD-1' }],
+        used: [{ t: 'Установка на стандарты', d: '23 окт' }], effect: 'Пока не проверено в матче.', aria: 'Стоп-кадр углового: блок на вратаря' }
+    };
+    var filterDefs = [['all', 'Все'], ['press', 'Без мяча'], ['build', 'С мячом'], ['sp', 'Стандарты']];
+    var filters = filterDefs.map(function (f) { var on = st.filter === f[0]; return { label: f[1], pressed: on ? 'true' : 'false', bg: on ? '#232428' : 'transparent', border: on ? '#33353B' : '#2A2C31', color: on ? '#FFFFFF' : '#C3C6CB', weight: on ? '600' : '500', pick: function () { self.setState({ filter: f[0] }); } }; });
+    var thumbs = { gap: ['30%', '30%', '40%', '55%'], buildup: ['20%', '35%', '15%', '20%'], corner: ['70%', '35%', '60%', '60%'] };
+    var library = Object.keys(D).filter(function (k) { return st.filter === 'all' || D[k].tag === st.filter; }).map(function (k) {
+      var d = D[k], on = st.sel === k, th = thumbs[k];
+      return { title: d.title, src: d.src, link: d.links[0].kind + ' · ' + d.links[0].name, tx: th[0], ty: th[1], ax: th[2], ay: th[3], pressed: on ? 'true' : 'false',
+        bg: on ? '#1C1D21' : 'transparent', ring: on ? 'inset 2px 0 0 ' + accent : 'none', pick: function () { self.setState({ sel: k }); } };
+    });
+    var toolDefs = [
+      ['select', 'Выбор', 'V', 'M4 3l7 17 2-7 7-2z'], ['arrow', 'Передача', 'A', 'M5 19L19 5M19 5h-8M19 5v8'], ['run', 'Забегание', 'R', 'M4 18c4-8 10-10 16-12M20 6l-2 5M20 6l-5-1'],
+      ['zone', 'Зона', 'Z', 'M4 6h16v12H4z'], ['spot', 'Подсветка игрока', 'S', 'M12 4a8 8 0 1 0 0 16 8 8 0 0 0 0-16zM12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6z'],
+      ['measure', 'Расстояние', 'M', 'M3 12h18M3 8v8M21 8v8'], ['text', 'Текст', 'T', 'M5 6h14M12 6v13'], ['line', 'Линия', 'L', 'M4 20L20 4']
+    ];
+    var tools = toolDefs.map(function (t) { var on = st.tool === t[0]; return { label: t[1], key: t[2], icon: t[3], showLabel: on, pressed: on ? 'true' : 'false', bg: on ? '#2A2C31' : 'transparent', border: on ? '#3A3C42' : 'transparent', color: on ? '#FFFFFF' : '#A4A8AF', pick: function () { self.setState({ tool: t[0] }); } }; });
+    var colorDefs = [['Акцент', accent], ['Жёлтый', '#FFB547'], ['Белый', '#FFFFFF'], ['Красный', '#FF9A8A']];
+    var colors = colorDefs.map(function (c, i) { var on = st.color === i; return { name: c[0], v: c[1], pressed: on ? 'true' : 'false', ring: on ? '#FFFFFF' : '#2A2C31', pick: function () { self.setState({ color: i }); } }; });
+    var toolHint = { select: 'Щёлкните по рисунку, чтобы изменить', arrow: 'Тяните от игрока — стрелка передачи', run: 'Тяните — изогнутое забегание пунктиром', zone: 'Растяните прямоугольник зоны', spot: 'Щёлкните по игроку — прожектор', measure: 'Тяните между двумя точками — метры по данным поля', text: 'Щёлкните, чтобы добавить подпись', line: 'Линия: высота блока, линия офсайда' }[st.tool];
+    var cur0 = D[st.sel] || D.gap;
+    var cur = Object.assign({}, cur0, { texts: cur0.texts.map(function (x) { return Object.assign({}, x, { w: Math.round(x.label.length * 10.6 + 30) }); }) });
+    var hide = st.hide || {};
+    var lay = { zone: !hide.zone, spot: !hide.spot, arrows: !hide.arrows, measure: !hide.measure, text: !hide.text };
+    var eyeOn = 'M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12zM12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6z', eyeOff = 'M3 3l18 18M10.6 5.1A10 10 0 0 1 12 5c6.5 0 10 7 10 7a17 17 0 0 1-3 3.9M6.6 6.6A17 17 0 0 0 2 12s3.5 7 10 7a9.6 9.6 0 0 0 4.4-1';
+    var layers = [['zone', 'Зоны', cur.zones.length], ['spot', 'Подсветка игроков', cur.spots.length], ['arrows', 'Стрелки и забегания', cur.arrows.length], ['measure', 'Расстояния', cur.measures.length], ['text', 'Подписи', cur.texts.length]].map(function (l) {
+      var vis = !hide[l[0]];
+      return { label: l[1], count: String(l[2]), pressed: vis ? 'true' : 'false', eye: vis ? eyeOn : eyeOff, color: vis ? '#E3E4E6' : '#6B7078', toggle: function () { var h = Object.assign({}, hide); h[l[0]] = vis; self.setState({ hide: h }); } };
+    });
+    var I = {
+      inbox: 'M3 13h5l2 3h4l2-3h5M5 5h14l2 8v6a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-6z', cal: 'M4 6h16v14H4zM4 10h16M9 3v4M15 3v4', notes: 'M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z',
+      home: 'M4 11l8-6 8 6v8a1 1 0 0 1-1 1h-4v-5h-6v5H5a1 1 0 0 1-1-1z', squad: 'M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM2 21v-1a6 6 0 0 1 12 0v1M16 3.5a4 4 0 0 1 0 7M22 21v-1a6 6 0 0 0-4-5.6',
+      tactic: 'M4 4h16v16H4zM12 4v16M12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6z', setp: 'M5 21V4M5 4h11l-2 4 2 4H5', data: 'M5 20V11M11 20V5M17 20v-6'
+    };
+    function item(label, icon, active) { return { label: label, icon: icon, bg: active ? '#1E1F23' : 'transparent', color: active ? '#FFFFFF' : '#D0D2D6', weight: active ? '500' : '400' }; }
+    var navSections = [
+      { hasTitle: false, title: '', items: [item('Входящие', I.inbox), item('Календарь', I.cal), item('Тактический блокнот', I.notes, true)] },
+      { hasTitle: true, title: 'Команда', items: [item('Главная', I.home), item('Состав', I.squad), item('Тактика', I.tactic), item('Стандарты', I.setp)] },
+      { hasTitle: true, title: 'Данные и отбор', items: [item('Центр данных', I.data)] }
+    ];
+    return { accent: accent, navSections: navSections, filters: filters, library: library, tools: tools, colors: colors, toolHint: toolHint, cur: cur, lay: lay, layers: layers };
+  }
+}
+</script>
+</body>
+</html>
