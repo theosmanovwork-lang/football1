@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Досье игрока</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0B0C0E}
+a{color:#D0D2D6;text-decoration:none}a:hover{color:#FFFFFF}
+button{font-family:inherit}
+.navi{transition:background-color 120ms ease,color 120ms ease}
+.navi:hover{background:#1A1B1F;color:#FFFFFF}
+.row{transition:background-color 120ms ease}
+.row:hover{background:#18191C}
+.ib{transition:background-color 120ms ease,border-color 120ms ease}
+.ib:hover{background:#1E1F23;border-color:#34363C}
+.opt{transition:background-color 120ms ease,border-color 120ms ease}
+.opt:hover{border-color:#3A3C42}
+</style>
+</helmet>
+<div style="width: 100%; min-height: 100vh; display: flex; flex-wrap: wrap; background: #0B0C0E; color: #E3E4E6; font-family: Inter, system-ui, sans-serif; font-size: 13px; line-height: 1.4">
+
+<nav aria-label="Основное меню" style="flex: 0 0 224px; max-width: 100%; box-sizing: border-box; padding: 10px 10px 8px; display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; align-items: center; gap: 6px; padding: 2px 4px">
+<a href="#" class="navi" style="display: flex; align-items: center; gap: 8px; padding: 4px 6px; border-radius: 6px; flex: 1; min-width: 0; color: #E3E4E6">
+<span style="width: 20px; height: 20px; flex: none; border-radius: 5px; background: {{accent}}; color: #0B0C0E; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 600">NR</span>
+<span style="font-weight: 600; white-space: nowrap">Норт Ривер</span>
+</a>
+<button type="button" class="ib" aria-label="Поиск" style="width: 28px; height: 28px; flex: none; border-radius: 6px; border: 1px solid transparent; background: transparent; color: #A4A8AF; display: flex; align-items: center; justify-content: center; cursor: pointer">
+<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg>
+</button>
+</div>
+<sc-for list="{{navSections}}" as="s" hint-placeholder-count="5">
+<div style="display: flex; flex-direction: column; gap: 1px">
+<sc-if value="{{s.hasTitle}}" hint-placeholder-val="{{ true }}">
+<div style="height: 26px; padding: 0 10px; display: flex; align-items: center; font-size: 12px; color: #9A9FA6">{{s.title}}</div>
+</sc-if>
+<sc-for list="{{s.items}}" as="n" hint-placeholder-count="3">
+<a href="#" class="navi" style="display: flex; align-items: center; gap: 10px; height: 30px; padding: 0 10px; border-radius: 6px; background: {{n.bg}}; color: {{n.color}}">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none"><path d="{{n.icon}}"></path></svg>
+<span style="flex: 1; white-space: nowrap">{{n.label}}</span>
+<span style="font-size: 12px; color: #A4A8AF">{{n.count}}</span>
+</a>
+</sc-for>
+</div>
+</sc-for>
+</nav>
+
+<div style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column; padding: 8px 8px 8px 0; box-sizing: border-box">
+<main style="flex: 1; display: flex; flex-direction: column; background: #121316; border: 1px solid #222327; border-radius: 10px; overflow: hidden">
+
+<header style="display: flex; align-items: center; gap: 8px; height: 44px; padding: 0 12px 0 16px; border-bottom: 1px solid #1E1F23; min-width: 0">
+<a href="#" style="color: #A4A8AF; white-space: nowrap">Скаутинг</a>
+<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#8F949C" stroke-width="2" stroke-linecap="round" aria-hidden="true" style="flex: none"><path d="M9 6l6 6-6 6"></path></svg>
+<a href="#" style="color: #A4A8AF; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">Шорт-лист · Левый защитник</a>
+<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#8F949C" stroke-width="2" stroke-linecap="round" aria-hidden="true" style="flex: none"><path d="M9 6l6 6-6 6"></path></svg>
+<span style="font-weight: 500; white-space: nowrap">Тиаго Ферраз</span>
+<div style="flex: 1"></div>
+<button type="button" class="ib" style="height: 28px; flex: none; padding: 0 10px; border-radius: 6px; border: 1px solid #2A2C31; background: transparent; color: #D0D2D6; font-size: 12px; cursor: pointer">Сравнить</button>
+<button type="button" class="ib" style="height: 28px; flex: none; padding: 0 10px; border-radius: 6px; border: 1px solid #2A2C31; background: #1A1B1F; color: #E3E4E6; font-size: 12px; font-weight: 500; cursor: pointer">Предложить спортивному директору</button>
+</header>
+
+<section aria-label="Игрок" style="display: flex; flex-wrap: wrap; align-items: center; gap: 16px 24px; padding: 16px 20px; border-bottom: 1px solid #1E1F23">
+<div style="display: flex; align-items: center; gap: 14px; flex: 1 1 340px; min-width: 0">
+<span style="width: 52px; height: 52px; flex: none; border-radius: 12px; background: #1E1F23; border: 1px solid #2A2C31; color: #D0D2D6; font-size: 16px; font-weight: 600; display: flex; align-items: center; justify-content: center">ТФ</span>
+<div style="display: flex; flex-direction: column; gap: 4px; min-width: 0">
+<h1 style="margin: 0; font-size: 20px; font-weight: 600; line-height: 1.2">Тиаго Ферраз</h1>
+<span style="color: #A4A8AF; font-size: 12px">21 год · ЛЗ, ЛП · левая нога · Ривьера Сул (Примейра Сул) · сборная до 21 года</span>
+</div>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<sc-for list="{{facts}}" as="f" hint-placeholder-count="4">
+<div style="min-width: 128px; padding: 8px 12px; border: 1px solid #222327; border-radius: 8px; display: flex; flex-direction: column; gap: 2px">
+<span style="font-size: 11px; color: #9A9FA6">{{f.label}}</span>
+<span style="font-size: 14px; font-weight: 500; color: {{f.color}}">{{f.value}}</span>
+<span style="font-size: 11px; color: #9A9FA6">{{f.note}}</span>
+</div>
+</sc-for>
+</div>
+</section>
+
+<nav aria-label="Разделы досье" style="display: flex; flex-wrap: wrap; gap: 6px; padding: 8px 20px; border-bottom: 1px solid #1E1F23">
+<a href="#grades" class="ib" style="height: 28px; padding: 0 12px; border-radius: 999px; border: 1px solid #33353B; background: #232428; color: #FFFFFF; font-size: 12px; font-weight: 500; display: flex; align-items: center">Оценки</a>
+<a href="#views" class="ib" style="height: 28px; padding: 0 12px; border-radius: 999px; border: 1px solid #2A2C31; color: #C3C6CB; font-size: 12px; font-weight: 500; display: flex; align-items: center">Просмотры</a>
+<a href="#plan" class="ib" style="height: 28px; padding: 0 12px; border-radius: 999px; border: 1px solid #2A2C31; color: #C3C6CB; font-size: 12px; font-weight: 500; display: flex; align-items: center">Следующий шаг</a>
+<a href="#data" class="ib" style="height: 28px; padding: 0 12px; border-radius: 999px; border: 1px solid #2A2C31; color: #C3C6CB; font-size: 12px; font-weight: 500; display: flex; align-items: center">Данные</a>
+<a href="#rules" class="ib" style="height: 28px; padding: 0 12px; border-radius: 999px; border: 1px solid #2A2C31; color: #C3C6CB; font-size: 12px; font-weight: 500; display: flex; align-items: center">Контракт и правила</a>
+</nav>
+
+<div style="display: flex; flex-wrap: wrap; align-items: flex-start">
+
+<div style="flex: 999 1 520px; min-width: 0; padding: 16px 16px 24px 20px; display: flex; flex-direction: column; gap: 16px; box-sizing: border-box">
+
+<section aria-labelledby="h-verdict" style="border: 1px solid #222327; border-radius: 8px; padding: 14px 16px; display: flex; flex-wrap: wrap; gap: 16px 28px">
+<div style="flex: 1 1 260px; display: flex; flex-direction: column; gap: 8px; min-width: 0">
+<h2 id="h-verdict" style="margin: 0; font-size: 12px; font-weight: 500; color: #9A9FA6">Рекомендация главного скаута · Даниэл Кроу</h2>
+<div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap">
+<span style="height: 26px; padding: 0 10px; border-radius: 6px; background: #2E2412; color: #FFCB7A; font-weight: 600; display: flex; align-items: center">Наблюдать</span>
+<span style="color: #D0D2D6">Нужны ещё 2 живых просмотра и проверка личности</span>
+</div>
+<p style="margin: 0; color: #C3C6CB">Быстрый атакующий крайний защитник с сильным навесом. Риски: игра в обороне один в один и выносливость после 60-й минуты. Характер почти не известен.</p>
+</div>
+<div style="flex: 1 1 220px; display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; justify-content: space-between; gap: 12px"><span style="color: #9A9FA6">Уровень сейчас</span><span>Ротация в нашей лиге</span></div>
+<div style="display: flex; justify-content: space-between; gap: 12px"><span style="color: #9A9FA6">Потенциал</span><span>Основа клуба топ-6</span></div>
+<div style="display: flex; justify-content: space-between; gap: 12px"><span style="color: #9A9FA6">Тип игрока</span><span>Атакующий крайний защитник</span></div>
+<div style="display: flex; justify-content: space-between; gap: 12px"><span style="color: #9A9FA6">Уверенность</span><span style="color: #FFCB7A">Низкая · 34%</span></div>
+</div>
+</section>
+
+<section id="grades" aria-labelledby="h-grades" style="display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap">
+<h2 id="h-grades" style="margin: 0; font-size: 13px; font-weight: 500">Оценки по четырём блокам</h2>
+<span style="font-size: 11px; color: #9A9FA6">полоса — диапазон, в котором скорее всего находится навык</span>
+<div style="flex: 1"></div>
+<span style="display: flex; align-items: center; gap: 6px; font-size: 11px; color: #9A9FA6"><span style="width: 14px; height: 6px; border-radius: 3px; background: {{accent}}"></span>уверенно<span style="width: 14px; height: 6px; border-radius: 3px; background: #4F6B3A; margin-left: 8px"></span>примерно<span style="width: 14px; height: 6px; border-radius: 3px; border: 1px dashed #4A4D55; margin-left: 8px"></span>не видели</span>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px">
+<sc-for list="{{groups}}" as="g" hint-placeholder-count="4">
+<div style="border: 1px solid #222327; border-radius: 8px; padding: 12px; display: flex; flex-direction: column; gap: 8px; min-width: 0">
+<div style="display: flex; align-items: center; gap: 8px">
+<h3 style="margin: 0; font-size: 13px; font-weight: 500">{{g.title}}</h3>
+<span style="font-size: 11px; color: {{g.knowColor}}">знание {{g.know}}</span>
+<div style="flex: 1"></div>
+<sc-for list="{{g.sources}}" as="src" hint-placeholder-count="2">
+<span style="font-size: 10px; color: #8F949C; border: 1px solid #2A2C31; border-radius: 4px; padding: 0 5px; white-space: nowrap">{{src}}</span>
+</sc-for>
+</div>
+<sc-for list="{{g.rows}}" as="r" hint-placeholder-count="4">
+<div style="display: flex; flex-direction: column; gap: 4px; padding: 3px 0">
+<div style="display: flex; align-items: baseline; gap: 10px">
+<span style="flex: 1; min-width: 0; color: #D0D2D6; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{r.name}}</span>
+<span style="flex: none; font-size: 12px; color: {{r.labelColor}}; white-space: nowrap">{{r.label}}</span>
+</div>
+<div style="position: relative; height: 6px; border-radius: 3px; background: #1B1C20; border: 1px {{r.trackBorder}} {{r.trackColor}}; box-sizing: border-box">
+<span style="position: absolute; top: 0; bottom: 0; left: 25%; width: 1px; background: #26272B"></span>
+<span style="position: absolute; top: 0; bottom: 0; left: 40%; width: 1px; background: #26272B"></span>
+<span style="position: absolute; top: 0; bottom: 0; left: 55%; width: 1px; background: #26272B"></span>
+<span style="position: absolute; top: 0; bottom: 0; left: 70%; width: 1px; background: #26272B"></span>
+<span style="position: absolute; top: 0; bottom: 0; left: 85%; width: 1px; background: #26272B"></span>
+<sc-if value="{{r.known}}" hint-placeholder-val="{{ true }}">
+<span style="position: absolute; top: -1px; bottom: -1px; left: {{r.left}}; width: {{r.width}}; border-radius: 3px; background: {{r.fill}}"></span>
+</sc-if>
+</div>
+</div>
+</sc-for>
+</div>
+</sc-for>
+</div>
+</section>
+
+<section aria-labelledby="h-sw" style="display: flex; flex-wrap: wrap; gap: 12px">
+<div style="flex: 1 1 260px; border: 1px solid #222327; border-radius: 8px; padding: 12px; display: flex; flex-direction: column; gap: 8px">
+<h2 id="h-sw" style="margin: 0; font-size: 13px; font-weight: 500">Сильные стороны</h2>
+<sc-for list="{{strengths}}" as="s" hint-placeholder-count="3">
+<div style="display: flex; gap: 8px"><span style="color: {{accent}}">+</span><span style="color: #D0D2D6">{{s}}</span></div>
+</sc-for>
+</div>
+<div style="flex: 1 1 260px; border: 1px solid #222327; border-radius: 8px; padding: 12px; display: flex; flex-direction: column; gap: 8px">
+<h2 style="margin: 0; font-size: 13px; font-weight: 500">Слабые стороны и риски</h2>
+<sc-for list="{{weaknesses}}" as="s" hint-placeholder-count="3">
+<div style="display: flex; gap: 8px"><span style="color: #FF9A8A">−</span><span style="color: #D0D2D6">{{s}}</span></div>
+</sc-for>
+</div>
+</section>
+
+<section id="views" aria-labelledby="h-views" style="display: flex; flex-direction: column; gap: 4px">
+<div style="display: flex; align-items: center; gap: 8px; height: 36px; padding: 0 12px; border-radius: 6px; background: #17181B">
+<h2 id="h-views" style="margin: 0; font-size: 13px; font-weight: 500">Просмотры</h2>
+<span style="color: #9A9FA6">4</span>
+<div style="flex: 1"></div>
+<span style="font-size: 12px; color: #9A9FA6">2 видео · 1 живой · 1 от агента</span>
+</div>
+<sc-for list="{{views}}" as="v" hint-placeholder-count="4">
+<article class="row" style="display: flex; gap: 12px; padding: 10px 12px; border-radius: 6px">
+<span style="width: 48px; flex: none; font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 11px; color: #9A9FA6; padding-top: 2px">{{v.date}}</span>
+<span style="flex: none; height: 20px; padding: 0 7px; border-radius: 4px; background: {{v.kindBg}}; color: {{v.kindFg}}; font-size: 11px; display: flex; align-items: center; white-space: nowrap">{{v.kind}}</span>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px">
+<div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: baseline"><span style="font-weight: 500">{{v.title}}</span><span style="font-size: 12px; color: #9A9FA6">{{v.who}}</span></div>
+<span style="color: #C3C6CB">{{v.note}}</span>
+<sc-if value="{{v.hasWarn}}" hint-placeholder-val="{{ false }}">
+<span style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: #FFCB7A">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"></path><circle cx="12" cy="12" r="3"></circle></svg>{{v.warn}}</span>
+</sc-if>
+</div>
+<span style="flex: none; font-size: 11px; color: #9A9FA6; white-space: nowrap; padding-top: 2px">{{v.gain}}</span>
+</article>
+</sc-for>
+</section>
+
+</div>
+
+<aside aria-label="Следующий шаг и данные" style="flex: 1 1 380px; max-width: 100%; min-width: 0; padding: 16px 20px 24px 16px; border-left: 1px solid #1E1F23; display: flex; flex-direction: column; gap: 20px; box-sizing: border-box">
+
+<section aria-labelledby="h-know" style="display: flex; flex-direction: column; gap: 10px">
+<h2 id="h-know" style="margin: 0; font-size: 12px; font-weight: 500; color: #9A9FA6">Что мы знаем об игроке</h2>
+<div role="img" aria-label="Радар по четырём блокам: тёмная фигура — нижняя граница оценок, светлый контур — верхняя" style="display: flex; justify-content: center">
+<svg width="300" height="200" viewBox="0 0 300 200" aria-hidden="true">
+<polygon points="150,20 230,100 150,180 70,100" fill="none" stroke="#2A2C31" stroke-width="1"></polygon>
+<polygon points="150,60 190,100 150,140 110,100" fill="none" stroke="#222327" stroke-width="1"></polygon>
+<line x1="150" y1="20" x2="150" y2="180" stroke="#222327"></line>
+<line x1="70" y1="100" x2="230" y2="100" stroke="#222327"></line>
+<polygon points="{{radarHi}}" fill="none" stroke="{{accent}}" stroke-width="1.5" stroke-dasharray="4 3"></polygon>
+<polygon points="{{radarLo}}" fill="{{accent}}" fill-opacity="0.22" stroke="{{accent}}" stroke-width="1.5"></polygon>
+<text x="150" y="12" text-anchor="middle" font-size="11" fill="#A4A8AF" font-family="Inter, sans-serif">Техника</text>
+<text x="236" y="104" text-anchor="start" font-size="11" fill="#A4A8AF" font-family="Inter, sans-serif">Тактика</text>
+<text x="150" y="196" text-anchor="middle" font-size="11" fill="#A4A8AF" font-family="Inter, sans-serif">Физика</text>
+<text x="64" y="104" text-anchor="end" font-size="11" fill="#A4A8AF" font-family="Inter, sans-serif">Психология</text>
+</svg>
+</div>
+<sc-for list="{{knowRows}}" as="k" hint-placeholder-count="4">
+<div style="display: flex; align-items: center; gap: 10px; font-size: 12px">
+<span style="width: 84px; color: #D0D2D6">{{k.name}}</span>
+<span style="flex: 1; height: 4px; border-radius: 2px; background: #26272B; display: block"><span style="display: block; height: 4px; border-radius: 2px; width: {{k.w}}; background: {{k.c}}"></span></span>
+<span style="width: 36px; text-align: right; font-family: &quot;JetBrains Mono&quot;, monospace; color: #A4A8AF">{{k.w}}</span>
+</div>
+</sc-for>
+<span style="font-size: 11px; color: #9A9FA6">Стартовое знание по лигам Южной Америки — около 10%. Остальное дали просмотры.</span>
+</section>
+
+<section id="plan" aria-labelledby="h-plan" style="display: flex; flex-direction: column; gap: 10px">
+<h2 id="h-plan" style="margin: 0; font-size: 12px; font-weight: 500; color: #9A9FA6">Следующий шаг · живой просмотр</h2>
+<span style="font-size: 12px; color: #D0D2D6">Матч</span>
+<sc-for list="{{matches}}" as="m" hint-placeholder-count="3">
+<button type="button" class="opt" onClick="{{m.pick}}" aria-pressed="{{m.pressed}}" style="display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 8px; border: 1px solid {{m.border}}; background: {{m.bg}}; color: #E3E4E6; font-size: 12px; text-align: left; cursor: pointer">
+<span style="width: 14px; height: 14px; flex: none; border-radius: 50%; border: 1.5px solid {{m.dot}}; box-sizing: border-box; display: flex; align-items: center; justify-content: center"><span style="width: 6px; height: 6px; border-radius: 50%; background: {{m.dotFill}}"></span></span>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px"><span>{{m.title}}</span><span style="color: #9A9FA6">{{m.sub}}</span></span>
+<span style="flex: none; color: {{m.ticketColor}}; white-space: nowrap">{{m.ticket}}</span>
+</button>
+</sc-for>
+<span style="font-size: 12px; color: #D0D2D6; margin-top: 4px">Кто поедет</span>
+<sc-for list="{{scouts}}" as="s" hint-placeholder-count="3">
+<button type="button" class="opt" onClick="{{s.pick}}" aria-pressed="{{s.pressed}}" style="display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 8px; border: 1px solid {{s.border}}; background: {{s.bg}}; color: #E3E4E6; font-size: 12px; text-align: left; cursor: pointer">
+<span style="width: 26px; height: 26px; flex: none; border-radius: 50%; background: #26272B; color: #C3C6CB; font-size: 10px; font-weight: 600; display: flex; align-items: center; justify-content: center">{{s.ini}}</span>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px"><span>{{s.name}}</span><span style="color: #9A9FA6">{{s.sub}}</span></span>
+<span style="flex: none; color: #9A9FA6; white-space: nowrap">{{s.load}}</span>
+</button>
+</sc-for>
+<div style="border: 1px solid #222327; border-radius: 8px; overflow: hidden; margin-top: 4px">
+<sc-for list="{{planRows}}" as="p" hint-placeholder-count="5">
+<div style="display: flex; gap: 12px; padding: 7px 10px; font-size: 12px; border-bottom: 1px solid #1B1C20"><span style="flex: none; width: 128px; color: #9A9FA6">{{p.k}}</span><span style="flex: 1; text-align: right; color: {{p.c}}">{{p.v}}</span></div>
+</sc-for>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<button type="button" class="ib" style="flex: 1 1 200px; height: 32px; border-radius: 6px; border: 1px solid #2A2C31; background: #1A1B1F; color: #E3E4E6; font-size: 12px; font-weight: 500; cursor: pointer">{{sendLabel}}</button>
+<button type="button" class="ib" style="height: 32px; padding: 0 12px; border-radius: 6px; border: 1px solid #2A2C31; background: transparent; color: #D0D2D6; font-size: 12px; cursor: pointer">Запросить видео</button>
+</div>
+<button type="button" class="ib" style="height: 32px; border-radius: 6px; border: 1px solid #2A2C31; background: transparent; color: #D0D2D6; font-size: 12px; cursor: pointer">Проверка личности через контакты · 5–7 дней</button>
+</section>
+
+<section id="data" aria-labelledby="h-data" style="display: flex; flex-direction: column; gap: 10px">
+<h2 id="h-data" style="margin: 0; font-size: 12px; font-weight: 500; color: #9A9FA6">Центр данных · базовые цифры</h2>
+<div style="border: 1px solid #222327; border-radius: 8px; overflow: hidden">
+<div style="display: flex; padding: 7px 10px; font-size: 11px; color: #9A9FA6; border-bottom: 1px solid #222327"><span style="flex: 1">Сезон</span><span style="width: 44px; text-align: right">Матчи</span><span style="width: 52px; text-align: right">Минуты</span><span style="width: 44px; text-align: right">Голы</span><span style="width: 68px; text-align: right">Передачи</span></div>
+<sc-for list="{{seasons}}" as="s" hint-placeholder-count="2">
+<div style="display: flex; padding: 6px 10px; font-size: 12px; border-bottom: 1px solid #1B1C20; font-family: &quot;JetBrains Mono&quot;, monospace"><span style="flex: 1; font-family: Inter, sans-serif; color: #D0D2D6">{{s.s}}</span><span style="width: 44px; text-align: right">{{s.m}}</span><span style="width: 52px; text-align: right">{{s.min}}</span><span style="width: 44px; text-align: right">{{s.g}}</span><span style="width: 68px; text-align: right">{{s.a}}</span></div>
+</sc-for>
+</div>
+<div style="display: flex; gap: 10px; padding: 10px; border-radius: 8px; background: #17181B; font-size: 12px">
+<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#A4A8AF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 1px"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V8a4 4 0 0 1 8 0v3"></path></svg>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<span style="color: #D0D2D6">Глубокие метрики (xG, прогрессивные действия, обойдённые соперники, физданные) по этой лиге недоступны: пакет «Южная Америка» у провайдера «Полевые данные» не подключён.</span>
+<a href="#" style="color: {{accent}}; font-weight: 500">Подключить пакет · 210 тыс. в сезон →</a>
+</div>
+</div>
+</section>
+
+<section id="rules" aria-labelledby="h-rules" style="display: flex; flex-direction: column; gap: 8px">
+<h2 id="h-rules" style="margin: 0; font-size: 12px; font-weight: 500; color: #9A9FA6">Контракт и правила</h2>
+<sc-for list="{{rules}}" as="r" hint-placeholder-count="4">
+<div style="display: flex; gap: 10px; font-size: 12px">
+<span style="width: 8px; height: 8px; flex: none; border-radius: 50%; margin-top: 5px; background: {{r.c}}"></span>
+<span style="display: flex; flex-direction: column; gap: 2px"><span style="color: #E3E4E6">{{r.t}}</span><span style="color: #9A9FA6">{{r.d}}</span></span>
+</div>
+</sc-for>
+</section>
+
+</aside>
+</div>
+</main>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#9BE15D","options":["#9BE15D","#7CC4FF","#FFB547","#B9A2FF"]},"showNumbers":{"editor":"boolean","default":false},"$preview":{"width":1440,"height":2000}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { match: 0, scout: 0 };
+  }
+  renderVals() {
+    var self = this;
+    var accent = this.props.accent ?? '#9BE15D';
+    var nums = !!this.props.showNumbers;
+    var st = this.state;
+    var words = [[18, 'Элитный уровень'], [15, 'Очень хорошо'], [12, 'Хорошо'], [9, 'Средне'], [6, 'Ниже среднего'], [1, 'Слабо']];
+    function word(v) { for (var i = 0; i < words.length; i++) { if (v >= words[i][0]) { return words[i][1]; } } return 'Слабо'; }
+    function grade(name, lo, hi, sure) {
+      if (lo === null) {
+        return { name: name, known: false, left: '0%', width: '0%', fill: 'transparent', trackBorder: 'dashed', trackColor: '#3A3C42', label: 'не видели', labelColor: '#8F949C' };
+      }
+      var a = word(lo), b = word(hi);
+      var label = a === b ? a : (a + ' — ' + b);
+      if (nums) { label = lo === hi ? String(lo) : (lo + '–' + hi); }
+      return { name: name, known: true, left: ((lo - 1) / 20 * 100).toFixed(1) + '%', width: ((hi - lo + 1) / 20 * 100).toFixed(1) + '%', fill: sure ? accent : '#4F6B3A', trackBorder: 'solid', trackColor: '#1B1C20', label: label, labelColor: sure ? '#E3E4E6' : '#C3C6CB' };
+    }
+    var groups = [
+      { title: 'Техника', know: '58%', knowColor: '#C3C6CB', sources: ['Видео', 'Живой'], rows: [
+        grade('Навес', 15, 17, true), grade('Дриблинг', 13, 16, true), grade('Первое касание', 12, 15, false), grade('Пас', 11, 14, false), grade('Отбор', 8, 11, true), grade('Удар', 7, 12, false)] },
+      { title: 'Тактика', know: '40%', knowColor: '#C3C6CB', sources: ['Видео'], rows: [
+        grade('Игра без мяча', 13, 16, false), grade('Позиционирование', 8, 12, false), grade('Решения', 9, 14, false), grade('Прессинг', 11, 15, false)] },
+      { title: 'Физика', know: '30%', knowColor: '#FFCB7A', sources: ['Живой ×1'], rows: [
+        grade('Скорость', 16, 18, true), grade('Ускорение', 15, 18, false), grade('Выносливость', 8, 13, false), grade('Сила', null, null)] },
+      { title: 'Психология и характер', know: '10%', knowColor: '#FF9A8A', sources: ['Агент'], rows: [
+        grade('Работоспособность', 10, 16, false), grade('Концентрация', null, null), grade('Хладнокровие', null, null), grade('Лидерство', null, null)] }
+    ];
+    var facts = [
+      { label: 'Знание', value: '34%', note: 'по всем блокам', color: '#FFCB7A' },
+      { label: 'Оценка стоимости', value: '2,5–4 млн', note: 'по 3 похожим сделкам', color: '#E3E4E6' },
+      { label: 'Контракт', value: 'до июня 2027', note: 'осталось 8 месяцев', color: '#E3E4E6' },
+      { label: 'Наш интерес', value: 'Замечен', note: 'скауты двух клубов видели', color: '#FFCB7A' }
+    ];
+    var views = [
+      { date: '22 окт', kind: 'Видео', kindBg: '#18222E', kindFg: '#9CCBFF', title: 'Кубок: Ривьера Сул — Атлас (1:1)', who: 'Ана Резенде · аналитик', note: 'Отбор в своей половине поля рискованный: 2 из 5 выигранных. В атаке открывается вовремя.', hasWarn: false, warn: '', gain: 'Тактика +8%' },
+      { date: '18 окт', kind: 'Живой', kindBg: '#1B2A16', kindFg: '#B7E69A', title: 'Порто Норте — Ривьера Сул (1:2), гости', who: 'Мигел Араужо · скаут, Южная Америка', note: 'Очень быстрый, после 60-й минуты заметно проседает. Разминку провёл отдельно от команды — уточнить, нет ли травмы.', hasWarn: true, warn: 'На местах для скаутов были представители Кингспорта и Эшби Роверс', gain: 'Физика +25%' },
+      { date: '05 окт', kind: 'Агент', kindBg: '#26222E', kindFg: '#CDBBFF', title: 'Предложение от агента Рикарду Кошты', who: 'письмо во Входящих', note: '«Лучший молодой крайний защитник лиги, работает больше всех». Сведения от агента — низкая уверенность.', hasWarn: false, warn: '', gain: 'Психология +5%' },
+      { date: '28 сен', kind: 'Видео', kindBg: '#18222E', kindFg: '#9CCBFF', title: 'Нарезка 3 матчей лиги', who: 'Ана Резенде · аналитик', note: 'Сильный навес с ходу, 2 голевые передачи. Видео не показывает игру без мяча целиком.', hasWarn: false, warn: '', gain: 'Техника +30%' }
+    ];
+    var matchDefs = [
+      { title: 'Ср 28 окт · Ривьера Сул — Сантана', sub: 'дома · лига', ticket: 'Билет одобрен', ticketColor: accent, days: 0 },
+      { title: 'Вс 1 нояб · Валле Верде — Ривьера Сул', sub: 'гости · лига · игра против сильного фланга', ticket: 'Запросить билет', ticketColor: '#A4A8AF', days: 1 },
+      { title: 'Чт 12 нояб · Сборная до 21 года', sub: 'отборочный матч · через федерацию', ticket: 'Аккредитация', ticketColor: '#A4A8AF', days: 2 }
+    ];
+    var matches = matchDefs.map(function (m, i) {
+      var on = st.match === i;
+      return Object.assign({}, m, { pressed: on ? 'true' : 'false', pick: function () { self.setState({ match: i }); },
+        border: on ? '#3A3C42' : '#222327', bg: on ? '#1A1B1F' : 'transparent', dot: on ? accent : '#4A4D55', dotFill: on ? accent : 'transparent' });
+    });
+    var scoutDefs = [
+      { ini: 'МА', name: 'Мигел Араужо', sub: 'Южная Америка · порт., исп. · точность высокая', load: '7 из 9', leak: 'Высокий — его уже видели на этом игроке', leakC: '#FF9A8A', gain: 'Физика +20%, Психология +10%', cost: '9 400', days: 4 },
+      { ini: 'ЛП', name: 'Луиш Пинту', sub: 'внештатный · Бразилия · точность средняя', load: '3 из 6', leak: 'Низкий — малоизвестный скаут', leakC: accent, gain: 'Физика +12%, Психология +6%', cost: '4 100', days: 4 },
+      { ini: 'ДК', name: 'Даниэл Кроу', sub: 'главный скаут · точность очень высокая', load: '5 из 8', leak: 'Высокий — главного скаута знают все', leakC: '#FF9A8A', gain: 'Физика +25%, Психология +15%, второе мнение', cost: '18 700', days: 7 }
+    ];
+    var scouts = scoutDefs.map(function (s, i) {
+      var on = st.scout === i;
+      return Object.assign({}, s, { pressed: on ? 'true' : 'false', pick: function () { self.setState({ scout: i }); },
+        border: on ? '#3A3C42' : '#222327', bg: on ? '#1A1B1F' : 'transparent' });
+    });
+    var sm = scoutDefs[st.scout];
+    var md = matchDefs[st.match];
+    var planRows = [
+      { k: 'Что откроет', v: sm.gain, c: '#E3E4E6' },
+      { k: 'Срок с отчётом', v: (sm.days + md.days * 2) + ' дн.', c: '#E3E4E6' },
+      { k: 'Стоимость поездки', v: sm.cost, c: '#E3E4E6' },
+      { k: 'Риск утечки интереса', v: sm.leak, c: sm.leakC },
+      { k: 'Билет', v: md.days === 0 ? 'одобрен домашним клубом' : (md.days === 1 ? 'запрос за 1+ рабочий день, могут отказать' : 'заявка в федерацию'), c: md.days === 0 ? accent : '#C3C6CB' }
+    ];
+    function pt(cx, cy, r, dir) { return dir === 0 ? (cx + ',' + (cy - r)) : dir === 1 ? ((cx + r) + ',' + cy) : dir === 2 ? (cx + ',' + (cy + r)) : ((cx - r) + ',' + cy); }
+    function poly(vals) { return vals.map(function (v, i) { return pt(150, 100, v / 20 * 80, i); }).join(' '); }
+    var radarLo = poly([12, 10, 11, 6]);
+    var radarHi = poly([15, 14, 16, 15]);
+    var knowRows = [
+      { name: 'Техника', w: '58%', c: '#C3C6CB' }, { name: 'Тактика', w: '40%', c: '#C3C6CB' },
+      { name: 'Физика', w: '30%', c: '#FFB547' }, { name: 'Психология', w: '10%', c: '#FF9A8A' }
+    ];
+    var seasons = [{ s: '2026/27 · идёт', m: '14', min: '1 180', g: '1', a: '4' }, { s: '2025/26', m: '31', min: '2 670', g: '2', a: '7' }];
+    var rules = [
+      { c: '#FFB547', t: 'Сейчас — только через клуб', d: 'Можно запросить у Ривьера Сул цену и условия. Прямой разговор с игроком — нарушение правил.' },
+      { c: accent, t: 'С 1 января 2027 — свободный переход', d: 'До конца контракта останется 6 месяцев: можно договориться с игроком, заранее письменно уведомив его клуб.' },
+      { c: '#7CC4FF', t: 'Агент: Рикарду Кошта', d: 'Сам предложил игрока 5 октября. Комиссия по рынку — около 10%.' },
+      { c: '#FF9A8A', t: 'Медосмотр — только при подписании', d: 'Вопрос о разминке 18 октября останется открытым до медосмотра, если не уточнить через контакты.' }
+    ];
+    var I = {
+      inbox: 'M3 13h5l2 3h4l2-3h5M5 5h14l2 8v6a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-6z', cal: 'M4 6h16v14H4zM4 10h16M9 3v4M15 3v4', notes: 'M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z',
+      home: 'M4 11l8-6 8 6v8a1 1 0 0 1-1 1h-4v-5h-6v5H5a1 1 0 0 1-1-1z', squad: 'M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM2 21v-1a6 6 0 0 1 12 0v1M16 3.5a4 4 0 0 1 0 7M22 21v-1a6 6 0 0 0-4-5.6',
+      tactic: 'M4 4h16v16H4zM12 4v16M12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6z', med: 'M12 21s-8-5-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 6-8 11-8 11z', load: 'M3 12h4l3-8 4 16 3-8h4',
+      data: 'M5 20V11M11 20V5M17 20v-6', scout: 'M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM20 20l-4-4', transfer: 'M4 8h13l-3-3M20 16H7l3 3',
+      world: 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM3 12h18M12 3c2.5 2.5 3.8 5.5 3.8 9s-1.3 6.5-3.8 9c-2.5-2.5-3.8-5.5-3.8-9S9.5 5.5 12 3z', club: 'M4 21V8l8-5 8 5v13M9 21v-6h6v6', money: 'M3 7h18v10H3zM12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z'
+    };
+    function item(label, icon, count, active) { return { label: label, icon: icon, count: count || '', bg: active ? '#1E1F23' : 'transparent', color: active ? '#FFFFFF' : '#D0D2D6' }; }
+    var navSections = [
+      { hasTitle: false, title: '', items: [item('Входящие', I.inbox, '7'), item('Календарь', I.cal), item('Тактический блокнот', I.notes)] },
+      { hasTitle: true, title: 'Команда', items: [item('Главная', I.home), item('Состав', I.squad), item('Тактика', I.tactic)] },
+      { hasTitle: true, title: 'Здоровье', items: [item('Медцентр', I.med, '3'), item('Нагрузка и GPS', I.load)] },
+      { hasTitle: true, title: 'Данные и отбор', items: [item('Центр данных', I.data), item('Скаутинг', I.scout, '3', true), item('Трансферы', I.transfer), item('Мир', I.world)] },
+      { hasTitle: true, title: 'Клуб', items: [item('Совет и цели', I.club), item('Финансы', I.money)] }
+    ];
+    return {
+      accent: accent, navSections: navSections, facts: facts, groups: groups, views: views, matches: matches, scouts: scouts, planRows: planRows,
+      sendLabel: 'Отправить скаута · ' + md.title.split(' · ')[0],
+      radarLo: radarLo, radarHi: radarHi, knowRows: knowRows, seasons: seasons, rules: rules,
+      strengths: ['Навес с ходу: 9 голевых моментов за 3 матча на видео', 'Скорость на рывке — одна из лучших в лиге', 'Вовремя открывается за спину крайнему полузащитнику'],
+      weaknesses: ['Оборона один в один: проигрывает больше половины', 'Выносливость: проседает после 60-й минуты', 'Характер и адаптация к переезду не проверены']
+    };
+  }
+}
+</script>
+</body>
+</html>
