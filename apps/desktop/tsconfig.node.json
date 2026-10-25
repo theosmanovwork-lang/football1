@@ -3,5 +3,5 @@
   "compilerOptions": {
     "types": ["node"]
   },
-  "include": ["electron.vite.config.mts", "vite.web.config.mts", "src/main", "src/preload", "e2e"]
+  "include": ["electron.vite.config.mts", "vite.web.config.mts", "src/main", "src/preload"]
 }

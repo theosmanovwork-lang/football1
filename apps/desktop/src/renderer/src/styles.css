@@ -1,93 +1,191 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
+@import '@fontsource-variable/inter';
+@import '@fontsource/jetbrains-mono/500.css';
 
 /*
- * Design tokens. Every color and spacing decision in the UI goes through these variables:
+ * Design tokens. Every color and size in the UI goes through these variables:
  * no hard-coded colors in components (CLAUDE.md, UI principles).
- * Theme: `.dark` on <html>. Density: `data-density="comfortable"` on <html> (compact is default).
- * The values are neutral shadcn/ui defaults until the first mockups arrive.
+ * Dark values are taken 1:1 from the home mockup (docs/design/source/home/Desk.dc.html).
+ * Light values are derived with the same roles; the mockup has no light variant yet.
+ * Theme: `.dark` on <html>. Density: `data-density` on <html>.
  */
 
 @custom-variant dark (&:is(.dark *));
 
 :root {
+  /* Surfaces */
+  --app-bg: #f4f4f5;
+  --surface: #ffffff;
+  --surface-sunken: #f7f7f8;
+  --raised: #f4f4f5;
+  --control: #ffffff;
+  --selected: #ececee;
+  --selected-strong: #e6e6e9;
+  /* Lines */
+  --line: #ececee;
+  --line-card: #e4e4e7;
+  --line-control: #d9d9de;
+  --line-strong: #c9c9cf;
+  --line-faint: #f0f0f2;
+  --track: #e4e4e7;
+  /* Text */
+  --fg: #18181b;
+  --fg-strong: #09090b;
+  --fg-2: #27272a;
+  --fg-3: #3f3f46;
+  --fg-muted: #52525b;
+  --fg-subtle: #63636b;
+  --fg-faint: #71717a;
+  --fg-dim: #a1a1aa;
+  /* Signal colors */
+  --brand: #3e8e1e;
+  --brand-fg: #ffffff;
+  --warn: #d97706;
+  --caution: #b45309;
+  --danger: #dc2626;
+  --info: #0369a1;
+  --violet: #6d28d9;
+  --progress: #a16207;
+  --risk-zone: #fdf1e3;
+  --ok-bg: #e7f5dd;
+  --ok-fg: #2f6b12;
+  --mod-bg: #fdf0d9;
+  --mod-fg: #8a4b05;
+  --out-bg: #fce4e1;
+  --out-fg: #a1261b;
+  --scrim: rgb(15 15 20 / 0.35);
+  --overlay-shadow: 0 12px 40px rgb(0 0 0 / 0.18);
+
+  /* Density: compact matches the mockup */
+  --nav-item-h: 30px;
+  --row-h: 40px;
+  --group-h: 36px;
+  --list-row-h: 34px;
+  --table-row-h: 26px;
+
   --radius: 0.5rem;
-  --density-row: 28px;
-  --density-gap: 6px;
 
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-}
-
-:root[data-density='comfortable'] {
-  --density-row: 36px;
-  --density-gap: 10px;
+  /* shadcn/ui roles mapped onto the palette above */
+  --background: var(--surface);
+  --foreground: var(--fg);
+  --card: var(--surface);
+  --card-foreground: var(--fg);
+  --popover: var(--raised);
+  --popover-foreground: var(--fg);
+  --primary: var(--fg);
+  --primary-foreground: var(--surface);
+  --secondary: var(--control);
+  --secondary-foreground: var(--fg);
+  --muted: var(--raised);
+  --muted-foreground: var(--fg-subtle);
+  --accent: var(--selected);
+  --accent-foreground: var(--fg-strong);
+  --destructive: var(--danger);
+  --border: var(--line-card);
+  --input: var(--line-control);
+  --ring: var(--line-strong);
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
+  --app-bg: #0b0c0e;
+  --surface: #121316;
+  --surface-sunken: #111215;
+  --raised: #17181b;
+  --control: #1a1b1f;
+  --selected: #1e1f23;
+  --selected-strong: #232428;
+  --line: #1e1f23;
+  --line-card: #222327;
+  --line-control: #2a2c31;
+  --line-strong: #33353b;
+  --line-faint: #1b1c20;
+  --track: #26272b;
+  --fg: #e3e4e6;
+  --fg-strong: #ffffff;
+  --fg-2: #d0d2d6;
+  --fg-3: #c3c6cb;
+  --fg-muted: #a4a8af;
+  --fg-subtle: #9a9fa6;
+  --fg-faint: #8f949c;
+  --fg-dim: #6b7078;
+  --brand: #9be15d;
+  --brand-fg: #0b0c0e;
+  --warn: #f59e3b;
+  --caution: #ffb547;
+  --danger: #ff9a8a;
+  --info: #7cc4ff;
+  --violet: #b9a2ff;
+  --progress: #f2c94c;
+  --risk-zone: #2a1d12;
+  --ok-bg: #1b2a16;
+  --ok-fg: #b7e69a;
+  --mod-bg: #2e2412;
+  --mod-fg: #ffcb7a;
+  --out-bg: #2e1715;
+  --out-fg: #ffb0a6;
+  --scrim: rgb(5 6 8 / 0.6);
+  --overlay-shadow: 0 12px 40px rgb(0 0 0 / 0.55);
+}
+
+:root[data-density='comfortable'] {
+  --nav-item-h: 34px;
+  --row-h: 46px;
+  --group-h: 40px;
+  --list-row-h: 40px;
+  --table-row-h: 30px;
 }
 
 @theme inline {
+  --font-sans: 'Inter Variable', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  --color-app: var(--app-bg);
+  --color-surface: var(--surface);
+  --color-surface-sunken: var(--surface-sunken);
+  --color-raised: var(--raised);
+  --color-control: var(--control);
+  --color-selected: var(--selected);
+  --color-selected-strong: var(--selected-strong);
+  --color-line: var(--line);
+  --color-line-card: var(--line-card);
+  --color-line-control: var(--line-control);
+  --color-line-strong: var(--line-strong);
+  --color-line-faint: var(--line-faint);
+  --color-track: var(--track);
+  --color-fg: var(--fg);
+  --color-fg-strong: var(--fg-strong);
+  --color-fg-2: var(--fg-2);
+  --color-fg-3: var(--fg-3);
+  --color-fg-muted: var(--fg-muted);
+  --color-fg-subtle: var(--fg-subtle);
+  --color-fg-faint: var(--fg-faint);
+  --color-fg-dim: var(--fg-dim);
+  --color-brand: var(--brand);
+  --color-brand-fg: var(--brand-fg);
+  --color-warn: var(--warn);
+  --color-caution: var(--caution);
+  --color-danger: var(--danger);
+  --color-info: var(--info);
+  --color-violet: var(--violet);
+  --color-progress: var(--progress);
+  --color-risk-zone: var(--risk-zone);
+  --color-ok-bg: var(--ok-bg);
+  --color-ok-fg: var(--ok-fg);
+  --color-mod-bg: var(--mod-bg);
+  --color-mod-fg: var(--mod-fg);
+  --color-out-bg: var(--out-bg);
+  --color-out-fg: var(--out-fg);
+  --color-scrim: var(--scrim);
+
+  --spacing-nav-item: var(--nav-item-h);
+  --spacing-row: var(--row-h);
+  --spacing-group: var(--group-h);
+  --spacing-list-row: var(--list-row-h);
+  --spacing-table-row: var(--table-row-h);
+
+  --shadow-overlay: var(--overlay-shadow);
+
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -110,28 +208,51 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
-  --spacing-row: var(--density-row);
-  --spacing-density: var(--density-gap);
 }
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply border-line-card outline-ring/50;
+  }
+  html,
+  body,
+  #root {
+    height: 100%;
   }
   body {
-    @apply bg-background text-foreground text-sm antialiased;
+    margin: 0;
+    background: var(--app-bg);
+    color: var(--fg);
+    font-family: var(--font-sans);
+    font-size: 13px;
+    line-height: 1.4;
+    -webkit-font-smoothing: antialiased;
+    overflow: hidden;
   }
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+  button {
+    font: inherit;
+    color: inherit;
+  }
+  :focus-visible {
+    outline: 2px solid var(--line-strong);
+    outline-offset: 1px;
+  }
+}
+
+/* Hover feedback: 120 ms CSS transitions (CLAUDE.md, UI principles). */
+@utility hover-surface {
+  transition: background-color 120ms ease-out;
+  &:hover {
+    background-color: var(--selected);
+  }
+}
+
+/* Thin scrollbars in the palette colors instead of the OS default. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-strong) transparent;
 }
