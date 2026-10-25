@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Медцентр</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0B0C0E}
+a{color:#D0D2D6;text-decoration:none}a:hover{color:#FFFFFF}
+button{font-family:inherit}
+.navi{transition:background-color 120ms ease,color 120ms ease}
+.navi:hover{background:#1A1B1F;color:#FFFFFF}
+.row{transition:background-color 120ms ease}
+.row:hover{background:#18191C}
+.ib{transition:background-color 120ms ease,border-color 120ms ease}
+.ib:hover{background:#1E1F23;border-color:#34363C}
+.pri{transition:filter 120ms ease}
+.pri:hover{filter:brightness(1.08)}
+</style>
+</helmet>
+<div style="width: 100%; min-height: 100vh; display: flex; flex-wrap: wrap; background: #0B0C0E; color: #E3E4E6; font-family: Inter, system-ui, sans-serif; font-size: 13px; line-height: 1.4">
+
+<nav aria-label="Основное меню" style="flex: 0 0 224px; max-width: 100%; box-sizing: border-box; padding: 10px 10px 8px; display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; align-items: center; gap: 8px; padding: 6px 10px">
+<span style="width: 20px; height: 20px; flex: none; border-radius: 5px; background: {{accent}}; color: #0B0C0E; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 600">NR</span>
+<span style="font-weight: 600; white-space: nowrap">Норт Ривер</span>
+</div>
+<sc-for list="{{navSections}}" as="s" hint-placeholder-count="5">
+<div style="display: flex; flex-direction: column; gap: 1px">
+<sc-if value="{{s.hasTitle}}" hint-placeholder-val="{{ true }}">
+<div style="height: 26px; padding: 0 10px; display: flex; align-items: center; font-size: 12px; font-weight: 500; color: #9A9FA6">{{s.title}}</div>
+</sc-if>
+<sc-for list="{{s.items}}" as="n" hint-placeholder-count="3">
+<a href="#" class="navi" style="display: flex; align-items: center; gap: 10px; height: 30px; padding: 0 10px; border-radius: 6px; background: {{n.bg}}; color: {{n.color}}">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none"><path d="{{n.icon}}"></path></svg>
+<span style="flex: 1; white-space: nowrap; font-weight: {{n.weight}}">{{n.label}}</span>
+<span style="font-size: 12px; color: #A4A8AF">{{n.count}}</span>
+</a>
+</sc-for>
+</div>
+</sc-for>
+</nav>
+
+<div style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column; padding: 8px 8px 8px 0; box-sizing: border-box">
+<main style="flex: 1; display: flex; flex-direction: column; background: #121316; border: 1px solid #222327; border-radius: 10px; overflow: hidden">
+
+<header style="display: flex; align-items: center; gap: 8px; height: 44px; padding: 0 12px 0 16px; border-bottom: 1px solid #1E1F23; min-width: 0">
+<span style="color: #A4A8AF; white-space: nowrap">Здоровье</span>
+<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#8F949C" stroke-width="2" stroke-linecap="round" aria-hidden="true" style="flex: none"><path d="M9 6l6 6-6 6"></path></svg>
+<h1 style="margin: 0; font-size: 15px; font-weight: 600; white-space: nowrap">Медцентр</h1>
+<span style="font-size: 13px; color: #9A9FA6; white-space: nowrap">Пн, 26 окт · MD-5</span>
+<div style="flex: 1"></div>
+<button type="button" class="ib" style="height: 32px; flex: none; padding: 0 12px; border-radius: 7px; border: 1px solid #2A2C31; background: transparent; color: #D0D2D6; font-size: 13px; font-weight: 500; cursor: pointer">Правила штаба</button>
+<button type="button" class="ib" style="height: 32px; flex: none; padding: 0 14px; border-radius: 7px; border: 1px solid #3A3C42; background: #232428; color: #FFFFFF; font-size: 13px; font-weight: 600; cursor: pointer">Новая запись</button>
+</header>
+
+<section aria-label="Показатели" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1px; background: #222327; border-bottom: 1px solid #222327">
+<sc-for list="{{kpis}}" as="k" hint-placeholder-count="4">
+<div style="background: #121316; padding: 12px 16px; display: flex; flex-direction: column; gap: 4px">
+<span style="font-size: 12px; font-weight: 500; color: #A4A8AF">{{k.l}}</span>
+<div style="display: flex; align-items: baseline; gap: 8px"><span style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 24px; font-weight: 500; color: {{k.c}}">{{k.v}}</span><span style="font-size: 12px; font-weight: 500; color: {{k.dc}}">{{k.d}}</span></div>
+<span style="font-size: 11px; color: #9A9FA6">{{k.n}}</span>
+</div>
+</sc-for>
+</section>
+
+<div style="display: flex; flex-wrap: wrap; align-items: flex-start; flex: 1">
+
+<div style="flex: 999 1 560px; min-width: 0; padding: 12px 12px 24px 16px; display: flex; flex-direction: column; gap: 16px; box-sizing: border-box">
+
+<section aria-labelledby="h-cases" style="display: flex; flex-direction: column; gap: 4px">
+<div style="display: flex; align-items: center; gap: 10px; height: 36px; padding: 0 12px; border-radius: 6px; background: #17181B">
+<h2 id="h-cases" style="margin: 0; font-size: 14px; font-weight: 600">Активные случаи</h2>
+<span style="color: #9A9FA6; font-weight: 500">5</span>
+<span style="flex: 1"></span>
+<span style="font-size: 12px; color: #9A9FA6">3 недоступны · 2 ограниченно</span>
+</div>
+<sc-for list="{{cases}}" as="c" hint-placeholder-count="5">
+<button type="button" class="row" onClick="{{c.pick}}" aria-pressed="{{c.pressed}}" style="display: flex; align-items: center; gap: 12px; min-height: 52px; padding: 6px 12px; border: 0; border-radius: 6px; background: {{c.bg}}; box-shadow: {{c.ring}}; color: #E3E4E6; font-size: 13px; text-align: left; cursor: pointer">
+<span style="flex: none; width: 96px; justify-content: center; box-sizing: border-box; height: 20px; padding: 0 7px; border-radius: 4px; background: {{c.stBg}}; color: {{c.stFg}}; font-size: 11px; display: flex; align-items: center; white-space: nowrap">{{c.status}}</span>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+<span style="display: flex; align-items: baseline; gap: 8px; min-width: 0"><span style="font-weight: 600; color: #FFFFFF; white-space: nowrap">{{c.name}}</span><span style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 11px; color: #9A9FA6">{{c.pos}}</span></span>
+<span style="font-size: 12px; color: #C3C6CB; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{c.diag}}</span>
+</span>
+<span style="flex: none; width: 150px; display: flex; flex-direction: column; gap: 4px">
+<span style="font-size: 11px; color: #9A9FA6; white-space: nowrap">{{c.stageText}}</span>
+<span style="display: flex; gap: 3px"><sc-for list="{{c.stages}}" as="s" hint-placeholder-count="5"><span style="flex: 1; height: 4px; border-radius: 2px; background: {{s}}"></span></sc-for></span>
+</span>
+<span style="flex: none; width: 140px; text-align: right; display: flex; flex-direction: column; gap: 2px">
+<span style="font-size: 13px; font-weight: 600; color: #FFFFFF; white-space: nowrap">{{c.ret}}</span>
+<span style="font-size: 11px; color: #9A9FA6; white-space: nowrap">{{c.retNote}}</span>
+</span>
+</button>
+</sc-for>
+</section>
+
+<section aria-labelledby="h-morning" style="display: flex; flex-direction: column; gap: 4px">
+<div style="display: flex; align-items: center; gap: 10px; height: 36px; padding: 0 12px; border-radius: 6px; background: #17181B">
+<h2 id="h-morning" style="margin: 0; font-size: 14px; font-weight: 600">Утренний скрининг</h2>
+<span style="color: #9A9FA6; font-weight: 500">4</span>
+<span style="flex: 1"></span>
+<span style="font-size: 12px; color: #9A9FA6">анкеты 21 из 21 · хуже личной нормы</span>
+</div>
+<sc-for list="{{flags}}" as="f" hint-placeholder-count="4">
+<div class="row" style="display: flex; align-items: center; gap: 12px; min-height: 40px; padding: 0 12px; border-radius: 6px">
+<span style="width: 8px; height: 8px; flex: none; border-radius: 50%; background: {{f.dot}}"></span>
+<span style="width: 150px; flex: none; font-weight: 500; color: #FFFFFF; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{f.name}}</span>
+<span style="flex: 1; min-width: 0; font-size: 12px; color: #C3C6CB; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{f.what}}</span>
+<span style="flex: none; font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 12px; color: {{f.dot}}">{{f.score}}</span>
+<button type="button" class="ib" style="flex: none; height: 28px; padding: 0 10px; border-radius: 6px; border: 1px solid #2A2C31; background: transparent; color: #D0D2D6; font-size: 12px; font-weight: 500; cursor: pointer">{{f.action}}</button>
+</div>
+</sc-for>
+</section>
+
+<section aria-labelledby="h-season" style="display: flex; flex-wrap: wrap; gap: 12px">
+<div style="flex: 1 1 320px; border: 1px solid #222327; border-radius: 8px; padding: 12px; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px"><h2 id="h-season" style="margin: 0; font-size: 14px; font-weight: 600; white-space: nowrap">Травмы сезона</h2><span style="font-size: 12px; color: #9A9FA6">· пропущено дней, мы и средний клуб лиги</span></div>
+<sc-for list="{{types}}" as="t" hint-placeholder-count="5">
+<div style="display: flex; align-items: center; gap: 10px; font-size: 12px">
+<span style="width: 120px; flex: none; color: #D0D2D6">{{t.name}}</span>
+<span style="flex: 1; position: relative; height: 14px">
+<span style="position: absolute; left: 0; top: 2px; height: 4px; width: {{t.us}}; border-radius: 2px; background: {{t.c}}"></span>
+<span style="position: absolute; left: 0; top: 8px; height: 4px; width: {{t.lg}}; border-radius: 2px; background: #3A3C42"></span>
+</span>
+<span style="width: 64px; flex: none; text-align: right; font-family: &quot;JetBrains Mono&quot;, monospace; color: #C3C6CB">{{t.v}}</span>
+</div>
+</sc-for>
+<span style="display: flex; gap: 14px; font-size: 11px; color: #9A9FA6"><span style="display: flex; align-items: center; gap: 6px"><span style="width: 14px; height: 4px; border-radius: 2px; background: #C3C6CB"></span>мы</span><span style="display: flex; align-items: center; gap: 6px"><span style="width: 14px; height: 4px; border-radius: 2px; background: #3A3C42"></span>средний клуб лиги</span></span>
+</div>
+<div style="flex: 1 1 280px; border: 1px solid #222327; border-radius: 8px; padding: 12px; display: flex; flex-direction: column; gap: 10px">
+<h2 style="margin: 0; font-size: 14px; font-weight: 600">Правила штаба</h2>
+<sc-for list="{{rules}}" as="r" hint-placeholder-count="3">
+<div style="display: flex; gap: 10px; font-size: 12px">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="{{accent}}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 2px"><path d="M13 2L4 14h7l-1 8 9-12h-7z"></path></svg>
+<span style="display: flex; flex-direction: column; gap: 2px"><span style="color: #E3E4E6"><span style="color: #9A9FA6">Если</span> {{r.if}}</span><span style="color: #E3E4E6"><span style="color: #9A9FA6">то</span> {{r.then}}</span></span>
+</div>
+</sc-for>
+</div>
+</section>
+</div>
+
+<aside aria-label="Карточка случая" style="flex: 1 1 380px; max-width: 100%; min-width: 0; border-left: 1px solid #1E1F23; padding: 16px 20px 24px 16px; display: flex; flex-direction: column; gap: 18px; box-sizing: border-box">
+<section aria-labelledby="h-case" style="display: flex; flex-direction: column; gap: 6px">
+<div style="display: flex; align-items: center; gap: 8px">
+<span style="height: 22px; padding: 0 8px; border-radius: 4px; background: {{sel.stBg}}; color: {{sel.stFg}}; font-size: 12px; display: flex; align-items: center">{{sel.status}}</span>
+<span style="font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 11px; color: #9A9FA6">{{sel.code}}</span>
+</div>
+<h2 id="h-case" style="margin: 0; font-size: 18px; font-weight: 600; color: #FFFFFF">{{sel.name}}</h2>
+<span style="font-size: 13px; color: #C3C6CB">{{sel.diagLong}}</span>
+<span style="font-size: 12px; color: #9A9FA6">{{sel.how}}</span>
+</section>
+
+<section aria-labelledby="h-ret" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; background: #222327; border: 1px solid #222327; border-radius: 8px; overflow: hidden">
+<div style="background: #121316; padding: 10px 12px; display: flex; flex-direction: column; gap: 2px">
+<span id="h-ret" style="font-size: 12px; font-weight: 500; color: #A4A8AF">Возвращение</span>
+<span style="font-size: 18px; font-weight: 600; color: #FFFFFF">{{sel.ret}}</span>
+<span style="font-size: 11px; color: #9A9FA6">{{sel.range}}</span>
+</div>
+<div style="background: #121316; padding: 10px 12px; display: flex; flex-direction: column; gap: 2px">
+<span style="font-size: 12px; font-weight: 500; color: #A4A8AF">Пропустит</span>
+<span style="font-size: 18px; font-weight: 600; color: #FFFFFF">{{sel.miss}}</span>
+<span style="font-size: 11px; color: #9A9FA6">{{sel.missNote}}</span>
+</div>
+</section>
+
+<section aria-labelledby="h-stages" style="display: flex; flex-direction: column; gap: 8px">
+<h3 id="h-stages" style="margin: 0; font-size: 13px; font-weight: 600; color: #E3E4E6">Этапы возвращения <span style="font-weight: 400; color: #9A9FA6">· день {{sel.day}}</span></h3>
+<sc-for list="{{sel.steps}}" as="s" hint-placeholder-count="5">
+<div style="display: flex; gap: 10px">
+<span style="width: 18px; flex: none; display: flex; flex-direction: column; align-items: center">
+<span style="width: 14px; height: 14px; border-radius: 50%; border: 1.5px solid {{s.ring}}; background: {{s.fill}}; box-sizing: border-box"></span>
+<sc-if value="{{s.line}}" hint-placeholder-val="{{ true }}"><span style="flex: 1; width: 1.5px; min-height: 14px; background: #2A2C31"></span></sc-if>
+</span>
+<span style="flex: 1; display: flex; flex-direction: column; gap: 4px; padding-bottom: 6px">
+<span style="display: flex; justify-content: space-between; gap: 8px"><span style="font-weight: {{s.weight}}; color: {{s.color}}">{{s.name}}</span><span style="font-size: 11px; color: #9A9FA6; white-space: nowrap">{{s.when}}</span></span>
+<sc-if value="{{s.current}}" hint-placeholder-val="{{ false }}">
+<span style="display: flex; flex-direction: column; gap: 4px; padding: 8px 10px; border-radius: 8px; background: #17181B">
+<span style="font-size: 11px; font-weight: 500; color: #A4A8AF">Критерии перехода на следующий этап</span>
+<sc-for list="{{sel.criteria}}" as="k" hint-placeholder-count="4">
+<span style="display: flex; align-items: center; gap: 8px; font-size: 12px"><span style="width: 14px; height: 14px; flex: none; border-radius: 4px; background: {{k.bg}}; color: #0B0C0E; font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center">{{k.mark}}</span><span style="flex: 1; color: #D0D2D6">{{k.t}}</span><span style="font-family: &quot;JetBrains Mono&quot;, monospace; color: {{k.vc}}">{{k.v}}</span></span>
+</sc-for>
+</span>
+</sc-if>
+</span>
+</div>
+</sc-for>
+</section>
+
+<section aria-labelledby="h-staff" style="display: flex; flex-direction: column; gap: 8px">
+<h3 id="h-staff" style="margin: 0; font-size: 13px; font-weight: 600; color: #E3E4E6">Мнение штаба</h3>
+<sc-for list="{{sel.opinions}}" as="o" hint-placeholder-count="2">
+<div style="display: flex; gap: 10px; padding: 10px; border-radius: 8px; background: #17181B; font-size: 12px">
+<span style="width: 22px; height: 22px; flex: none; border-radius: 50%; background: #26272B; color: #C3C6CB; font-size: 9px; font-weight: 600; display: flex; align-items: center; justify-content: center">{{o.ini}}</span>
+<span style="display: flex; flex-direction: column; gap: 2px"><span style="font-weight: 500; color: #E3E4E6">{{o.who}}</span><span style="color: #C3C6CB">{{o.text}}</span></span>
+</div>
+</sc-for>
+</section>
+
+<div style="display: flex; flex-direction: column; gap: 8px">
+<button type="button" class="pri" style="height: 36px; border-radius: 7px; border: 0; background: {{accent}}; color: #0B0C0E; font-size: 13px; font-weight: 600; cursor: pointer">{{sel.primary}}</button>
+<div style="display: flex; gap: 8px">
+<button type="button" class="ib" style="flex: 1; height: 32px; border-radius: 7px; border: 1px solid #2A2C31; background: transparent; color: #D0D2D6; font-size: 13px; font-weight: 500; cursor: pointer">Ускорить — риск выше</button>
+<button type="button" class="ib" style="flex: 1; height: 32px; border-radius: 7px; border: 1px solid #2A2C31; background: transparent; color: #D0D2D6; font-size: 13px; font-weight: 500; cursor: pointer">Второе мнение</button>
+</div>
+<span style="font-size: 11px; color: #9A9FA6">Решение о допуске принимает врач. Главный тренер может настоять на ускорении — риск повторной травмы растёт, это записывается в карту.</span>
+</div>
+</aside>
+</div>
+</main>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#9BE15D","options":["#9BE15D","#7CC4FF","#FFB547","#B9A2FF"]},"$preview":{"width":1440,"height":1500}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { sel: 'hart' };
+  }
+  renderVals() {
+    var self = this;
+    var accent = this.props.accent ?? '#9BE15D';
+    var st = this.state;
+    var S = { out: ['Недоступен', '#2E1715', '#FFB0A6'], mod: ['Ограниченно', '#2E2412', '#FFCB7A'] };
+    function bars(done, cur, total) {
+      var r = [];
+      for (var i = 0; i < total; i++) { r.push(i < done ? accent : (i === done && cur ? '#FFB547' : '#26272B')); }
+      return r;
+    }
+    var defs = [
+      { id: 'hart', st: 'out', name: 'Лиам Харт', pos: 'ЦП', diag: 'Растяжение задней поверхности бедра, правая, 2 степень', stageText: 'Этап 2 из 5 · ждёт решения', stages: bars(1, true, 5), ret: '~16 нояб', retNote: '14–20 нояб' },
+      { id: 'wed', st: 'out', name: 'Карл Ведберг', pos: 'НАП', diag: 'Ушиб голеностопа, левый', stageText: 'Этап 4 из 5', stages: bars(3, true, 5), ret: 'к MD-2', retNote: 'пт, 30 окт' },
+      { id: 'kov', st: 'out', name: 'Ян Ковач', pos: 'ПЗ', diag: 'Растяжение внутренней связки колена, 1 степень', stageText: 'Этап 2 из 5', stages: bars(1, true, 5), ret: '~9 нояб', retNote: '7–12 нояб' },
+      { id: 'bre', st: 'mod', name: 'Нико Бреннан', pos: 'ЛЗ', diag: 'Перегрузка икроножной мышцы, без структурного повреждения', stageText: 'Индивидуальный план', stages: bars(4, true, 5), ret: 'после ср', retNote: 'полный объём с MD-3' },
+      { id: 'oka', st: 'mod', name: 'Самуэль Окафор', pos: 'ЦЗ', diag: 'Риск перегрузки: ACWR 1,52, боль в мышцах 3-й день', stageText: 'Профилактика', stages: bars(4, true, 5), ret: 'доступен', retNote: 'объём ограничен' }
+    ];
+    var cases = defs.map(function (d) {
+      var on = st.sel === d.id;
+      return Object.assign({}, d, { status: S[d.st][0], stBg: S[d.st][1], stFg: S[d.st][2], pressed: on ? 'true' : 'false',
+        bg: on ? '#1C1D21' : 'transparent', ring: on ? 'inset 2px 0 0 ' + accent : 'none', pick: function () { self.setState({ sel: d.id }); } });
+    });
+    function step(name, when, state, last) {
+      return { name: name, when: when, current: state === 'cur', line: !last,
+        ring: state === 'done' ? accent : state === 'cur' ? '#FFB547' : '#3A3C42', fill: state === 'done' ? accent : 'transparent',
+        color: state === 'todo' ? '#9A9FA6' : '#FFFFFF', weight: state === 'cur' ? '600' : '400' };
+    }
+    function crit(t, v, ok) { return { t: t, v: v, mark: ok ? '✓' : '', bg: ok ? accent : '#3A3C42', vc: ok ? '#C3C6CB' : '#FFCB7A' }; }
+    var details = {
+      hart: { code: 'MED-14', diagLong: 'Растяжение задней поверхности бедра, правая нога, 2 степень (по УЗИ)', how: 'Спринт на 63-й минуте, матч с Хейвен Таун, 14 окт', ret: '~16 нояб', range: 'вероятно 14–20 нояб', miss: '4 матча', missNote: 'лига 3, кубок 1', day: '12',
+        steps: [step('1. Острая фаза: покой, физиотерапия', '14–19 окт', 'done'), step('2. Восстановление силы и подвижности', 'с 20 окт', 'cur'), step('3. Беговая работа до 90% скорости', 'план с 30 окт', 'todo'), step('4. Тренировки с командой', 'план с 6 нояб', 'todo'), step('5. Допуск к матчу', '~16 нояб', 'todo', true)],
+        criteria: [crit('Без боли в повседневных движениях', 'да', true), crit('Сила бедра к здоровой ноге', '86%', true), crit('Подъём прямой ноги к здоровой', '92%', true), crit('Бег трусцой без боли', 'завтра', false)],
+        opinions: [{ ini: 'ДК', who: 'Даниэль Кейн · главный врач', text: 'Критерии этапа 2 выполнены, кроме бега. Предлагаю перевести на этап 3 после теста во вторник.' }, { ini: 'РФ', who: 'Райан Фрей · физподготовка', text: 'Беговой блок вести по GPS: до 90% его максимальной скорости, не больше 300 м высокоскоростного бега за занятие.' }],
+        primary: 'Утвердить этап 3 после теста во вторник' },
+      wed: { code: 'MED-12', diagLong: 'Ушиб голеностопа, левая нога, без повреждения связок', how: 'Удар в стык, тренировка, 21 окт', ret: 'к MD-2', range: 'пт, 30 окт', miss: '0 матчей', missNote: 'если без отёка в четверг', day: '5',
+        steps: [step('1. Острая фаза', '21–23 окт', 'done'), step('2. Подвижность', '24–25 окт', 'done'), step('3. Беговая работа', '26–27 окт', 'done'), step('4. Тренировки с командой', 'с 28 окт', 'cur'), step('5. Допуск к матчу', '30 окт', 'todo', true)],
+        criteria: [crit('Без отёка утром', 'да', true), crit('Смена направления без боли', 'да', true), crit('Полная тренировка MD-3', 'ср', false), crit('Удар по мячу в полную силу', 'ср', false)],
+        opinions: [{ ini: 'ДК', who: 'Даниэль Кейн · главный врач', text: 'Если в среду пройдёт полную тренировку без реакции — готов к составу на субботу.' }],
+        primary: 'Допустить к полной тренировке в среду' }
+    };
+    var dd = details[st.sel] || details.hart;
+    var base = defs.filter(function (d) { return d.id === st.sel; })[0] || defs[0];
+    var sel = Object.assign({ name: base.name, status: S[base.st][0], stBg: S[base.st][1], stFg: S[base.st][2] }, details[st.sel] ? dd : {
+      code: 'MED-—', diagLong: base.diag, how: 'Подробности — в медкарте', ret: base.ret, range: base.retNote, miss: '—', missNote: '', day: '—',
+      steps: [step('Индивидуальный план', 'идёт', 'cur', true)], criteria: [crit('Самочувствие в личной норме 2 дня подряд', 'нет', false), crit('ACWR ниже 1,3', '1,52', false)],
+      opinions: [{ ini: 'РФ', who: 'Райан Фрей · физподготовка', text: 'Снизить объём вторника на треть, без высокоскоростного бега.' }], primary: 'Согласовать облегчённый вторник' });
+    var kpis = [
+      { l: 'Недоступны', v: '3', d: 'из 26', dc: '#9A9FA6', n: 'вернутся до 20 нояб', c: '#FFFFFF' },
+      { l: 'Ограниченно', v: '2', d: 'нагрузка, мышцы', dc: '#FFCB7A', n: 'тренируются по плану врача', c: '#FFFFFF' },
+      { l: 'Пропущено дней', v: '64', d: 'лига в среднем 81', dc: accent, n: 'с начала сезона, 10 туров', c: '#FFFFFF' },
+      { l: 'Повторные травмы', v: '0', d: 'лига 1,2', dc: accent, n: 'за сезон', c: '#FFFFFF' }
+    ];
+    var flags = [
+      { dot: '#FF9A8A', name: 'Самуэль Окафор', what: 'Тревожно: боль в мышцах 6 из 7 — третий день подряд', score: '13 · н.8', action: 'К физиотерапевту' },
+      { dot: '#FF9A8A', name: 'Нико Бреннан', what: 'Тревожно: боль в икроножной, усталость', score: '14 · н.9', action: 'Осмотр врача' },
+      { dot: '#FFB547', name: 'Маркус Хольм', what: 'Хуже нормы: сон 5 из 7 — спал 5 часов', score: '11 · н.8', action: 'Разговор' },
+      { dot: '#FFB547', name: 'Эли Фокс', what: 'Хуже нормы: усталость после двух тренировок подряд', score: '12 · н.9', action: 'Облегчить' }
+    ];
+    var types = [
+      { name: 'Мышечные', us: '58%', lg: '70%', v: '38 / 47', c: '#C3C6CB' },
+      { name: 'Связки и суставы', us: '30%', lg: '34%', v: '19 / 23', c: '#C3C6CB' },
+      { name: 'Ушибы', us: '10%', lg: '9%', v: '7 / 6', c: '#FFB547' },
+      { name: 'Болезни', us: '0%', lg: '7%', v: '0 / 5', c: '#C3C6CB' }
+    ];
+    var rules = [
+      { if: 'самочувствие «тревожно» 2 дня подряд', then: 'уведомить главного врача' },
+      { if: 'ACWR выше 1,5', then: 'предложить облегчить ближайшую тренировку' },
+      { if: 'игрок вернулся после мышечной травмы', then: 'ограничить матч 60 минутами' }
+    ];
+    var I = {
+      inbox: 'M3 13h5l2 3h4l2-3h5M5 5h14l2 8v6a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-6z', cal: 'M4 6h16v14H4zM4 10h16M9 3v4M15 3v4', notes: 'M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z',
+      home: 'M4 11l8-6 8 6v8a1 1 0 0 1-1 1h-4v-5h-6v5H5a1 1 0 0 1-1-1z', squad: 'M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM2 21v-1a6 6 0 0 1 12 0v1M16 3.5a4 4 0 0 1 0 7M22 21v-1a6 6 0 0 0-4-5.6',
+      tactic: 'M4 4h16v16H4zM12 4v16M12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6z', med: 'M12 21s-8-5-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 6-8 11-8 11z', load: 'M3 12h4l3-8 4 16 3-8h4',
+      train: 'M4 18l4-6 4 3 4-7 4 4M4 21h16', data: 'M5 20V11M11 20V5M17 20v-6', scout: 'M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM20 20l-4-4', club: 'M4 21V8l8-5 8 5v13M9 21v-6h6v6'
+    };
+    function item(label, icon, count, active) { return { label: label, icon: icon, count: count || '', bg: active ? '#1E1F23' : 'transparent', color: active ? '#FFFFFF' : '#D0D2D6', weight: active ? '500' : '400' }; }
+    var navSections = [
+      { hasTitle: false, title: '', items: [item('Входящие', I.inbox, '7'), item('Календарь', I.cal), item('Тактический блокнот', I.notes)] },
+      { hasTitle: true, title: 'Команда', items: [item('Главная', I.home), item('Состав', I.squad), item('Тактика', I.tactic)] },
+      { hasTitle: true, title: 'Здоровье', items: [item('Медцентр', I.med, '3', true), item('Нагрузка и GPS', I.load), item('Тренировки', I.train)] },
+      { hasTitle: true, title: 'Данные и отбор', items: [item('Центр данных', I.data), item('Скаутинг', I.scout, '3')] },
+      { hasTitle: true, title: 'Клуб', items: [item('Совет и цели', I.club)] }
+    ];
+    return { accent: accent, navSections: navSections, kpis: kpis, cases: cases, flags: flags, types: types, rules: rules, sel: sel };
+  }
+}
+</script>
+</body>
+</html>
