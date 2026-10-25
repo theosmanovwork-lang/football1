@@ -22,6 +22,8 @@ button{font-family:inherit}
 .ib:hover{background:#1E1F23;border-color:#34363C}
 .opt{transition:background-color 120ms ease,border-color 120ms ease}
 .opt:hover{border-color:#3A3C42}
+.pri{transition:filter 120ms ease}
+.pri:hover{filter:brightness(1.08)}
 </style>
 </helmet>
 <div style="width: 100%; min-height: 100vh; display: flex; flex-wrap: wrap; background: #0B0C0E; color: #E3E4E6; font-family: Inter, system-ui, sans-serif; font-size: 13px; line-height: 1.4">
@@ -39,12 +41,12 @@ button{font-family:inherit}
 <sc-for list="{{navSections}}" as="s" hint-placeholder-count="5">
 <div style="display: flex; flex-direction: column; gap: 1px">
 <sc-if value="{{s.hasTitle}}" hint-placeholder-val="{{ true }}">
-<div style="height: 26px; padding: 0 10px; display: flex; align-items: center; font-size: 12px; color: #9A9FA6">{{s.title}}</div>
+<div style="height: 26px; padding: 0 10px; display: flex; align-items: center; font-size: 12px; font-weight: 500; color: #9A9FA6">{{s.title}}</div>
 </sc-if>
 <sc-for list="{{s.items}}" as="n" hint-placeholder-count="3">
 <a href="#" class="navi" style="display: flex; align-items: center; gap: 10px; height: 30px; padding: 0 10px; border-radius: 6px; background: {{n.bg}}; color: {{n.color}}">
 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none"><path d="{{n.icon}}"></path></svg>
-<span style="flex: 1; white-space: nowrap">{{n.label}}</span>
+<span style="flex: 1; white-space: nowrap; font-weight: {{n.weight}}">{{n.label}}</span>
 <span style="font-size: 12px; color: #A4A8AF">{{n.count}}</span>
 </a>
 </sc-for>
@@ -60,25 +62,25 @@ button{font-family:inherit}
 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#8F949C" stroke-width="2" stroke-linecap="round" aria-hidden="true" style="flex: none"><path d="M9 6l6 6-6 6"></path></svg>
 <a href="#" style="color: #A4A8AF; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">Шорт-лист · Левый защитник</a>
 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#8F949C" stroke-width="2" stroke-linecap="round" aria-hidden="true" style="flex: none"><path d="M9 6l6 6-6 6"></path></svg>
-<span style="font-weight: 500; white-space: nowrap">Тиаго Ферраз</span>
+<span style="font-weight: 600; white-space: nowrap">Тиаго Ферраз</span>
 <div style="flex: 1"></div>
-<button type="button" class="ib" style="height: 28px; flex: none; padding: 0 10px; border-radius: 6px; border: 1px solid #2A2C31; background: transparent; color: #D0D2D6; font-size: 12px; cursor: pointer">Сравнить</button>
-<button type="button" class="ib" style="height: 28px; flex: none; padding: 0 10px; border-radius: 6px; border: 1px solid #2A2C31; background: #1A1B1F; color: #E3E4E6; font-size: 12px; font-weight: 500; cursor: pointer">Предложить спортивному директору</button>
+<button type="button" class="ib" style="height: 32px; flex: none; padding: 0 12px; border-radius: 7px; border: 1px solid #2A2C31; background: transparent; color: #D0D2D6; font-size: 13px; font-weight: 500; cursor: pointer">Сравнить</button>
+<button type="button" class="ib" style="height: 32px; flex: none; padding: 0 14px; border-radius: 7px; border: 1px solid #3A3C42; background: #232428; color: #FFFFFF; font-size: 13px; font-weight: 600; cursor: pointer">Предложить спортивному директору</button>
 </header>
 
 <section aria-label="Игрок" style="display: flex; flex-wrap: wrap; align-items: center; gap: 16px 24px; padding: 16px 20px; border-bottom: 1px solid #1E1F23">
 <div style="display: flex; align-items: center; gap: 14px; flex: 1 1 340px; min-width: 0">
-<span style="width: 52px; height: 52px; flex: none; border-radius: 12px; background: #1E1F23; border: 1px solid #2A2C31; color: #D0D2D6; font-size: 16px; font-weight: 600; display: flex; align-items: center; justify-content: center">ТФ</span>
+<span style="width: 56px; height: 56px; flex: none; border-radius: 12px; background: #1E1F23; border: 1px solid #2A2C31; color: #D0D2D6; font-size: 16px; font-weight: 600; display: flex; align-items: center; justify-content: center">ТФ</span>
 <div style="display: flex; flex-direction: column; gap: 4px; min-width: 0">
-<h1 style="margin: 0; font-size: 20px; font-weight: 600; line-height: 1.2">Тиаго Ферраз</h1>
-<span style="color: #A4A8AF; font-size: 12px">21 год · ЛЗ, ЛП · левая нога · Ривьера Сул (Примейра Сул) · сборная до 21 года</span>
+<h1 style="margin: 0; font-size: 24px; font-weight: 600; line-height: 1.15; letter-spacing: -0.01em; color: #FFFFFF">Тиаго Ферраз</h1>
+<span style="color: #A4A8AF; font-size: 13px">21 год · ЛЗ, ЛП · левая нога · Ривьера Сул (Примейра Сул) · сборная до 21 года</span>
 </div>
 </div>
 <div style="display: flex; flex-wrap: wrap; gap: 8px">
 <sc-for list="{{facts}}" as="f" hint-placeholder-count="4">
 <div style="min-width: 128px; padding: 8px 12px; border: 1px solid #222327; border-radius: 8px; display: flex; flex-direction: column; gap: 2px">
-<span style="font-size: 11px; color: #9A9FA6">{{f.label}}</span>
-<span style="font-size: 14px; font-weight: 500; color: {{f.color}}">{{f.value}}</span>
+<span style="font-size: 12px; font-weight: 500; color: #A4A8AF">{{f.label}}</span>
+<span style="font-size: 18px; font-weight: 600; line-height: 1.3; color: {{f.color}}">{{f.value}}</span>
 <span style="font-size: 11px; color: #9A9FA6">{{f.note}}</span>
 </div>
 </sc-for>
@@ -86,7 +88,7 @@ button{font-family:inherit}
 </section>
 
 <nav aria-label="Разделы досье" style="display: flex; flex-wrap: wrap; gap: 6px; padding: 8px 20px; border-bottom: 1px solid #1E1F23">
-<a href="#grades" class="ib" style="height: 28px; padding: 0 12px; border-radius: 999px; border: 1px solid #33353B; background: #232428; color: #FFFFFF; font-size: 12px; font-weight: 500; display: flex; align-items: center">Оценки</a>
+<a href="#grades" class="ib" style="height: 28px; padding: 0 12px; border-radius: 999px; border: 1px solid #33353B; background: #232428; color: #FFFFFF; font-size: 12px; font-weight: 600; display: flex; align-items: center">Оценки</a>
 <a href="#views" class="ib" style="height: 28px; padding: 0 12px; border-radius: 999px; border: 1px solid #2A2C31; color: #C3C6CB; font-size: 12px; font-weight: 500; display: flex; align-items: center">Просмотры</a>
 <a href="#plan" class="ib" style="height: 28px; padding: 0 12px; border-radius: 999px; border: 1px solid #2A2C31; color: #C3C6CB; font-size: 12px; font-weight: 500; display: flex; align-items: center">Следующий шаг</a>
 <a href="#data" class="ib" style="height: 28px; padding: 0 12px; border-radius: 999px; border: 1px solid #2A2C31; color: #C3C6CB; font-size: 12px; font-weight: 500; display: flex; align-items: center">Данные</a>
@@ -99,24 +101,24 @@ button{font-family:inherit}
 
 <section aria-labelledby="h-verdict" style="border: 1px solid #222327; border-radius: 8px; padding: 14px 16px; display: flex; flex-wrap: wrap; gap: 16px 28px">
 <div style="flex: 1 1 260px; display: flex; flex-direction: column; gap: 8px; min-width: 0">
-<h2 id="h-verdict" style="margin: 0; font-size: 12px; font-weight: 500; color: #9A9FA6">Рекомендация главного скаута · Даниэл Кроу</h2>
+<h2 id="h-verdict" style="margin: 0; font-size: 13px; font-weight: 600; color: #E3E4E6">Рекомендация главного скаута <span style="font-weight: 400; color: #9A9FA6">· Даниэл Кроу</span></h2>
 <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap">
-<span style="height: 26px; padding: 0 10px; border-radius: 6px; background: #2E2412; color: #FFCB7A; font-weight: 600; display: flex; align-items: center">Наблюдать</span>
-<span style="color: #D0D2D6">Нужны ещё 2 живых просмотра и проверка личности</span>
+<span style="height: 30px; padding: 0 12px; border-radius: 7px; background: #2E2412; color: #FFCB7A; font-size: 15px; font-weight: 600; display: flex; align-items: center">Наблюдать</span>
+<span style="font-size: 14px; font-weight: 500; color: #E3E4E6">Нужны ещё 2 живых просмотра и проверка личности</span>
 </div>
 <p style="margin: 0; color: #C3C6CB">Быстрый атакующий крайний защитник с сильным навесом. Риски: игра в обороне один в один и выносливость после 60-й минуты. Характер почти не известен.</p>
 </div>
 <div style="flex: 1 1 220px; display: flex; flex-direction: column; gap: 8px">
-<div style="display: flex; justify-content: space-between; gap: 12px"><span style="color: #9A9FA6">Уровень сейчас</span><span>Ротация в нашей лиге</span></div>
-<div style="display: flex; justify-content: space-between; gap: 12px"><span style="color: #9A9FA6">Потенциал</span><span>Основа клуба топ-6</span></div>
-<div style="display: flex; justify-content: space-between; gap: 12px"><span style="color: #9A9FA6">Тип игрока</span><span>Атакующий крайний защитник</span></div>
-<div style="display: flex; justify-content: space-between; gap: 12px"><span style="color: #9A9FA6">Уверенность</span><span style="color: #FFCB7A">Низкая · 34%</span></div>
+<div style="display: flex; justify-content: space-between; gap: 12px"><span style="color: #9A9FA6">Уровень сейчас</span><span style="font-weight: 500">Ротация в нашей лиге</span></div>
+<div style="display: flex; justify-content: space-between; gap: 12px"><span style="color: #9A9FA6">Потенциал</span><span style="font-weight: 500">Основа клуба топ-6</span></div>
+<div style="display: flex; justify-content: space-between; gap: 12px"><span style="color: #9A9FA6">Тип игрока</span><span style="font-weight: 500">Атакующий крайний защитник</span></div>
+<div style="display: flex; justify-content: space-between; gap: 12px"><span style="color: #9A9FA6">Уверенность</span><span style="font-weight: 600; color: #FFCB7A">Низкая · 34%</span></div>
 </div>
 </section>
 
 <section id="grades" aria-labelledby="h-grades" style="display: flex; flex-direction: column; gap: 10px">
 <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap">
-<h2 id="h-grades" style="margin: 0; font-size: 13px; font-weight: 500">Оценки по четырём блокам</h2>
+<h2 id="h-grades" style="margin: 0; font-size: 16px; font-weight: 600; color: #FFFFFF">Оценки по четырём блокам</h2>
 <span style="font-size: 11px; color: #9A9FA6">полоса — диапазон, в котором скорее всего находится навык</span>
 <div style="flex: 1"></div>
 <span style="display: flex; align-items: center; gap: 6px; font-size: 11px; color: #9A9FA6"><span style="width: 14px; height: 6px; border-radius: 3px; background: {{accent}}"></span>уверенно<span style="width: 14px; height: 6px; border-radius: 3px; background: #4F6B3A; margin-left: 8px"></span>примерно<span style="width: 14px; height: 6px; border-radius: 3px; border: 1px dashed #4A4D55; margin-left: 8px"></span>не видели</span>
@@ -125,8 +127,8 @@ button{font-family:inherit}
 <sc-for list="{{groups}}" as="g" hint-placeholder-count="4">
 <div style="border: 1px solid #222327; border-radius: 8px; padding: 12px; display: flex; flex-direction: column; gap: 8px; min-width: 0">
 <div style="display: flex; align-items: center; gap: 8px">
-<h3 style="margin: 0; font-size: 13px; font-weight: 500">{{g.title}}</h3>
-<span style="font-size: 11px; color: {{g.knowColor}}">знание {{g.know}}</span>
+<h3 style="margin: 0; font-size: 14px; font-weight: 600">{{g.title}}</h3>
+<span style="font-size: 12px; font-weight: 500; color: {{g.knowColor}}">знание {{g.know}}</span>
 <div style="flex: 1"></div>
 <sc-for list="{{g.sources}}" as="src" hint-placeholder-count="2">
 <span style="font-size: 10px; color: #8F949C; border: 1px solid #2A2C31; border-radius: 4px; padding: 0 5px; white-space: nowrap">{{src}}</span>
@@ -136,7 +138,7 @@ button{font-family:inherit}
 <div style="display: flex; flex-direction: column; gap: 4px; padding: 3px 0">
 <div style="display: flex; align-items: baseline; gap: 10px">
 <span style="flex: 1; min-width: 0; color: #D0D2D6; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{r.name}}</span>
-<span style="flex: none; font-size: 12px; color: {{r.labelColor}}; white-space: nowrap">{{r.label}}</span>
+<span style="flex: none; font-size: 12px; font-weight: {{r.labelWeight}}; color: {{r.labelColor}}; white-space: nowrap">{{r.label}}</span>
 </div>
 <div style="position: relative; height: 6px; border-radius: 3px; background: #1B1C20; border: 1px {{r.trackBorder}} {{r.trackColor}}; box-sizing: border-box">
 <span style="position: absolute; top: 0; bottom: 0; left: 25%; width: 1px; background: #26272B"></span>
@@ -157,13 +159,13 @@ button{font-family:inherit}
 
 <section aria-labelledby="h-sw" style="display: flex; flex-wrap: wrap; gap: 12px">
 <div style="flex: 1 1 260px; border: 1px solid #222327; border-radius: 8px; padding: 12px; display: flex; flex-direction: column; gap: 8px">
-<h2 id="h-sw" style="margin: 0; font-size: 13px; font-weight: 500">Сильные стороны</h2>
+<h2 id="h-sw" style="margin: 0; font-size: 14px; font-weight: 600">Сильные стороны</h2>
 <sc-for list="{{strengths}}" as="s" hint-placeholder-count="3">
 <div style="display: flex; gap: 8px"><span style="color: {{accent}}">+</span><span style="color: #D0D2D6">{{s}}</span></div>
 </sc-for>
 </div>
 <div style="flex: 1 1 260px; border: 1px solid #222327; border-radius: 8px; padding: 12px; display: flex; flex-direction: column; gap: 8px">
-<h2 style="margin: 0; font-size: 13px; font-weight: 500">Слабые стороны и риски</h2>
+<h2 style="margin: 0; font-size: 14px; font-weight: 600">Слабые стороны и риски</h2>
 <sc-for list="{{weaknesses}}" as="s" hint-placeholder-count="3">
 <div style="display: flex; gap: 8px"><span style="color: #FF9A8A">−</span><span style="color: #D0D2D6">{{s}}</span></div>
 </sc-for>
@@ -172,7 +174,7 @@ button{font-family:inherit}
 
 <section id="views" aria-labelledby="h-views" style="display: flex; flex-direction: column; gap: 4px">
 <div style="display: flex; align-items: center; gap: 8px; height: 36px; padding: 0 12px; border-radius: 6px; background: #17181B">
-<h2 id="h-views" style="margin: 0; font-size: 13px; font-weight: 500">Просмотры</h2>
+<h2 id="h-views" style="margin: 0; font-size: 14px; font-weight: 600">Просмотры</h2>
 <span style="color: #9A9FA6">4</span>
 <div style="flex: 1"></div>
 <span style="font-size: 12px; color: #9A9FA6">2 видео · 1 живой · 1 от агента</span>
@@ -199,7 +201,7 @@ button{font-family:inherit}
 <aside aria-label="Следующий шаг и данные" style="flex: 1 1 380px; max-width: 100%; min-width: 0; padding: 16px 20px 24px 16px; border-left: 1px solid #1E1F23; display: flex; flex-direction: column; gap: 20px; box-sizing: border-box">
 
 <section aria-labelledby="h-know" style="display: flex; flex-direction: column; gap: 10px">
-<h2 id="h-know" style="margin: 0; font-size: 12px; font-weight: 500; color: #9A9FA6">Что мы знаем об игроке</h2>
+<h2 id="h-know" style="margin: 0; font-size: 13px; font-weight: 600; color: #E3E4E6">Что мы знаем об игроке</h2>
 <div role="img" aria-label="Радар по четырём блокам: тёмная фигура — нижняя граница оценок, светлый контур — верхняя" style="display: flex; justify-content: center">
 <svg width="300" height="200" viewBox="0 0 300 200" aria-hidden="true">
 <polygon points="150,20 230,100 150,180 70,100" fill="none" stroke="#2A2C31" stroke-width="1"></polygon>
@@ -225,37 +227,37 @@ button{font-family:inherit}
 </section>
 
 <section id="plan" aria-labelledby="h-plan" style="display: flex; flex-direction: column; gap: 10px">
-<h2 id="h-plan" style="margin: 0; font-size: 12px; font-weight: 500; color: #9A9FA6">Следующий шаг · живой просмотр</h2>
-<span style="font-size: 12px; color: #D0D2D6">Матч</span>
+<h2 id="h-plan" style="margin: 0; font-size: 15px; font-weight: 600; color: #FFFFFF">Следующий шаг <span style="font-size: 13px; font-weight: 400; color: #9A9FA6">· живой просмотр</span></h2>
+<span style="font-size: 12px; font-weight: 500; color: #A4A8AF">Матч</span>
 <sc-for list="{{matches}}" as="m" hint-placeholder-count="3">
 <button type="button" class="opt" onClick="{{m.pick}}" aria-pressed="{{m.pressed}}" style="display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 8px; border: 1px solid {{m.border}}; background: {{m.bg}}; color: #E3E4E6; font-size: 12px; text-align: left; cursor: pointer">
 <span style="width: 14px; height: 14px; flex: none; border-radius: 50%; border: 1.5px solid {{m.dot}}; box-sizing: border-box; display: flex; align-items: center; justify-content: center"><span style="width: 6px; height: 6px; border-radius: 50%; background: {{m.dotFill}}"></span></span>
-<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px"><span>{{m.title}}</span><span style="color: #9A9FA6">{{m.sub}}</span></span>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px"><span style="font-weight: 500">{{m.title}}</span><span style="color: #9A9FA6">{{m.sub}}</span></span>
 <span style="flex: none; color: {{m.ticketColor}}; white-space: nowrap">{{m.ticket}}</span>
 </button>
 </sc-for>
-<span style="font-size: 12px; color: #D0D2D6; margin-top: 4px">Кто поедет</span>
+<span style="font-size: 12px; font-weight: 500; color: #A4A8AF; margin-top: 4px">Кто поедет</span>
 <sc-for list="{{scouts}}" as="s" hint-placeholder-count="3">
 <button type="button" class="opt" onClick="{{s.pick}}" aria-pressed="{{s.pressed}}" style="display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 8px; border: 1px solid {{s.border}}; background: {{s.bg}}; color: #E3E4E6; font-size: 12px; text-align: left; cursor: pointer">
 <span style="width: 26px; height: 26px; flex: none; border-radius: 50%; background: #26272B; color: #C3C6CB; font-size: 10px; font-weight: 600; display: flex; align-items: center; justify-content: center">{{s.ini}}</span>
-<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px"><span>{{s.name}}</span><span style="color: #9A9FA6">{{s.sub}}</span></span>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px"><span style="font-weight: 500">{{s.name}}</span><span style="color: #9A9FA6">{{s.sub}}</span></span>
 <span style="flex: none; color: #9A9FA6; white-space: nowrap">{{s.load}}</span>
 </button>
 </sc-for>
 <div style="border: 1px solid #222327; border-radius: 8px; overflow: hidden; margin-top: 4px">
 <sc-for list="{{planRows}}" as="p" hint-placeholder-count="5">
-<div style="display: flex; gap: 12px; padding: 7px 10px; font-size: 12px; border-bottom: 1px solid #1B1C20"><span style="flex: none; width: 128px; color: #9A9FA6">{{p.k}}</span><span style="flex: 1; text-align: right; color: {{p.c}}">{{p.v}}</span></div>
+<div style="display: flex; gap: 12px; padding: 7px 10px; font-size: 12px; border-bottom: 1px solid #1B1C20"><span style="flex: none; width: 128px; color: #9A9FA6">{{p.k}}</span><span style="flex: 1; text-align: right; font-weight: 500; color: {{p.c}}">{{p.v}}</span></div>
 </sc-for>
 </div>
 <div style="display: flex; flex-wrap: wrap; gap: 8px">
-<button type="button" class="ib" style="flex: 1 1 200px; height: 32px; border-radius: 6px; border: 1px solid #2A2C31; background: #1A1B1F; color: #E3E4E6; font-size: 12px; font-weight: 500; cursor: pointer">{{sendLabel}}</button>
-<button type="button" class="ib" style="height: 32px; padding: 0 12px; border-radius: 6px; border: 1px solid #2A2C31; background: transparent; color: #D0D2D6; font-size: 12px; cursor: pointer">Запросить видео</button>
+<button type="button" class="pri" style="flex: 1 1 200px; height: 36px; border-radius: 7px; border: 0; background: {{accent}}; color: #0B0C0E; font-size: 13px; font-weight: 600; cursor: pointer">{{sendLabel}}</button>
+<button type="button" class="ib" style="height: 36px; padding: 0 14px; border-radius: 7px; border: 1px solid #2A2C31; background: transparent; color: #D0D2D6; font-size: 13px; font-weight: 500; cursor: pointer">Запросить видео</button>
 </div>
-<button type="button" class="ib" style="height: 32px; border-radius: 6px; border: 1px solid #2A2C31; background: transparent; color: #D0D2D6; font-size: 12px; cursor: pointer">Проверка личности через контакты · 5–7 дней</button>
+<button type="button" class="ib" style="height: 32px; border-radius: 7px; border: 1px solid #2A2C31; background: transparent; color: #D0D2D6; font-size: 13px; font-weight: 500; cursor: pointer">Проверка личности через контакты · 5–7 дней</button>
 </section>
 
 <section id="data" aria-labelledby="h-data" style="display: flex; flex-direction: column; gap: 10px">
-<h2 id="h-data" style="margin: 0; font-size: 12px; font-weight: 500; color: #9A9FA6">Центр данных · базовые цифры</h2>
+<h2 id="h-data" style="margin: 0; font-size: 13px; font-weight: 600; color: #E3E4E6">Центр данных <span style="font-weight: 400; color: #9A9FA6">· базовые цифры</span></h2>
 <div style="border: 1px solid #222327; border-radius: 8px; overflow: hidden">
 <div style="display: flex; padding: 7px 10px; font-size: 11px; color: #9A9FA6; border-bottom: 1px solid #222327"><span style="flex: 1">Сезон</span><span style="width: 44px; text-align: right">Матчи</span><span style="width: 52px; text-align: right">Минуты</span><span style="width: 44px; text-align: right">Голы</span><span style="width: 68px; text-align: right">Передачи</span></div>
 <sc-for list="{{seasons}}" as="s" hint-placeholder-count="2">
@@ -266,17 +268,17 @@ button{font-family:inherit}
 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#A4A8AF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 1px"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V8a4 4 0 0 1 8 0v3"></path></svg>
 <div style="display: flex; flex-direction: column; gap: 8px">
 <span style="color: #D0D2D6">Глубокие метрики (xG, прогрессивные действия, обойдённые соперники, физданные) по этой лиге недоступны: пакет «Южная Америка» у провайдера «Полевые данные» не подключён.</span>
-<a href="#" style="color: {{accent}}; font-weight: 500">Подключить пакет · 210 тыс. в сезон →</a>
+<a href="#" style="color: {{accent}}; font-weight: 600">Подключить пакет · 210 тыс. в сезон →</a>
 </div>
 </div>
 </section>
 
 <section id="rules" aria-labelledby="h-rules" style="display: flex; flex-direction: column; gap: 8px">
-<h2 id="h-rules" style="margin: 0; font-size: 12px; font-weight: 500; color: #9A9FA6">Контракт и правила</h2>
+<h2 id="h-rules" style="margin: 0; font-size: 13px; font-weight: 600; color: #E3E4E6">Контракт и правила</h2>
 <sc-for list="{{rules}}" as="r" hint-placeholder-count="4">
 <div style="display: flex; gap: 10px; font-size: 12px">
 <span style="width: 8px; height: 8px; flex: none; border-radius: 50%; margin-top: 5px; background: {{r.c}}"></span>
-<span style="display: flex; flex-direction: column; gap: 2px"><span style="color: #E3E4E6">{{r.t}}</span><span style="color: #9A9FA6">{{r.d}}</span></span>
+<span style="display: flex; flex-direction: column; gap: 2px"><span style="font-weight: 500; color: #E3E4E6">{{r.t}}</span><span style="color: #9A9FA6">{{r.d}}</span></span>
 </div>
 </sc-for>
 </section>
@@ -302,12 +304,12 @@ class Component extends DCLogic {
     function word(v) { for (var i = 0; i < words.length; i++) { if (v >= words[i][0]) { return words[i][1]; } } return 'Слабо'; }
     function grade(name, lo, hi, sure) {
       if (lo === null) {
-        return { name: name, known: false, left: '0%', width: '0%', fill: 'transparent', trackBorder: 'dashed', trackColor: '#3A3C42', label: 'не видели', labelColor: '#8F949C' };
+        return { name: name, known: false, left: '0%', width: '0%', fill: 'transparent', trackBorder: 'dashed', trackColor: '#3A3C42', label: 'не видели', labelColor: '#8F949C', labelWeight: '400' };
       }
       var a = word(lo), b = word(hi);
       var label = a === b ? a : (a + ' — ' + b);
       if (nums) { label = lo === hi ? String(lo) : (lo + '–' + hi); }
-      return { name: name, known: true, left: ((lo - 1) / 20 * 100).toFixed(1) + '%', width: ((hi - lo + 1) / 20 * 100).toFixed(1) + '%', fill: sure ? accent : '#4F6B3A', trackBorder: 'solid', trackColor: '#1B1C20', label: label, labelColor: sure ? '#E3E4E6' : '#C3C6CB' };
+      return { name: name, known: true, left: ((lo - 1) / 20 * 100).toFixed(1) + '%', width: ((hi - lo + 1) / 20 * 100).toFixed(1) + '%', fill: sure ? accent : '#4F6B3A', trackBorder: 'solid', trackColor: '#1B1C20', label: label, labelColor: sure ? '#FFFFFF' : '#C3C6CB', labelWeight: sure ? '600' : '400' };
     }
     var groups = [
       { title: 'Техника', know: '58%', knowColor: '#C3C6CB', sources: ['Видео', 'Живой'], rows: [
@@ -321,8 +323,8 @@ class Component extends DCLogic {
     ];
     var facts = [
       { label: 'Знание', value: '34%', note: 'по всем блокам', color: '#FFCB7A' },
-      { label: 'Оценка стоимости', value: '2,5–4 млн', note: 'по 3 похожим сделкам', color: '#E3E4E6' },
-      { label: 'Контракт', value: 'до июня 2027', note: 'осталось 8 месяцев', color: '#E3E4E6' },
+      { label: 'Оценка стоимости', value: '2,5–4 млн', note: 'по 3 похожим сделкам', color: '#FFFFFF' },
+      { label: 'Контракт', value: 'до июня 2027', note: 'осталось 8 месяцев', color: '#FFFFFF' },
       { label: 'Наш интерес', value: 'Замечен', note: 'скауты двух клубов видели', color: '#FFCB7A' }
     ];
     var views = [
@@ -354,7 +356,7 @@ class Component extends DCLogic {
     var sm = scoutDefs[st.scout];
     var md = matchDefs[st.match];
     var planRows = [
-      { k: 'Что откроет', v: sm.gain, c: '#E3E4E6' },
+      { k: 'Что откроет', v: sm.gain, c: '#FFFFFF' },
       { k: 'Срок с отчётом', v: (sm.days + md.days * 2) + ' дн.', c: '#E3E4E6' },
       { k: 'Стоимость поездки', v: sm.cost, c: '#E3E4E6' },
       { k: 'Риск утечки интереса', v: sm.leak, c: sm.leakC },
@@ -382,7 +384,7 @@ class Component extends DCLogic {
       data: 'M5 20V11M11 20V5M17 20v-6', scout: 'M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM20 20l-4-4', transfer: 'M4 8h13l-3-3M20 16H7l3 3',
       world: 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM3 12h18M12 3c2.5 2.5 3.8 5.5 3.8 9s-1.3 6.5-3.8 9c-2.5-2.5-3.8-5.5-3.8-9S9.5 5.5 12 3z', club: 'M4 21V8l8-5 8 5v13M9 21v-6h6v6', money: 'M3 7h18v10H3zM12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z'
     };
-    function item(label, icon, count, active) { return { label: label, icon: icon, count: count || '', bg: active ? '#1E1F23' : 'transparent', color: active ? '#FFFFFF' : '#D0D2D6' }; }
+    function item(label, icon, count, active) { return { label: label, icon: icon, count: count || '', bg: active ? '#1E1F23' : 'transparent', color: active ? '#FFFFFF' : '#D0D2D6', weight: active ? '500' : '400' }; }
     var navSections = [
       { hasTitle: false, title: '', items: [item('Входящие', I.inbox, '7'), item('Календарь', I.cal), item('Тактический блокнот', I.notes)] },
       { hasTitle: true, title: 'Команда', items: [item('Главная', I.home), item('Состав', I.squad), item('Тактика', I.tactic)] },
