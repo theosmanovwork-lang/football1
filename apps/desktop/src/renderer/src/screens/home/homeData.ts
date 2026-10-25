@@ -1,3 +1,5 @@
+import type { Status } from '@/components/StatusIcon'
+
 /**
  * Fictional placeholder content copied from the home mockup (docs/design/source/home/Desk.dc.html).
  * The simulation core replaces it in later steps; the UI only renders what it gets (CLAUDE.md rule 3).
@@ -5,7 +7,7 @@
 
 export type Tone = 'brand' | 'warn' | 'caution' | 'danger' | 'info' | 'violet' | 'neutral' | 'dim'
 
-export type RowStatus = 'urgent' | 'todo' | 'progress' | 'ready' | 'insight'
+export type RowStatus = Status
 
 export interface FeedRow {
   code: string

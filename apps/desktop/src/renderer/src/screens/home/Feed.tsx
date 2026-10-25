@@ -1,23 +1,8 @@
-import {
-  ChartNoAxesColumn,
-  Circle,
-  CircleAlert,
-  CircleCheck,
-  CircleDotDashed,
-  type LucideIcon,
-} from 'lucide-react'
+import { StatusIcon } from '@/components/StatusIcon'
 import { useUi } from '@/store/ui'
 import { cn } from '@/lib/utils'
-import type { FeedGroup, RowStatus } from './homeData'
+import type { FeedGroup } from './homeData'
 import { TONE_BG, TONE_BORDER, TONE_TEXT } from './tones'
-
-const STATUS_ICON: Record<RowStatus, { icon: LucideIcon; className: string; label: string }> = {
-  urgent: { icon: CircleAlert, className: 'text-warn', label: 'Срочно' },
-  todo: { icon: Circle, className: 'text-fg-subtle', label: 'Ждёт решения' },
-  progress: { icon: CircleDotDashed, className: 'text-progress', label: 'В работе' },
-  ready: { icon: CircleCheck, className: 'text-brand', label: 'Готово' },
-  insight: { icon: ChartNoAxesColumn, className: 'text-info', label: 'Инсайт' },
-}
 
 /** Collapsible list group in the Linear style: tinted header, dense rows. */
 export function FeedSection({ group }: { group: FeedGroup }) {
@@ -58,8 +43,6 @@ export function FeedSection({ group }: { group: FeedGroup }) {
       {!collapsed && (
         <div>
           {group.rows.map((row, i) => {
-            const status = STATUS_ICON[row.status]
-            const StatusIcon = status.icon
             return (
               <a
                 key={`${row.code}-${i}`}
@@ -72,12 +55,7 @@ export function FeedSection({ group }: { group: FeedGroup }) {
                 <span className="w-[52px] flex-none font-mono text-label text-fg-subtle">
                   {row.code}
                 </span>
-                <StatusIcon
-                  size={15}
-                  strokeWidth={1.75}
-                  aria-label={status.label}
-                  className={cn('flex-none', status.className)}
-                />
+                <StatusIcon status={row.status} />
                 <span
                   className={cn(
                     'min-w-0 flex-1 truncate',
