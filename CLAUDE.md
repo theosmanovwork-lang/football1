@@ -13,7 +13,7 @@
 
 ## Стек
 
-- Оболочка: **Electron** + **electron-vite**, сборка установщиков через **electron-builder**.
+- Оболочка: **Electron 43** (закреплена ради macOS 12, см. ADR-004) + **electron-vite**, сборка установщиков через **electron-builder**.
 - Интерфейс: **React + TypeScript (strict)**, **Tailwind CSS**, **shadcn/ui**.
 - Таблицы: **TanStack Table** + **TanStack Virtual**. Командная палитра: **cmdk**. Графики: **Recharts**. Состояние интерфейса: **Zustand**.
 - Ядро симуляции: чистый **TypeScript** в **Web Worker**, связь с интерфейсом через **Comlink**.
@@ -38,7 +38,7 @@ docs/                    концепция, решения, задачи, от�
 
 ## Команды
 
-Создаются в задаче T001. Пока их нет — не выдумывай.
+Все команды запускаются из корня репозитория.
 
 - `npm run dev` — запуск приложения в Electron
 - `npm run dev:web` — запуск интерфейса в обычном браузере с моком моста (для Playwright и скриншотов)
@@ -46,6 +46,11 @@ docs/                    концепция, решения, задачи, от�
 - `npm run test:e2e` — Playwright
 - `npm run bench` — замеры производительности ядра
 - `npm run build` — сборка установщика под текущую ОС
+- `npm run format` — автоформатирование Prettier (`npm run lint` проверяет и ESLint, и Prettier)
+
+Для Playwright на новой машине один раз нужен `npx playwright install chromium`. Если Chromium уже установлен в системе (облачные сессии Claude Code), вместо этого задай `PLAYWRIGHT_CHROMIUM_PATH=/путь/к/chrome`.
+
+Правила 1 и 2 ниже частично проверяются ESLint: в `packages/sim` запрещены импорты React/Electron/Node, `Math.random`, `Date.now`, `fetch`, `window`, `document`, `process`.
 
 ## Жёсткие правила архитектуры
 

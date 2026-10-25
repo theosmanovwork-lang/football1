@@ -1,0 +1,12 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "types": ["node"]
+  },
+  "include": [
+    "eslint.config.js",
+    "vitest.config.ts",
+    "playwright.config.ts",
+    "vitest.bench.config.ts"
+  ]
+}

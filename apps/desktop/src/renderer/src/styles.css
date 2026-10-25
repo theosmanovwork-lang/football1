@@ -1,0 +1,56 @@
+/* Temporary placeholder styles. Themes and density via CSS variables come in T001 step 2. */
+:root {
+  color-scheme: light dark;
+  --bg: #fafafa;
+  --fg: #18181b;
+  --muted: #71717a;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #111113;
+    --fg: #ececee;
+    --muted: #8b8b93;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font:
+    14px/1.5 system-ui,
+    sans-serif;
+}
+
+.placeholder {
+  max-width: 560px;
+  margin: 15vh auto 0;
+  padding: 0 24px;
+}
+
+.placeholder h1 {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0 0 4px;
+}
+
+.placeholder p {
+  color: var(--muted);
+  margin: 0 0 24px;
+}
+
+.placeholder dl {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 4px 16px;
+  margin: 0;
+}
+
+.placeholder dt {
+  color: var(--muted);
+}
+
+.placeholder dd {
+  margin: 0;
+}

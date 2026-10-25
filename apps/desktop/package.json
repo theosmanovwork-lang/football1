@@ -1,0 +1,29 @@
+{
+  "name": "@fm/desktop",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Football manager desktop app",
+  "main": "./out/main/index.js",
+  "scripts": {
+    "dev": "electron-vite dev",
+    "dev:web": "vite --config vite.web.config.mts",
+    "typecheck": "tsc -p tsconfig.node.json && tsc -p tsconfig.web.json",
+    "build": "electron-vite build && electron-builder",
+    "build:unpack": "electron-vite build && electron-builder --dir",
+    "preview": "electron-vite preview"
+  },
+  "devDependencies": {
+    "@fm/shared": "0.0.1",
+    "@fm/sim": "0.0.1",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.1.2",
+    "electron": "43.8.3",
+    "electron-builder": "^26.18.0",
+    "electron-vite": "^6.0.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "vite": "^8.3.5"
+  },
+  "author": "FM project"
+}

@@ -1,0 +1,17 @@
+appId: com.fm.desktop
+productName: FM
+directories:
+  output: release
+  buildResources: build
+files:
+  - out/**
+  - package.json
+asar: true
+mac:
+  target: dmg
+  category: public.app-category.sports-games
+win:
+  target: nsis
+linux:
+  executableName: fm
+  target: AppImage

@@ -1,0 +1,7 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "types": ["node"]
+  },
+  "include": ["electron.vite.config.mts", "vite.web.config.mts", "src/main", "src/preload", "e2e"]
+}
