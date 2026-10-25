@@ -17,5 +17,7 @@
 | `docs/decisions.md`            | Все         | Журнал принятых решений                                                                |
 | `docs/tasks/T001-prototype.md` | Claude Code | Первая задача: недельный прототип и проверка стека                                     |
 | `docs/reports/`                | Все         | Отчёты по задачам                                                                      |
+| `docs/design/`                 | Claude Code | Картинки эталонных макетов экранов (см. README внутри)                                 |
+| `docs/research/`               | Все         | Исследования реальных клубных инструментов и стеков (см. README внутри)                |
 | `.claude/settings.json`        | Claude Code | Разрешения: какие команды Claude может запускать без вопросов                          |
 | `SETUP.md`, `PROMPTS.md`       | Вы          | Установка и готовые запросы                                                            |
