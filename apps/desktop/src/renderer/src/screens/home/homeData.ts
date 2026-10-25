@@ -46,7 +46,7 @@ export const DECISIONS: FeedGroup = {
     {
       code: 'LOAD-3',
       status: 'urgent',
-      title: 'Окафор в зоне риска перегрузки — облегчить вторничную тренировку?',
+      title: 'Окафор: ACWR 1,52 и боль в мышцах выше нормы — облегчить вторник?',
       chip: { label: 'Нагрузка', tone: 'caution' },
       owner: 'ДК',
       meta: '08:55',
@@ -197,22 +197,27 @@ export const KPIS: Kpi[] = [
     note: 'доступны · ограниченно · недоступны',
   },
   {
-    label: 'Готовность команды',
+    label: 'Самочувствие',
     source: 'Анкеты',
-    value: '74',
-    delta: '−4 за 7 дней',
+    value: '17',
+    delta: 'из 21 · 4 хуже нормы',
     deltaTone: 'caution',
-    bars: [{ percent: 74, tone: 'neutral' }],
-    note: 'сон, усталость, болезненность',
+    bars: [
+      { percent: 81, tone: 'neutral' },
+      { percent: 14, tone: 'caution' },
+      { percent: 5, tone: 'danger' },
+    ],
+    note: 'утренняя анкета к личной норме',
   },
   {
     label: 'Нагрузка недели',
     source: 'GPS',
-    value: '82%',
-    delta: 'от плана',
+    // Narrow no-break space as the thousands separator: a regular one is a full cell wide in the mono font.
+    value: '1\u202f980',
+    delta: 'у.е. · план 2 400',
     deltaTone: 'neutral',
     bars: [{ percent: 82, tone: 'info' }],
-    note: '2 игрока выше нормы',
+    note: 'ACWR выше 1,3 у 2 игроков',
   },
   {
     label: 'Прессинг, PPDA',
@@ -227,30 +232,31 @@ export const KPIS: Kpi[] = [
 
 export type LoadZone = 'risk' | 'fit' | 'under'
 
-/** Load × readiness quadrant. `zone` is precomputed (later by the core), the UI only colors it. */
+/** Load (ACWR) × wellness-vs-norm quadrant. `zone` is precomputed (later by the core), the UI only colors it. */
 export interface LoadPoint {
   name: string
   load: number
-  readiness: number
+  /** Wellness relative to the player's own norm, 0–100 on the chart (50 = at norm). */
+  wellness: number
   zone: LoadZone
   labelled?: boolean
 }
 
 export const LOAD_POINTS: LoadPoint[] = [
-  { name: 'Окафор', load: 82, readiness: 34, zone: 'risk', labelled: true },
-  { name: 'Бреннан', load: 70, readiness: 28, zone: 'risk', labelled: true },
-  { name: 'Мартинес', load: 64, readiness: 78, zone: 'fit' },
-  { name: 'Ли', load: 58, readiness: 70, zone: 'fit' },
-  { name: 'Ковач', load: 46, readiness: 82, zone: 'fit' },
-  { name: 'Абади', load: 40, readiness: 64, zone: 'fit' },
-  { name: 'Росси', load: 55, readiness: 58, zone: 'fit' },
-  { name: 'Нгуен', load: 36, readiness: 74, zone: 'fit' },
-  { name: 'Фокс', load: 72, readiness: 62, zone: 'fit' },
-  { name: 'Дюбуа', load: 30, readiness: 40, zone: 'under' },
-  { name: 'Сато', load: 50, readiness: 86, zone: 'fit' },
-  { name: 'Мбеки', load: 62, readiness: 52, zone: 'fit' },
-  { name: 'Хольм', load: 44, readiness: 55, zone: 'fit' },
-  { name: 'Перес', load: 26, readiness: 66, zone: 'fit' },
+  { name: 'Окафор', load: 82, wellness: 34, zone: 'risk', labelled: true },
+  { name: 'Бреннан', load: 70, wellness: 28, zone: 'risk', labelled: true },
+  { name: 'Мартинес', load: 64, wellness: 78, zone: 'fit' },
+  { name: 'Ли', load: 58, wellness: 70, zone: 'fit' },
+  { name: 'Ковач', load: 46, wellness: 82, zone: 'fit' },
+  { name: 'Абади', load: 40, wellness: 64, zone: 'fit' },
+  { name: 'Росси', load: 55, wellness: 58, zone: 'fit' },
+  { name: 'Нгуен', load: 36, wellness: 74, zone: 'fit' },
+  { name: 'Фокс', load: 72, wellness: 62, zone: 'fit' },
+  { name: 'Дюбуа', load: 30, wellness: 40, zone: 'under' },
+  { name: 'Сато', load: 50, wellness: 86, zone: 'fit' },
+  { name: 'Мбеки', load: 62, wellness: 52, zone: 'fit' },
+  { name: 'Хольм', load: 44, wellness: 55, zone: 'fit' },
+  { name: 'Перес', load: 26, wellness: 66, zone: 'fit' },
 ]
 
 export type Availability = 'ok' | 'limited' | 'out'

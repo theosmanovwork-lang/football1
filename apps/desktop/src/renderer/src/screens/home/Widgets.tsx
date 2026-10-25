@@ -89,18 +89,18 @@ export function LoadQuadrant({ fullWidth }: { fullWidth: boolean }) {
     >
       <CardHeader
         id="h-quad"
-        title="Нагрузка × готовность"
+        title="Нагрузка × самочувствие"
         hint="GPS + анкеты утром"
         link="Медцентр"
       />
       <div className="flex gap-2">
         <div className="rotate-180 text-center text-micro text-fg-faint [writing-mode:vertical-rl]">
-          готовность ↑
+          самочувствие к норме ↑
         </div>
         <div className="flex flex-1 flex-col gap-1">
           <div
             role="img"
-            aria-label="Точечный график: игроки по нагрузке и готовности; в зоне риска Окафор и Бреннан"
+            aria-label="Точечный график: игроки по ACWR и самочувствию к личной норме; в зоне риска Окафор и Бреннан"
             className="relative h-[200px] overflow-hidden rounded-md border border-line-card bg-surface-sunken"
           >
             <div className="absolute top-1/2 right-0 bottom-0 left-1/2 bg-risk-zone" />
@@ -116,7 +116,7 @@ export function LoadQuadrant({ fullWidth }: { fullWidth: boolean }) {
               <span
                 key={p.name}
                 title={p.name}
-                style={{ left: `${p.load}%`, top: `${100 - p.readiness}%` }}
+                style={{ left: `${p.load}%`, top: `${100 - p.wellness}%` }}
                 className={cn(
                   '-mt-1 -ml-1 absolute size-2 rounded-full shadow-[0_0_0_2px_var(--surface-sunken)]',
                   ZONE_DOT[p.zone],
@@ -126,14 +126,14 @@ export function LoadQuadrant({ fullWidth }: { fullWidth: boolean }) {
             {LOAD_POINTS.filter((p) => p.labelled).map((p) => (
               <span
                 key={`${p.name}-label`}
-                style={{ left: `${p.load}%`, top: `${100 - p.readiness}%` }}
+                style={{ left: `${p.load}%`, top: `${100 - p.wellness}%` }}
                 className="-mt-5 ml-1.5 absolute whitespace-nowrap text-micro text-fg"
               >
                 {p.name}
               </span>
             ))}
           </div>
-          <div className="text-right text-micro text-fg-faint">нагрузка за 7 дней →</div>
+          <div className="text-right text-micro text-fg-faint">нагрузка: ACWR, 7 дней к 28 →</div>
         </div>
       </div>
     </section>
