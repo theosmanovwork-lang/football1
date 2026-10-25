@@ -99,8 +99,8 @@ button{font-family:inherit}
 <sc-if value="{{c.age}}" hint-placeholder-val="{{ true }}"><span role="columnheader" style="text-align: right">Возраст</span></sc-if>
 <sc-if value="{{c.role}}" hint-placeholder-val="{{ true }}"><span role="columnheader">Роль в команде</span></sc-if>
 <span role="columnheader">Статус</span>
-<span role="columnheader">Готовность</span>
-<sc-if value="{{c.load}}" hint-placeholder-val="{{ true }}"><span role="columnheader">Нагрузка 7 дн.</span></sc-if>
+<span role="columnheader" title="Утренняя анкета: сон, усталость, болезненность, стресс — сравнение с личной нормой игрока">Самочувствие</span>
+<sc-if value="{{c.load}}" hint-placeholder-val="{{ true }}"><span role="columnheader" title="Сумма за 7 дней: оценка тяжести (0–10) × минуты, в условных единицах; ACWR — 7 дней к среднему за 28">Нагрузка · ACWR</span></sc-if>
 <span role="columnheader">Уровень</span>
 <sc-if value="{{c.contract}}" hint-placeholder-val="{{ true }}"><span role="columnheader" style="text-align: right">Контракт</span></sc-if>
 <sc-if value="{{c.wage}}" hint-placeholder-val="{{ true }}"><span role="columnheader" style="text-align: right">Зарплата</span></sc-if>
@@ -130,14 +130,14 @@ button{font-family:inherit}
 <span style="flex: none; height: 20px; padding: 0 7px; border-radius: 4px; background: {{p.stBg}}; color: {{p.stFg}}; font-size: 11px; display: flex; align-items: center; white-space: nowrap">{{p.status}}</span>
 <span style="font-size: 11px; color: #9A9FA6; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{p.back}}</span>
 </span>
-<span role="cell" style="display: flex; align-items: center; gap: 8px">
-<span style="width: 24px; text-align: right; font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 12px; color: {{p.rdColor}}">{{p.rd}}</span>
-<span style="flex: 1; max-width: 56px; height: 4px; border-radius: 2px; background: #26272B; display: block"><span style="display: block; height: 4px; border-radius: 2px; width: {{p.rdW}}; background: {{p.rdColor}}"></span></span>
+<span role="cell" style="display: flex; align-items: center; gap: 6px; min-width: 0">
+<span style="width: 8px; height: 8px; flex: none; border-radius: 50%; background: {{p.wbColor}}"></span>
+<span style="font-size: 12px; font-weight: {{p.wbWeight}}; color: {{p.wbText}}; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{p.wb}}</span>
 </span>
 <sc-if value="{{c.load}}" hint-placeholder-val="{{ true }}">
 <span role="cell" style="display: flex; align-items: center; gap: 8px">
-<span style="width: 40px; text-align: right; font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 12px; color: {{p.ldColor}}">{{p.ld}}</span>
-<span style="position: relative; flex: 1; max-width: 64px; height: 4px; border-radius: 2px; background: #26272B; display: block"><span style="position: absolute; top: -3px; bottom: -3px; left: 83%; width: 1px; background: #4A4D55"></span><span style="display: block; height: 4px; border-radius: 2px; width: {{p.ldW}}; background: {{p.ldColor}}"></span></span>
+<span style="width: 44px; text-align: right; font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 12px; color: #C3C6CB">{{p.au}}</span>
+<span style="height: 20px; padding: 0 6px; border-radius: 4px; background: {{p.acBg}}; color: {{p.acFg}}; font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 11px; font-weight: 500; display: flex; align-items: center">{{p.ac}}</span>
 </span>
 </sc-if>
 <span role="cell" style="font-size: 12px; font-weight: {{p.lvlWeight}}; color: {{p.lvlColor}}; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{p.lvl}}</span>
@@ -240,16 +240,16 @@ class Component extends DCLogic {
     var navW = navHidden ? 0 : (navCompact ? 60 : 224);
     var content = W - navW - 8 - (showPanel ? 320 : 0);
     var avail = content - 16 - 24;
-    var used = 32 + 150 + 160 + 88 + 120 + 4 * 12;
+    var used = 32 + 150 + 160 + 130 + 120 + 4 * 12;
     var c = { load: false, role: false, age: false, contract: false, wage: false };
-    [['load', 112], ['role', 110], ['age', 52], ['contract', 84], ['wage', 76]].forEach(function (o) {
+    [['load', 116], ['role', 110], ['age', 52], ['contract', 84], ['wage', 76]].forEach(function (o) {
       if (used + o[1] + 12 <= avail) { c[o[0]] = true; used += o[1] + 12; }
     });
     var cols = ['32px', 'minmax(150px, 1.5fr)'];
     if (c.age) { cols.push('52px'); }
     if (c.role) { cols.push('110px'); }
-    cols.push('minmax(160px, 1fr)', '88px');
-    if (c.load) { cols.push('112px'); }
+    cols.push('minmax(160px, 1fr)', '130px');
+    if (c.load) { cols.push('116px'); }
     cols.push('minmax(120px, 1fr)');
     if (c.contract) { cols.push('84px'); }
     if (c.wage) { cols.push('76px'); }
@@ -297,13 +297,20 @@ class Component extends DCLogic {
       var r = roles[a[6]], s = stat[a[7]];
       var rd = a[9], ld = a[10];
       var out = a[7] === 'out';
-      var rdColor = out ? '#5B5F66' : rd < 65 ? '#FFB547' : '#C3C6CB';
-      var ldColor = out ? '#5B5F66' : ld > 115 ? '#FF9A8A' : ld > 105 ? '#FFB547' : ld < 70 ? '#6B7078' : '#7CC4FF';
+      var factor = { '4': 'мышцы', '3': 'мышцы', '5': 'сон', '16': 'усталость', '7': 'сон', '1': 'стресс', '23': 'усталость' }[a[1]] || 'сон';
+      var dlt = rd >= 75 ? 0 : rd >= 65 ? 3 : 6;
+      var wb = out ? 'не заполняет' : dlt === 0 ? 'Норма' : dlt < 5 ? 'Хуже нормы · ' + factor : 'Тревожно · ' + factor;
+      var wbColor = out ? '#4A4D55' : dlt === 0 ? '#6FAF4A' : dlt < 5 ? '#FFB547' : '#FF9A8A';
+      var acwr = ld >= 100 ? 1 + (ld - 100) * 0.0185 : 1 - (100 - ld) * 0.006;
+      var acTxt = acwr.toFixed(2).replace('.', ',');
+      var acBg = out ? 'transparent' : acwr > 1.5 ? '#2E1715' : acwr > 1.3 ? '#2E2412' : acwr < 0.8 ? '#1B1F26' : '#1B1C20';
+      var acFg = out ? '#5B5F66' : acwr > 1.5 ? '#FFB0A6' : acwr > 1.3 ? '#FFCB7A' : acwr < 0.8 ? '#9CB3CF' : '#C3C6CB';
+      var au = Math.round(ld * 24 / 10) * 10;
       var on = st.sel === a[1];
       return { line: a[0], num: a[1], name: a[2], pos: a[3], posLong: a[4], age: String(a[5]), ageN: a[5], roleKey: a[6], statusKey: a[7],
         role: r[0], roleColor: r[1], roleWeight: r[2], status: s[0], stBg: s[1], stFg: s[2], back: a[8],
-        rd: out ? '—' : String(rd), rdW: (out ? 0 : rd) + '%', rdColor: rdColor,
-        ld: out ? '—' : ld + '%', ldW: Math.min(100, Math.round(ld / 1.2)) + '%', ldColor: ldColor, ldN: ld,
+        wb: wb, wbColor: wbColor, wbText: out ? '#8F949C' : dlt === 0 ? '#C3C6CB' : '#FFFFFF', wbWeight: dlt === 0 || out ? '400' : '500', wbScore: out ? '—' : String(8 + dlt), wbNorm: '8', wbFactor: factor, dlt: dlt,
+        au: out ? '—' : au.toLocaleString('ru-RU'), ac: out ? '—' : acTxt, acBg: acBg, acFg: acFg, acwr: out ? 0 : acwr,
         lvl: word(a[11]), lvlColor: a[11] >= 15 ? '#FFFFFF' : '#D0D2D6', lvlWeight: a[11] >= 15 ? '600' : '400',
         ct: 'до ' + a[12], ctColor: a[12] === '2027' ? '#FFCB7A' : '#C3C6CB', ctWeight: a[12] === '2027' ? '500' : '400', ctN: Number(a[12]),
         wage: a[13] + ' тыс.', nameWeight: a[6] === 'key' ? '600' : '500',
@@ -314,7 +321,7 @@ class Component extends DCLogic {
     var viewDefs = [
       { id: 'all', label: 'Все игроки', f: function () { return true; } },
       { id: 'first', label: 'Основа', f: function (p) { return p.roleKey === 'key' || p.roleKey === 'first'; } },
-      { id: 'med', label: 'Медицина и нагрузка', f: function (p) { return p.statusKey !== 'ok' || p.ldN > 105; } },
+      { id: 'med', label: 'Медицина и нагрузка', f: function (p) { return p.statusKey !== 'ok' || p.acwr > 1.3 || p.dlt > 0; } },
       { id: 'contracts', label: 'Контракты до 2027', f: function (p) { return p.ctN <= 2027; } },
       { id: 'young', label: 'Молодёжь до 21', f: function (p) { return p.ageN <= 21; } }
     ];
@@ -337,13 +344,13 @@ class Component extends DCLogic {
     var selP = all.filter(function (p) { return p.num === st.sel; })[0] || all[12];
     var details = {
       '8': { blocks: [['Техника', 'Очень хорошо'], ['Тактика', 'Очень хорошо'], ['Физика', 'Хорошо'], ['Психология', 'Очень хорошо']], season: [['Матчи · минуты', '10 · 884'], ['Голы · передачи', '2 · 3'], ['Обойдённые соперники за 90', '61 · 2-й в лиге'], ['Прогрессивные передачи за 90', '7,4']], noteIni: 'МС', note: 'Аналитик: главный разгоняющий игрок команды. Против Вестфилд Сити — ключ к выходу из прессинга.' },
-      '4': { blocks: [['Техника', 'Хорошо'], ['Тактика', 'Очень хорошо'], ['Физика', 'Очень хорошо'], ['Психология', 'Хорошо']], season: [['Матчи · минуты', '10 · 900'], ['Отборы · перехваты за 90', '2,1 · 1,8'], ['Спринты после 70-й', '−22% за 3 матча'], ['Нагрузка 7 дн.', '128% от плана']], noteIni: 'ДК', note: 'Физподготовка: в зоне риска перегрузки. Предлагаем облегчить вторник (LOAD-3 на главной).' }
+      '4': { blocks: [['Техника', 'Хорошо'], ['Тактика', 'Очень хорошо'], ['Физика', 'Очень хорошо'], ['Психология', 'Хорошо']], season: [['Матчи · минуты', '10 · 900'], ['Отборы · перехваты за 90', '2,1 · 1,8'], ['Спринты после 70-й', '−22% за 3 матча'], ['Высокоскоростной бег за 7 дн.', '2 140 м · +38% к норме']], noteIni: 'ДК', note: 'Физподготовка: ACWR 1,52 и боль в мышцах выше нормы третий день. Предлагаем облегчить вторник (LOAD-3 на главной).' }
     };
     var d0 = details[selP.num] || { blocks: [['Техника', selP.lvl], ['Тактика', selP.lvl], ['Физика', selP.lvl], ['Психология', selP.lvl]], season: [['Матчи · минуты', '—'], ['Голы · передачи', '—'], ['Обойдённые соперники за 90', '—'], ['Прогрессивные передачи за 90', '—']], noteIni: 'ГТ', note: 'Заметок нет.' };
     function kv(arr) { return arr.map(function (x) { return { k: x[0], v: x[1] }; }); }
     var d = { blocks: kv(d0.blocks), season: kv(d0.season), noteIni: d0.noteIni, note: d0.note };
     var sel = Object.assign({}, selP, d, { ini: selP.name.split(' ').map(function (w) { return w[0]; }).join(''),
-      kpis: [{ l: 'Готовность', v: selP.rd, n: 'анкета утром', c: selP.rdColor === '#5B5F66' ? '#9A9FA6' : '#FFFFFF' }, { l: 'Нагрузка', v: selP.ld, n: 'от плана, 7 дн.', c: selP.ldColor }, { l: 'Матчи', v: selP.num === '8' ? '10' : (selP.num === '4' ? '10' : '—'), n: 'в сезоне', c: '#FFFFFF' }] });
+      kpis: [{ l: 'Самочувствие', v: selP.wbScore, n: 'личная норма ' + selP.wbNorm, c: selP.dlt === 0 ? '#FFFFFF' : selP.dlt < 5 ? '#FFCB7A' : '#FFB0A6' }, { l: 'ACWR', v: selP.ac, n: selP.au + ' у.е. за 7 дн.', c: selP.acFg }, { l: 'Матчи', v: selP.num === '8' ? '10' : (selP.num === '4' ? '10' : '—'), n: 'в сезоне', c: '#FFFFFF' }] });
 
     var I = {
       inbox: 'M3 13h5l2 3h4l2-3h5M5 5h14l2 8v6a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-6z', cal: 'M4 6h16v14H4zM4 10h16M9 3v4M15 3v4', notes: 'M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z',

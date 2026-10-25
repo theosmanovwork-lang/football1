@@ -241,15 +241,15 @@ body{margin:0}
 
 <section aria-labelledby="h-quad" style="flex: 1 1 {{quadBasis}}; min-width: 0; border: 1px solid #222327; border-radius: 8px; padding: 12px; display: flex; flex-direction: column; gap: 10px">
 <div style="display: flex; align-items: center; gap: 8px">
-<h2 id="h-quad" style="margin: 0; font-size: 14px; font-weight: 600">Нагрузка × готовность</h2>
+<h2 id="h-quad" style="margin: 0; font-size: 14px; font-weight: 600">Нагрузка × самочувствие</h2>
 <span style="font-size: 11px; color: #9A9FA6">GPS + анкеты утром</span>
 <div style="flex: 1"></div>
 <a href="#" style="font-size: 12px; color: #9A9FA6">Медцентр →</a>
 </div>
 <div style="display: flex; gap: 8px">
-<div style="writing-mode: vertical-rl; transform: rotate(180deg); font-size: 10px; color: #8F949C; text-align: center">готовность ↑</div>
+<div style="writing-mode: vertical-rl; transform: rotate(180deg); font-size: 10px; color: #8F949C; text-align: center">самочувствие к норме ↑</div>
 <div style="flex: 1; display: flex; flex-direction: column; gap: 4px">
-<div role="img" aria-label="Точечный график: игроки по нагрузке и готовности; в зоне риска Окафор и Бреннан" style="position: relative; height: 200px; border: 1px solid #222327; border-radius: 6px; overflow: hidden; background: #111215">
+<div role="img" aria-label="Точечный график: игроки по ACWR и самочувствию к личной норме; в зоне риска Окафор и Бреннан" style="position: relative; height: 200px; border: 1px solid #222327; border-radius: 6px; overflow: hidden; background: #111215">
 <div style="position: absolute; left: 50%; top: 50%; right: 0; bottom: 0; background: #2A1D12"></div>
 <div style="position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: #2A2C31"></div>
 <div style="position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: #2A2C31"></div>
@@ -264,7 +264,7 @@ body{margin:0}
 <span style="position: absolute; left: {{d.x}}; top: {{d.y}}; margin: -20px 0 0 6px; font-size: 10px; color: #E3E4E6; white-space: nowrap">{{d.name}}</span>
 </sc-for>
 </div>
-<div style="text-align: right; font-size: 10px; color: #8F949C">нагрузка за 7 дней →</div>
+<div style="text-align: right; font-size: 10px; color: #8F949C">нагрузка: ACWR, 7 дней к 28 →</div>
 </div>
 </div>
 </section>
@@ -492,7 +492,7 @@ class Component extends DCLogic {
     }
     var decisions = [
       row({ code: 'MED-14', urgent: true, title: 'Лиам Харт: растяжение бедра — утвердить этап 2 протокола восстановления', hasChip: true, chip: 'Медцентр', chipColor: '#FF9A8A', hasIni: true, ini: 'ДК', meta: '09:12' }),
-      row({ code: 'LOAD-3', urgent: true, title: 'Окафор в зоне риска перегрузки — облегчить вторничную тренировку?', hasChip: true, chip: 'Нагрузка', chipColor: '#FFB547', hasIni: true, ini: 'ДК', meta: '08:55' }),
+      row({ code: 'LOAD-3', urgent: true, title: 'Окафор: ACWR 1,52 и боль в мышцах выше нормы — облегчить вторник?', hasChip: true, chip: 'Нагрузка', chipColor: '#FFB547', hasIni: true, ini: 'ДК', meta: '08:55' }),
       row({ code: 'TRF-6', todo: true, title: 'СД отклонил запрос на левого защитника: бюджет превышен на 1,8 млн', hasChip: true, chip: 'Трансферы', chipColor: '#7CC4FF', hasIni: true, ini: 'СД', meta: 'вчера' }),
       row({ code: 'ANL-21', ready: true, title: 'Пакет подготовки к Вестфилд Сити готов: 3 приоритета, 14 эпизодов', hasChip: true, chip: 'Аналитика', chipColor: accent, hasIni: true, ini: 'МС', meta: '08:40' }),
       row({ code: 'PR-9', progress: true, title: 'Пресс-конференция в пятницу, 13:00 — вопросы о защите после 0:3', hasChip: true, chip: 'Пресса', chipColor: '#B9A2FF', meta: '08:15' })
@@ -528,8 +528,8 @@ class Component extends DCLogic {
     });
     var kpis = [
       { label: 'Доступность', src: 'Медцентр', value: '81%', delta: '21 из 26', deltaColor: '#9A9FA6', bars: [{ w: '81%', c: accent }, { w: '8%', c: '#FFB547' }, { w: '11%', c: '#FF9A8A' }], note: 'доступны · ограниченно · недоступны' },
-      { label: 'Готовность команды', src: 'Анкеты', value: '74', delta: '−4 за 7 дней', deltaColor: '#FFB547', bars: [{ w: '74%', c: '#C3C6CB' }], note: 'сон, усталость, болезненность' },
-      { label: 'Нагрузка недели', src: 'GPS', value: '82%', delta: 'от плана', deltaColor: '#9A9FA6', bars: [{ w: '82%', c: '#7CC4FF' }], note: '2 игрока выше нормы' },
+      { label: 'Самочувствие', src: 'Анкеты', value: '17', delta: 'из 21 · 4 хуже нормы', deltaColor: '#FFB547', bars: [{ w: '81%', c: '#C3C6CB' }, { w: '14%', c: '#FFB547' }, { w: '5%', c: '#FF9A8A' }], note: 'утренняя анкета к личной норме' },
+      { label: 'Нагрузка недели', src: 'GPS', value: '1 980', delta: 'у.е. · план 2 400', deltaColor: '#9A9FA6', bars: [{ w: '82%', c: '#7CC4FF' }], note: 'ACWR выше 1,3 у 2 игроков' },
       { label: 'Прессинг, PPDA', src: 'Центр данных', value: '9,8', delta: '3-е в лиге', deltaColor: accent, bars: [{ w: '70%', c: accent }], note: 'чем ниже, тем агрессивнее' }
     ];
     var pl = [
