@@ -1,9 +1,8 @@
 /**
  * Simulation core. Pure TypeScript: no React, DOM, Electron or Node APIs.
- * The world generator, match model and season runner arrive in T001 step 3.
  */
 
-export const SIM_VERSION = '0.0.1'
+export const SIM_VERSION = '0.1.0'
 
 export interface CoreInfo {
   version: string
@@ -12,3 +11,25 @@ export interface CoreInfo {
 export function getCoreInfo(): CoreInfo {
   return { version: SIM_VERSION }
 }
+
+export * from './types'
+export { Rng, type RngState } from './rng'
+export { generateWorld, DEFAULT_WORLD_OPTIONS, type WorldOptions } from './world'
+export { abilityAt, overall, dossierWord, type DossierWord } from './ratings'
+export { doubleRoundRobin, type Fixture } from './schedule'
+export { teamStrength, playMatch, type TeamStrength, type Score } from './match'
+export {
+  runSeason,
+  buildTable,
+  type MatchResult,
+  type StandingRow,
+  type LeagueSeason,
+  type SeasonResult,
+} from './season'
+export {
+  playerRows,
+  leagueTables,
+  type PlayerRow,
+  type TableRowView,
+  type LeagueTableView,
+} from './views'

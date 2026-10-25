@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "electron-vite dev",
     "dev:web": "vite --config vite.web.config.mts",
-    "typecheck": "tsc -p tsconfig.node.json && tsc -p tsconfig.web.json && tsc -p tsconfig.e2e.json",
+    "typecheck": "tsc -p tsconfig.node.json && tsc -p tsconfig.web.json && tsc -p tsconfig.e2e.json && tsc -p tsconfig.worker.json",
     "build": "electron-vite build && electron-builder",
     "build:unpack": "electron-vite build && electron-builder --dir",
     "preview": "electron-vite preview"
